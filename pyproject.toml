@@ -13,6 +13,7 @@ dependencies = [
     "django-crispy-forms>=2.4,<3",
     "crispy-bootstrap5>=2025.6,<2026",
     "whitenoise>=6.9,<7",
+    "rich>=14.0,<15",
 ]
 
 [project.urls]
