@@ -10,13 +10,16 @@ from .models import User
 class CustomUserAdmin(UserAdmin):
     """Admin for the email-keyed user; the stock one assumes a username.
 
-    The stock delete button and ``delete_selected`` action issue a hard delete,
-    which a versioned row refuses and the admin then surfaces as a 500. Closing
-    an account is the "close" action below, which anyone who may change a user
-    may run. The changelist lists live accounts only: a closed one leaves it.
+    Deleting an account here ends its validity window: the delete button and the
+    ``delete_selected`` action both route to a soft-delete, so they read as they
+    always have and leave the row in place. Erasing one for good is the separate
+    "destroy" action.
+
+    The changelist lists live accounts only, so a deleted one leaves it and only
+    ``User.history`` still holds it.
     """
 
-    actions = ("close_accounts",)
+    actions = ("destroy_accounts",)
     ordering = ("email",)
     list_display = ("email", "full_name", "company", "is_staff")
     search_fields = ("email", "full_name", "company")
@@ -29,40 +32,6 @@ class CustomUserAdmin(UserAdmin):
         ),
         (_("[dates]"), {"fields": ("last_login", "date_joined")}),
     )
-
-    @admin.action(
-        permissions=["change"], description=_("[Close the selected accounts]")
-    )
-    def close_accounts(self, request, queryset):
-        """Close every selected account, in one statement.
-
-        Closing is what deleting an account means here: the row stays, its
-        validity window ends, and it leaves ``User.objects`` — so the account
-        can no longer log in and its email is free again.
-
-        Args:
-            request: The admin request, told how many rows were closed.
-            queryset: The selected accounts, live ones by construction.
-        """
-        closed = queryset.update(date_v_end=timezone.now())
-        self.message_user(request, _("[Accounts closed: {}]").format(closed))
-
-    def has_delete_permission(self, request, obj=None):
-        """Refuse destruction from the admin, whoever asks.
-
-        The stock delete path destroys the row rather than closing it, so no
-        permission can make it legal here. Closing goes through
-        :meth:`close_accounts`.
-
-        Args:
-            request: The admin request.
-            obj: The row being looked at, or None on the changelist.
-
-        Returns:
-            bool: Always False.
-        """
-        return False
-
     add_fieldsets = (
         (
             None,
@@ -72,3 +41,58 @@ class CustomUserAdmin(UserAdmin):
             },
         ),
     )
+
+    def delete_model(self, request, obj):
+        """Close the account the delete button was pressed on.
+
+        Args:
+            request: The admin request.
+            obj: The account to close.
+        """
+        obj.soft_delete()
+
+    def delete_queryset(self, request, queryset):
+        """Close every account the ``delete_selected`` action was run on.
+
+        One statement, whatever the number of rows.
+
+        Args:
+            request: The admin request.
+            queryset: The selected accounts.
+        """
+        queryset.update(date_v_end=timezone.now())
+
+    @admin.action(
+        permissions=["destroy"],
+        description=_("[Destroy the selected accounts and all their history]"),
+    )
+    def destroy_accounts(self, request, queryset):
+        """Erase every selected account for good, past versions included.
+
+        Destroying only the selected rows would leave their closed predecessors
+        behind, and the account would survive in ``history``. Every row sharing
+        a selected account's email goes, which is what an erasure request asks
+        for. An email a past version no longer carries is out of reach — an
+        account edited to a new address keeps its older rows.
+
+        Three queries: the emails, then the collect and the cascading delete.
+
+        Args:
+            request: The admin request, told how many rows went.
+            queryset: The selected accounts.
+        """
+        emails = list(queryset.values_list("email", flat=True))
+        destroyed, __ = User.history.filter(email__in=emails).hard_delete()
+        self.message_user(request, _("[Rows destroyed: {}]").format(destroyed))
+
+    def has_destroy_permission(self, request):
+        """Return whether this user may erase an account for good.
+
+        Args:
+            request: The admin request.
+
+        Returns:
+            bool: True for anyone holding the delete permission, from a group
+            or from being a superuser.
+        """
+        return request.user.has_perm("accounts.delete_user")

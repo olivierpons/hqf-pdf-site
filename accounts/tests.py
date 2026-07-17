@@ -165,48 +165,25 @@ class TestBulkWrites:
 
 
 @pytest.mark.django_db
-class TestAdminClosesAccounts:
-    def test_an_admin_closes_a_selected_account(self, client, account):
+class TestAdminDeleteOnlyClosesTheAccount:
+    def test_the_delete_button_closes_the_account(self, client, account):
         boss = User.objects.create_superuser(
             email="boss@example.com", password="s3cret-probe-pw", full_name="Boss"
         )
         client.force_login(boss)
         response = client.post(
-            reverse("admin:accounts_user_changelist"),
-            {"action": "close_accounts", "_selected_action": [str(account.pk)]},
+            reverse("admin:accounts_user_delete", args=[account.pk]), {"post": "yes"}
         )
         assert response.status_code == 302
 
-        assert not User.objects.filter(pk=account.pk).exists()
+        # The row is still there; only its validity window ended.
         assert User.history.get(pk=account.pk).date_v_end is not None
+        assert not User.objects.filter(pk=account.pk).exists()
         assert (
             authenticate(email="held@example.com", password="s3cret-probe-pw") is None
         )
 
-    def test_closing_needs_more_than_a_look(self, client, account):
-        watcher = User.objects.create_user(
-            email="watcher@example.com",
-            password="s3cret-probe-pw",
-            full_name="Watcher",
-            is_staff=True,
-        )
-        watcher.user_permissions.add(
-            Permission.objects.get(
-                codename="view_user", content_type__app_label="accounts"
-            )
-        )
-        client.force_login(watcher)
-        response = client.post(
-            reverse("admin:accounts_user_changelist"),
-            {"action": "close_accounts", "_selected_action": [str(account.pk)]},
-        )
-        assert User.objects.filter(pk=account.pk).exists()
-        assert response.status_code in (200, 302, 403)
-
-
-@pytest.mark.django_db
-class TestAdminCannotDelete:
-    def test_the_delete_action_is_not_offered(self, client, account):
+    def test_the_delete_action_closes_the_accounts(self, client, account):
         boss = User.objects.create_superuser(
             email="boss@example.com", password="s3cret-probe-pw", full_name="Boss"
         )
@@ -219,22 +196,93 @@ class TestAdminCannotDelete:
                 "post": "yes",
             },
         )
-        # The admin does not know the action, so it reports and redirects
-        # instead of reaching the hard delete that would 500.
         assert response.status_code == 302
-        assert User.objects.filter(pk=account.pk).exists()
-        assert User.history.get(pk=account.pk).date_v_end is None
+        assert User.history.get(pk=account.pk).date_v_end is not None
+        assert not User.objects.filter(pk=account.pk).exists()
 
-    def test_the_delete_view_is_refused(self, client, account):
+    def test_deleting_needs_more_than_a_look(self, client, account):
+        watcher = User.objects.create_user(
+            email="watcher@example.com",
+            password="s3cret-probe-pw",
+            full_name="Watcher",
+            is_staff=True,
+        )
+        watcher.user_permissions.add(
+            Permission.objects.get(
+                codename="view_user", content_type__app_label="accounts"
+            )
+        )
+        client.force_login(watcher)
+        client.post(
+            reverse("admin:accounts_user_delete", args=[account.pk]), {"post": "yes"}
+        )
+        assert User.objects.filter(pk=account.pk).exists()
+
+
+@pytest.mark.django_db
+class TestAdminDestroysAccounts:
+    def test_destroying_takes_the_history_with_it(self, client, account):
+        successor = account.update(full_name="Renamed")
+        assert User.history.count() == 2
+
         boss = User.objects.create_superuser(
             email="boss@example.com", password="s3cret-probe-pw", full_name="Boss"
         )
         client.force_login(boss)
         response = client.post(
-            reverse("admin:accounts_user_delete", args=[account.pk]), {"post": "yes"}
+            reverse("admin:accounts_user_changelist"),
+            {"action": "destroy_accounts", "_selected_action": [str(successor.pk)]},
         )
-        assert response.status_code == 403
-        assert User.objects.filter(pk=account.pk).exists()
+        assert response.status_code == 302
+
+        # The closed predecessor goes too, or the account would survive in
+        # history and the erasure would be a lie.
+        assert not User.history.filter(email="held@example.com").exists()
+        assert User.history.count() == 1
+
+    def test_destroying_needs_the_delete_permission(self, client, account):
+        editor = User.objects.create_user(
+            email="editor@example.com",
+            password="s3cret-probe-pw",
+            full_name="Editor",
+            is_staff=True,
+        )
+        editor.user_permissions.add(
+            Permission.objects.get(
+                codename="change_user", content_type__app_label="accounts"
+            )
+        )
+        client.force_login(editor)
+        client.post(
+            reverse("admin:accounts_user_changelist"),
+            {"action": "destroy_accounts", "_selected_action": [str(account.pk)]},
+        )
+        assert User.history.filter(pk=account.pk).exists()
+
+    def test_a_group_grants_the_destroy_permission(self, client, account):
+        squad = Group.objects.create(name="admins")
+        squad.permissions.add(
+            Permission.objects.get(
+                codename="delete_user", content_type__app_label="accounts"
+            ),
+            Permission.objects.get(
+                codename="view_user", content_type__app_label="accounts"
+            ),
+        )
+        member = User.objects.create_user(
+            email="member@example.com",
+            password="s3cret-probe-pw",
+            full_name="Member",
+            is_staff=True,
+        )
+        member.groups.add(squad)
+        client.force_login(member)
+        response = client.post(
+            reverse("admin:accounts_user_changelist"),
+            {"action": "destroy_accounts", "_selected_action": [str(account.pk)]},
+        )
+        assert response.status_code == 302
+        assert not User.history.filter(pk=account.pk).exists()
 
 
 @pytest.mark.django_db

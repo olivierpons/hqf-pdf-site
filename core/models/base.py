@@ -3,7 +3,8 @@
 The contract — read this before writing any model code
 ======================================================
 
-Rows are never destroyed. In-place mutation of business fields is forbidden.
+Rows are not destroyed, bar the one sanctioned escape below. In-place mutation
+of business fields is forbidden.
 Every "edit" is an *update*: the current row's validity window is closed
 (``date_v_end = now()``) and a fresh successor row is inserted, copying the
 previous field values, applying the requested changes, and opening its own
@@ -52,6 +53,10 @@ Anti-patterns this module turns into a ``RuntimeError``
   ``obj.update(…)`` per row.
 * ``obj.delete()`` / ``qs.delete()`` — use ``obj.soft_delete()`` or
   ``qs.update(date_v_end=timezone.now())``.
+
+The escape is :meth:`VersionedQuerySet.hard_delete`, which destroys for real.
+It is spelled differently from ``delete()`` so it cannot be reached by accident,
+and it is what an erasure request is served with.
 
 Anti-patterns it cannot catch — avoid them by hand
 ---------------------------------------------------
@@ -126,14 +131,31 @@ class VersionedQuerySet(models.QuerySet):
 
         Raises:
             RuntimeError: Always. Use ``qs.update(date_v_end=timezone.now())``
-                for a bulk soft-delete, or call ``obj.soft_delete()`` per row.
+                for a bulk soft-delete, :meth:`hard_delete` to destroy.
         """
         raise RuntimeError(
             f"{self.model.__name__} rows are temporally versioned, so "
             "QuerySet.delete() is forbidden. Use "
             "``qs.update(date_v_end=timezone.now())`` for a bulk soft-delete, "
-            "or iterate and call ``obj.soft_delete()``."
+            "``obj.soft_delete()`` per row, or ``hard_delete()`` to destroy."
         )
+
+    def hard_delete(self):
+        """Physically destroy the selected rows, history included.
+
+        The single sanctioned escape from the no-destruction invariant, for what
+        the invariant does not serve: a row no history is worth keeping for, and
+        an erasure that is owed rather than chosen — a customer asking for their
+        account to be gone leaves nothing to audit.
+
+        It destroys exactly what the queryset matches and nothing more, so the
+        caller narrows it, and reaches for ``history`` when the closed
+        predecessors must go too.
+
+        Returns:
+            tuple: Rows destroyed, and the per-model count including cascades.
+        """
+        return super().delete()
 
 
 class LiveManager(models.Manager):

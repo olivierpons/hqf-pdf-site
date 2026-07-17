@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 14:52+0200\n"
+"POT-Creation-Date: 2026-07-17 14:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,25 +17,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: accounts/admin.py:25
+#: accounts/admin.py:28
 msgid "[identity]"
 msgstr "identité"
 
-#: accounts/admin.py:27
+#: accounts/admin.py:30
 msgid "[permissions]"
 msgstr "permissions"
 
-#: accounts/admin.py:30
+#: accounts/admin.py:33
 msgid "[dates]"
 msgstr "dates"
 
-#: accounts/admin.py:34
-msgid "[Close the selected accounts]"
-msgstr "Fermer les comptes sélectionnés"
+#: accounts/admin.py:67
+msgid "[Destroy the selected accounts and all their history]"
+msgstr "Détruire les comptes sélectionnés et tout leur historique"
 
-#: accounts/admin.py:48
-msgid "[Accounts closed: {}]"
-msgstr "Comptes fermés : {}"
+#: accounts/admin.py:86
+msgid "[Rows destroyed: {}]"
+msgstr "Lignes détruites : {}"
 
 #: accounts/forms.py:16
 msgid "[Company (leave empty if you are an individual)]"
@@ -192,3 +192,6 @@ msgstr "Prix en euros"
 #: templates/home.html:50
 msgid "[Every amount on this site is in euros, taxes excluded.]"
 msgstr "Tous les montants de ce site sont en euros, hors taxes."
+
+#~ msgid "[Accounts closed: {}]"
+#~ msgstr "Comptes fermés : {}"
