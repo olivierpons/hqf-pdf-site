@@ -1,0 +1,55 @@
+# hqf-pdf-site configuration template.
+#
+# Copy this file to ~/.config/hqf_pdf_site.toml, or anywhere you like and point
+# the TOML_CONFIG_FILE environment variable at it, then fill in every value.
+# config/settings.py reads it at import time and refuses to boot on a missing
+# key, printing this template.
+#
+# The real file holds the secret key and the database password: keep it out of
+# the repository and readable only by the account running the site.
+
+[confidential]
+# Generate one with:
+#   python -c "from django.core.management.utils import get_random_secret_key as k; print(k())"
+secret_key = "CHANGE-ME"
+
+[debugging]
+# Never true on a public deployment.
+debug = true
+
+[security]
+internal_ips = ["127.0.0.1"]
+allowed_hosts = ["127.0.0.1", "localhost"]
+# Needed once the site answers on https, e.g. ["https://pdf.example.com"].
+csrf_trusted_origins = []
+# Uncomment ONLY when nginx (or another TLS-terminating proxy) sits in front and
+# sets this header itself. On a directly exposed server a client can forge it.
+# secure_proxy_ssl_header = "HTTP_X_FORWARDED_PROTO"
+
+[app_paths]
+tmp_dir = "/tmp/hqf_pdf_site"
+
+[databases.default]
+name = "hqf_pdf_site"
+user = "hqf_pdf_site"
+password = "CHANGE-ME"
+host = "localhost"
+port = 5432
+
+[pdf_server]
+# The client file the render server reads. The site writes it: a customer's API
+# key and rights land here. The site's account needs write access to it.
+clients_file = "/etc/hqf-pdf-server/clients.toml"
+
+[billing]
+# EUR is the only currency sold today; settings.py rejects anything else.
+currency = "EUR"
+
+[front]
+# false serves Bootstrap and htmx from this site instead of a CDN, so no
+# visitor IP reaches a third party.
+cdn_enabled = true
+
+[static_files]
+static_url = "/static/"
+static_root = "/var/www/hqf-pdf-site/static"

@@ -41,6 +41,11 @@ Quand une annotation est requise : **syntaxe native** — `list[int]`,
 
 ## Outillage
 
+**`uv`, et rien d'autre.** Pas de Poetry, pas de pip-tools, pas de
+`requirements.txt`. Les dépendances vivent dans `pyproject.toml`
+(`[project.dependencies]` et `[dependency-groups] dev`), `uv.lock` est
+versionné, `uv sync` installe, `uv run <cmd>` exécute.
+
 Formatage et lint : `black` (88), `isort` (profil `black`), `ruff`, `pylint`,
 `pycodestyle`.
 
