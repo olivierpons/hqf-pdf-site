@@ -77,6 +77,8 @@ disable = [
     "fixme",
     # Django's own form and view hierarchies are deeper than the default 7.
     "too-many-ancestors",
+    # A Django manager exposes get_queryset and nothing else, by design.
+    "too-few-public-methods",
 ]
 
 [tool.pytest.ini_options]
