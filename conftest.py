@@ -3,10 +3,14 @@
 # pytest-django rolls back. Naming it is also what shadows it.
 # pylint: disable=unused-argument, redefined-outer-name
 
+from datetime import date
+from decimal import Decimal
+
 import pytest
 from django.contrib.auth import get_user_model
 
 from api_keys.models import ApiKey
+from billing.models import Plan, Subscription
 
 
 @pytest.fixture
@@ -21,6 +25,27 @@ def account(db):
 def api_key(account):
     """Return a saved, live key belonging to ``account``."""
     return ApiKey.objects.create(account=account, client_name="acme")
+
+
+@pytest.fixture
+def plan(db):
+    """Return a saved plan: 1000 pages and 500 requests a month, then overage."""
+    return Plan.objects.create(
+        name="Starter",
+        monthly_price=Decimal("49.00"),
+        included_pages=1000,
+        included_requests=500,
+        overage_page_price=Decimal("0.010000"),
+        overage_request_price=Decimal("0.050000"),
+    )
+
+
+@pytest.fixture
+def subscription(account, plan):
+    """Return ``account`` subscribed to ``plan`` from a fixed anchor day."""
+    return Subscription.objects.create(
+        account=account, plan=plan, started_on=date(2026, 1, 15)
+    )
 
 
 @pytest.fixture
