@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtualenvs
+.venv/
+venv/
+env/
+
+# Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+/media/
+/staticfiles/
+
+# Compiled translations: .po is the source and is versioned, .mo is a build
+# artefact rebuilt by compilemessages.
+*.mo
+
+# Local configuration: the TOML carries secrets and machine-specific paths.
+# install/config_template.toml is the versioned example.
+*.toml
+!install/config_template.toml
+!pyproject.toml
+
+# Tests and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.ruff_cache/
+
+# PyCharm: everything is local except the shared inspection profile, which is
+# versioned so the IDE flags what the linters flag.
+.idea/*
+!.idea/inspectionProfiles/
+.idea/inspectionProfiles/*
+!.idea/inspectionProfiles/Project_Default.xml
+!.idea/inspectionProfiles/profiles_settings.xml
+
+# OS
+.DS_Store
