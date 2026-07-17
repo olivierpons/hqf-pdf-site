@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 16:43+0200\n"
+"POT-Creation-Date: 2026-07-17 17:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,23 +17,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: accounts/admin.py:28
+#: accounts/admin.py:33
 msgid "[identity]"
 msgstr "identity"
 
-#: accounts/admin.py:30
+#: accounts/admin.py:35
 msgid "[permissions]"
 msgstr "permissions"
 
-#: accounts/admin.py:33
+#: accounts/admin.py:38
 msgid "[dates]"
 msgstr "dates"
 
-#: accounts/admin.py:67
+#: accounts/admin.py:52
 msgid "[Destroy the selected accounts and all their history]"
 msgstr "Destroy the selected accounts and all their history"
 
-#: accounts/admin.py:86
+#: accounts/admin.py:71
 msgid "[Rows destroyed: {}]"
 msgstr "Rows destroyed: {}"
 
@@ -69,9 +69,22 @@ msgstr "user"
 msgid "[users]"
 msgstr "users"
 
-#: api_keys/admin.py:35
+#: api_keys/admin.py:39
 msgid "[entitlements]"
 msgstr "entitlements"
+
+#: api_keys/management/commands/write_pdf_server_config.py:46
+msgid "[Write the render server's client file and nginx's API-key map from the site's live API keys. Both are overwritten from scratch on every run. The server reads its client file at startup and nginx reads its map on reload, so restart the server and reload nginx afterwards.]"
+msgstr "Write the render server's client file and nginx's API-key map from the site's live API keys. Both are overwritten from scratch on every run. The server reads its client file at startup and nginx reads its map on reload, so restart the server and reload nginx afterwards."
+
+#: api_keys/management/commands/write_pdf_server_config.py:99
+msgid "[Print both files to stdout instead of writing them.]"
+msgstr "Print both files to stdout instead of writing them."
+
+#: api_keys/management/commands/write_pdf_server_config.py:125
+#, python-brace-format
+msgid "[Wrote {count} client(s) to {clients} and {nginx}.]"
+msgstr "Wrote {count} client(s) to {clients} and {nginx}."
 
 #: api_keys/models.py:31
 msgid "[A client name holds up to 64 lowercase letters, digits, underscores and dashes, and starts with a letter or a digit.]"
