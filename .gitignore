@@ -22,11 +22,13 @@ db.sqlite3-journal
 # artefact rebuilt by compilemessages.
 *.mo
 
-# Local configuration: the TOML carries secrets and machine-specific paths.
-# install/config_template.toml is the versioned example.
-*.toml
+# Local configuration: the real TOML carries the secret key and machine paths.
+# It normally lives at ~/.config/hqf_pdf_site.toml, outside the repo; these
+# patterns cover the in-repo copies TOML_CONFIG_FILE gets pointed at.
+/hqf_pdf_site.toml
+/local.toml
+/install/*.toml
 !install/config_template.toml
-!pyproject.toml
 
 # Tests and coverage
 .pytest_cache/
