@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 13:39+0200\n"
+"POT-Creation-Date: 2026-07-17 14:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,17 +17,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: accounts/admin.py:22
+#: accounts/admin.py:25
 msgid "[identity]"
 msgstr "identité"
 
-#: accounts/admin.py:24
+#: accounts/admin.py:27
 msgid "[permissions]"
 msgstr "permissions"
 
-#: accounts/admin.py:27
+#: accounts/admin.py:30
 msgid "[dates]"
 msgstr "dates"
+
+#: accounts/admin.py:34
+msgid "[Close the selected accounts]"
+msgstr "Fermer les comptes sélectionnés"
+
+#: accounts/admin.py:48
+msgid "[Accounts closed: {}]"
+msgstr "Comptes fermés : {}"
 
 #: accounts/forms.py:16
 msgid "[Company (leave empty if you are an individual)]"

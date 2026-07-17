@@ -1,6 +1,6 @@
 import pytest
 from django.contrib.auth import authenticate, get_user_model
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 from django.db import IntegrityError
 from django.urls import reverse
 from django.utils import timezone
@@ -165,6 +165,46 @@ class TestBulkWrites:
 
 
 @pytest.mark.django_db
+class TestAdminClosesAccounts:
+    def test_an_admin_closes_a_selected_account(self, client, account):
+        boss = User.objects.create_superuser(
+            email="boss@example.com", password="s3cret-probe-pw", full_name="Boss"
+        )
+        client.force_login(boss)
+        response = client.post(
+            reverse("admin:accounts_user_changelist"),
+            {"action": "close_accounts", "_selected_action": [str(account.pk)]},
+        )
+        assert response.status_code == 302
+
+        assert not User.objects.filter(pk=account.pk).exists()
+        assert User.history.get(pk=account.pk).date_v_end is not None
+        assert (
+            authenticate(email="held@example.com", password="s3cret-probe-pw") is None
+        )
+
+    def test_closing_needs_more_than_a_look(self, client, account):
+        watcher = User.objects.create_user(
+            email="watcher@example.com",
+            password="s3cret-probe-pw",
+            full_name="Watcher",
+            is_staff=True,
+        )
+        watcher.user_permissions.add(
+            Permission.objects.get(
+                codename="view_user", content_type__app_label="accounts"
+            )
+        )
+        client.force_login(watcher)
+        response = client.post(
+            reverse("admin:accounts_user_changelist"),
+            {"action": "close_accounts", "_selected_action": [str(account.pk)]},
+        )
+        assert User.objects.filter(pk=account.pk).exists()
+        assert response.status_code in (200, 302, 403)
+
+
+@pytest.mark.django_db
 class TestAdminCannotDelete:
     def test_the_delete_action_is_not_offered(self, client, account):
         boss = User.objects.create_superuser(
@@ -179,8 +219,11 @@ class TestAdminCannotDelete:
                 "post": "yes",
             },
         )
-        assert response.status_code == 200
+        # The admin does not know the action, so it reports and redirects
+        # instead of reaching the hard delete that would 500.
+        assert response.status_code == 302
         assert User.objects.filter(pk=account.pk).exists()
+        assert User.history.get(pk=account.pk).date_v_end is None
 
     def test_the_delete_view_is_refused(self, client, account):
         boss = User.objects.create_superuser(
