@@ -454,7 +454,7 @@ class OutMixin:
         Raises:
             CommandError: With the provided error message.
         """
-        sys.stderr.write(_("[Error: {}]\n").format(err))
+        sys.stderr.write(_("[Error: {}]").format(err) + "\n")
         raise CommandError(_(err))
 
     @staticmethod
@@ -470,7 +470,7 @@ class OutMixin:
                 is_error (bool): If True, output as error.
         """
         if bool(kwargs.get("is_error")):
-            sys.stderr.write(_("[Error: {}]\n").format(msg))
+            sys.stderr.write(_("[Error: {}]").format(msg) + "\n")
 
     def out_option_on_or_off(self, option, description):
         """

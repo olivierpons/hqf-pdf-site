@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 12:32+0200\n"
+"POT-Creation-Date: 2026-07-17 13:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: accounts/admin.py:17
+#: accounts/admin.py:22
 msgid "[identity]"
 msgstr "identity"
 
-#: accounts/admin.py:19
+#: accounts/admin.py:24
 msgid "[permissions]"
 msgstr "permissions"
 
-#: accounts/admin.py:22
+#: accounts/admin.py:27
 msgid "[dates]"
 msgstr "dates"
 
@@ -37,29 +37,41 @@ msgstr "Company (leave empty if you are an individual)"
 msgid "[VAT number (companies in the EU)]"
 msgstr "VAT number (companies in the EU)"
 
-#: accounts/models.py:67
+#: accounts/models.py:87
 msgid "[email address]"
 msgstr "email address"
 
-#: accounts/models.py:69
+#: accounts/models.py:89
 msgid "[full name]"
 msgstr "full name"
 
-#: accounts/models.py:70
+#: accounts/models.py:90
 msgid "[company]"
 msgstr "company"
 
-#: accounts/models.py:71
+#: accounts/models.py:91
 msgid "[VAT number]"
 msgstr "VAT number"
 
-#: accounts/models.py:79
+#: accounts/models.py:99
 msgid "[user]"
 msgstr "user"
 
-#: accounts/models.py:80
+#: accounts/models.py:100
 msgid "[users]"
 msgstr "users"
+
+#: core/management/base/out_mixin.py:457 core/management/base/out_mixin.py:473
+msgid "[Error: {}]"
+msgstr "Error: {}"
+
+#: core/management/base/out_mixin.py:484
+msgid "[With option '{}']"
+msgstr "With option '{}'"
+
+#: core/management/base/out_mixin.py:486
+msgid "[Without option '{}']"
+msgstr "Without option '{}'"
 
 #: templates/_language_picker.html:9
 msgid "[Language]"
