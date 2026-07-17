@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 14:58+0200\n"
+"POT-Creation-Date: 2026-07-17 16:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,6 +68,42 @@ msgstr "utilisateur"
 #: accounts/models.py:100
 msgid "[users]"
 msgstr "utilisateurs"
+
+#: api_keys/admin.py:35
+msgid "[entitlements]"
+msgstr "droits"
+
+#: api_keys/models.py:31
+msgid "[A client name holds up to 64 lowercase letters, digits, underscores and dashes, and starts with a letter or a digit.]"
+msgstr "Un nom de client comporte jusqu'à 64 minuscules, chiffres, tirets bas et tirets, et commence par une lettre ou un chiffre."
+
+#: api_keys/models.py:69
+msgid "[account]"
+msgstr "compte"
+
+#: api_keys/models.py:72
+msgid "[client name]"
+msgstr "nom du client"
+
+#: api_keys/models.py:74
+msgid "[key]"
+msgstr "clé"
+
+#: api_keys/models.py:76
+msgid "[allowed to use its own fonts]"
+msgstr "autorisé à utiliser ses propres polices"
+
+#: api_keys/models.py:78
+msgid "[max pages]"
+msgstr "pages maximum"
+
+#: api_keys/models.py:81
+msgid "[API key]"
+msgstr "clé d'API"
+
+#: api_keys/models.py:82
+msgid "[API keys]"
+msgstr "clés d'API"
 
 #: core/management/base/out_mixin.py:457 core/management/base/out_mixin.py:473
 msgid "[Error: {}]"
