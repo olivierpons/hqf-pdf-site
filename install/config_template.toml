@@ -47,6 +47,10 @@ clients_file = "/etc/hqf-pdf-server/clients.toml"
 nginx_map_file = "/etc/nginx/hqf-pdf-clients.map"
 # The parent a client's own font directory hangs under, named for the client.
 font_store_dir = "/etc/hqf-pdf-server/fonts"
+# The shared secret the render server presents (header X-HQF-Usage-Token) when it
+# reports each render to the site. Generate a long random value and set the same
+# one on the server.
+usage_token = "change-me-to-a-long-random-secret"
 
 [billing]
 # EUR is the only currency sold today; settings.py rejects anything else.

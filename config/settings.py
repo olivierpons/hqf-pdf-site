@@ -154,6 +154,16 @@ if not PDF_SERVER_FONT_STORE_DIR:
     )
 PDF_SERVER_FONT_STORE_DIR = Path(PDF_SERVER_FONT_STORE_DIR)
 
+# The shared secret the render server presents when it reports usage back to the
+# site. The same value is set on the server; the ingest endpoint accepts a push
+# only when the header carries it.
+PDF_SERVER_USAGE_TOKEN = PDF_SERVER_CONFIG.get("usage_token")
+if not PDF_SERVER_USAGE_TOKEN:
+    bad_config_file(
+        "'usage_token' missing in [pdf_server] section "
+        "(the shared secret the render server presents to report usage)"
+    )
+
 #########
 # Billing
 #########
