@@ -326,7 +326,7 @@ class _FullHelpAction(argparse.Action):
         parser.exit()
 
 
-class CustomHelpFormatterMixin(ABC):
+class CustomHelpFormatterMixin(ABC):  # noqa: B024
     """Mixin to preserve manual formatting in Django command help text.
 
     CRITICAL: Place this mixin BEFORE BaseCommand in inheritance:

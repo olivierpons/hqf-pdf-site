@@ -113,9 +113,12 @@ class OutMixin:
         Args:
             stdout (file, optional): Standard output stream. Defaults to None.
             stderr (file, optional): Standard error stream. Defaults to None.
-            no_color (bool, optional): If True, don't use colors. Defaults to False.
-            force_color (bool, optional): If True, force color output. Defaults to False.
-            use_rich (bool, optional): If True, try to use Rich library. Defaults to True.
+            no_color (bool, optional): If True, don't use colors.
+                Defaults to False.
+            force_color (bool, optional): If True, force color output.
+                Defaults to False.
+            use_rich (bool, optional): If True, try to use Rich library.
+                Defaults to True.
         """
         self._output_lock = threading.RLock()
 
@@ -430,7 +433,8 @@ class OutMixin:
 
         Args:
             msg (str or list): Message or list of messages to output.
-            keep_spaces (bool): Keep spacing alignment for multiline messages. Defaults to True.
+            keep_spaces (bool): Keep spacing alignment for multiline
+                messages. Defaults to True.
             **kwargs: Additional keyword arguments for styling the output.
 
         Returns:
@@ -487,7 +491,8 @@ class OutMixin:
 
         Args:
             msg (str, Promise or list): Message or list of messages to output.
-            keep_spaces (bool): Keep spacing alignment for multiline messages. Defaults to True.
+            keep_spaces (bool): Keep spacing alignment for multiline
+                messages. Defaults to True.
             **kwargs: Additional keyword arguments for styling the output.
         """
         self.out(msg, keep_spaces=keep_spaces, **{"is_success": True, **kwargs})
@@ -498,7 +503,8 @@ class OutMixin:
 
         Args:
             msg (str, Promise or list): Message or list of messages to output.
-            keep_spaces (bool): Keep spacing alignment for multiline messages. Defaults to True.
+            keep_spaces (bool): Keep spacing alignment for multiline
+                messages. Defaults to True.
             **kwargs: Additional keyword arguments for styling the output.
         """
         self.out(msg, keep_spaces=keep_spaces, **{"is_error": True, **kwargs})
@@ -509,7 +515,8 @@ class OutMixin:
 
         Args:
             msg (str, Promise or list): Message or list of messages to output.
-            keep_spaces (bool): Keep spacing alignment for multiline messages. Defaults to True.
+            keep_spaces (bool): Keep spacing alignment for multiline
+                messages. Defaults to True.
             **kwargs: Additional keyword arguments for styling the output.
         """
         self.out(msg, keep_spaces=keep_spaces, **{"is_warning": True, **kwargs})
@@ -564,7 +571,8 @@ class OutMixin:
 
         Args:
             message (str): Message to output.
-            keep_spaces (bool): Keep spacing alignment for multiline messages. Defaults to True.
+            keep_spaces (bool): Keep spacing alignment for multiline
+                messages. Defaults to True.
             **kwargs: Additional keyword arguments for styling the output.
         """
         thread_id = threading.current_thread().name
@@ -582,7 +590,8 @@ class OutMixin:
 
         Args:
             message (str): Message to output.
-            keep_spaces (bool): Keep spacing alignment for multiline messages. Defaults to True.
+            keep_spaces (bool): Keep spacing alignment for multiline
+                messages. Defaults to True.
             **kwargs: Additional keyword arguments for styling the output.
         """
         thread_id = threading.current_thread().name
