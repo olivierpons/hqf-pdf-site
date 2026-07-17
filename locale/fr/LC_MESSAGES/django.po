@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 19:17+0200\n"
+"POT-Creation-Date: 2026-07-17 23:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -126,6 +126,40 @@ msgstr "inclus"
 #: billing/admin.py:35
 msgid "[overage rates]"
 msgstr "tarifs hors-forfait"
+
+#: billing/management/commands/close_billing_month.py:45
+msgid "[Close a billing period: total each subscription's usage over it and cut one draft invoice per account, snapshotting the plan. Re-running adds nothing.]"
+msgstr "Clôt une période de facturation : totalise l'usage de chaque abonnement sur la période et émet une facture brouillon par compte, en figeant le forfait. La relancer n'ajoute rien."
+
+#: billing/management/commands/close_billing_month.py:100
+msgid "[Build the invoices and print them instead of saving.]"
+msgstr "Construit les factures et les affiche au lieu de les enregistrer."
+
+#: billing/management/commands/close_billing_month.py:108
+msgid "[End of the period, exclusive.]"
+msgstr "Fin de la période, exclue."
+
+#: billing/management/commands/close_billing_month.py:116
+msgid "[Invoice date; defaults to today.]"
+msgstr "Date de la facture ; par défaut aujourd'hui."
+
+#: billing/management/commands/close_billing_month.py:124
+msgid "[Start of the period, inclusive.]"
+msgstr "Début de la période, inclus."
+
+#: billing/management/commands/close_billing_month.py:140
+msgid "[The end date must be after the start date.]"
+msgstr "La date de fin doit être postérieure à la date de début."
+
+#: billing/management/commands/close_billing_month.py:153
+#, python-brace-format
+msgid "[Would cut {created} invoice(s), skipped {skipped}.]"
+msgstr "{created} facture(s) seraient émises, {skipped} ignorée(s)."
+
+#: billing/management/commands/close_billing_month.py:164
+#, python-brace-format
+msgid "[Cut {created} invoice(s), skipped {skipped} already billed.]"
+msgstr "{created} facture(s) émise(s), {skipped} déjà facturée(s) ignorée(s)."
 
 #: billing/models.py:66
 msgid "[plan name]"
