@@ -46,6 +46,3 @@ htmlcov/
 
 # OS
 .DS_Store
-
-# uv writes the venv here; uv.lock is versioned.
-.python-version
