@@ -1,14 +1,35 @@
 import json
-from datetime import date
+from datetime import date, datetime
 from decimal import Decimal
 
 import pytest
 from django.conf import settings
+from django.core.management import call_command
+from django.core.management.base import CommandError
 from django.db import IntegrityError
 from django.urls import reverse
 from django.utils import timezone
 
 from billing.models import Invoice, Plan, Subscription, UsageRecord, default_currency
+
+PERIOD_START = date(2026, 6, 15)
+PERIOD_END = date(2026, 7, 15)
+
+
+def _usage(account, event_id, pages, rendered_at):
+    """Create one usage row for ``account`` at ``rendered_at``."""
+    return UsageRecord.objects.create(
+        account=account,
+        client_name="acme",
+        event_id=event_id,
+        rendered_at=rendered_at,
+        pages=pages,
+    )
+
+
+def _in_period(day=20, hour=10):
+    """Return an aware datetime inside the June period."""
+    return timezone.make_aware(datetime(2026, 6, day, hour))
 
 
 def _invoice(account, subscription, plan, **overrides):
@@ -359,3 +380,78 @@ class TestIngestUsage:
         response = _post(client, [_event(rendered_at="2026-06-20T10:00:00")])
         assert response.status_code == 200
         assert timezone.is_aware(UsageRecord.objects.get(event_id="evt-1").rendered_at)
+
+
+@pytest.mark.django_db
+class TestCloseBillingMonth:
+    @pytest.fixture(autouse=True)
+    def live_subscription(self, subscription):
+        """Put the account on a plan, the subscription the close invoices."""
+        return subscription
+
+    def _close(self, **overrides):
+        options = {"start": PERIOD_START, "end": PERIOD_END}
+        options.update(overrides)
+        call_command("close_billing_month", **options)
+
+    def test_it_cuts_a_draft_invoice_totalling_the_period_usage(self, account):
+        _usage(account, "evt-1", pages=3, rendered_at=_in_period(day=16))
+        _usage(account, "evt-2", pages=5, rendered_at=_in_period(day=28))
+        self._close()
+        invoice = Invoice.objects.get(account=account)
+        assert invoice.status == Invoice.Status.DRAFT
+        assert invoice.used_requests == 2
+        assert invoice.used_pages == 8
+        assert invoice.period_start == PERIOD_START
+        assert invoice.period_end == PERIOD_END
+
+    def test_usage_outside_the_period_is_left_out(self, account):
+        _usage(
+            account,
+            "before",
+            pages=4,
+            rendered_at=timezone.make_aware(datetime(2026, 6, 14, 23)),
+        )
+        _usage(
+            account,
+            "after",
+            pages=4,
+            rendered_at=timezone.make_aware(datetime(2026, 7, 15, 0)),
+        )
+        _usage(account, "inside", pages=9, rendered_at=_in_period())
+        self._close()
+        invoice = Invoice.objects.get(account=account)
+        assert invoice.used_requests == 1
+        assert invoice.used_pages == 9
+
+    def test_a_subscription_with_no_usage_still_gets_a_flat_invoice(self, account):
+        self._close()
+        invoice = Invoice.objects.get(account=account)
+        assert invoice.used_pages == 0
+        assert invoice.used_requests == 0
+        assert invoice.total == Decimal("49.00")
+
+    def test_overage_beyond_the_quota_lands_on_the_invoice(self, account):
+        _usage(account, "big", pages=1500, rendered_at=_in_period())
+        for extra in range(1, 501):
+            _usage(account, f"req-{extra}", pages=0, rendered_at=_in_period())
+        self._close()
+        invoice = Invoice.objects.get(account=account)
+        # 501 requests over the 500 quota, 1500 pages over the 1000 quota
+        assert invoice.overage_pages == 500
+        assert invoice.overage_requests == 1
+
+    def test_re_running_the_close_bills_nothing_new(self, account):
+        _usage(account, "evt-1", pages=3, rendered_at=_in_period())
+        self._close()
+        self._close()
+        assert Invoice.objects.filter(account=account).count() == 1
+
+    def test_a_dry_run_saves_nothing(self, account):
+        _usage(account, "evt-1", pages=3, rendered_at=_in_period())
+        self._close(dry_run=True)
+        assert not Invoice.objects.exists()
+
+    def test_the_end_must_be_after_the_start(self):
+        with pytest.raises(CommandError):
+            self._close(start=PERIOD_END, end=PERIOD_START)
