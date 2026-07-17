@@ -1,6 +1,7 @@
 import pytest
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
+from django.urls import reverse
 from django.utils import timezone
 
 from api_keys.models import KEY_PREFIX, ApiKey, generate_key
@@ -120,3 +121,63 @@ class TestVersioning:
     def test_destroying_an_account_destroys_its_keys(self, account, api_key):
         type(account).history.filter(pk=account.pk).hard_delete()
         assert not ApiKey.history.filter(pk=api_key.pk).exists()
+
+
+@pytest.mark.django_db
+class TestAdmin:
+    def change_url(self, api_key):
+        return reverse("admin:api_keys_apikey_change", args=[api_key.pk])
+
+    def form(self, api_key, **overrides):
+        """Return a filled change form, since the admin posts every field."""
+        fields = {
+            "account": str(api_key.account.pk),
+            "client_name": api_key.client_name,
+            "allowed_to_use_its_own_fonts": "",
+            "max_pages": "",
+        }
+        fields.update(overrides)
+        return fields
+
+    def test_editing_an_entitlement_supersedes_the_key_and_carries_its_value(
+        self, boss_client, api_key
+    ):
+        response = boss_client.post(
+            self.change_url(api_key),
+            self.form(api_key, allowed_to_use_its_own_fonts="on"),
+        )
+        assert response.status_code == 302
+
+        assert ApiKey.history.get(pk=api_key.pk).date_v_end is not None
+        successor = ApiKey.objects.get(client_name="acme")
+        assert successor.pk != api_key.pk
+        assert successor.allowed_to_use_its_own_fonts
+        assert successor.key == api_key.key
+
+    def test_saving_an_untouched_form_supersedes_nothing(self, boss_client, api_key):
+        response = boss_client.post(self.change_url(api_key), self.form(api_key))
+        assert response.status_code == 302
+        assert list(ApiKey.objects.filter(client_name="acme")) == [api_key]
+        assert ApiKey.history.filter(client_name="acme").count() == 1
+
+    def test_the_delete_button_revokes_the_key(self, boss_client, api_key):
+        response = boss_client.post(
+            reverse("admin:api_keys_apikey_delete", args=[api_key.pk]),
+            {"post": "yes"},
+        )
+        assert response.status_code == 302
+        assert ApiKey.history.get(pk=api_key.pk).date_v_end is not None
+        assert not ApiKey.objects.filter(pk=api_key.pk).exists()
+
+    def test_the_delete_action_revokes_the_keys(self, boss_client, api_key):
+        response = boss_client.post(
+            reverse("admin:api_keys_apikey_changelist"),
+            {
+                "action": "delete_selected",
+                "_selected_action": [str(api_key.pk)],
+                "post": "yes",
+            },
+        )
+        assert response.status_code == 302
+        assert ApiKey.history.get(pk=api_key.pk).date_v_end is not None
+        assert not ApiKey.objects.filter(pk=api_key.pk).exists()

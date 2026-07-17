@@ -165,6 +165,68 @@ class TestBulkWrites:
 
 
 @pytest.mark.django_db
+class TestAdminEditSupersedesTheAccount:
+    def change_url(self, account):
+        return reverse("admin:accounts_user_change", args=[account.pk])
+
+    def form(self, **overrides):
+        """Return a filled change form, since the admin posts every field."""
+        fields = {
+            "email": "held@example.com",
+            "full_name": "Held",
+            "company": "",
+            "vat_number": "",
+            "is_active": "on",
+            "last_login_0": "",
+            "last_login_1": "",
+            "date_joined_0": "2026-07-17",
+            "date_joined_1": "10:00:00",
+        }
+        fields.update(overrides)
+        return fields
+
+    def test_saving_an_edit_closes_the_row_and_inserts_a_successor(
+        self, boss_client, account
+    ):
+        response = boss_client.post(
+            self.change_url(account), self.form(full_name="Renamed Here")
+        )
+        assert response.status_code == 302
+
+        assert User.history.get(pk=account.pk).date_v_end is not None
+        successor = User.objects.get(email="held@example.com")
+        assert successor.pk != account.pk
+        assert successor.full_name == "Renamed Here"
+
+    def test_saving_an_edit_keeps_the_password_the_account_logs_in_with(
+        self, boss_client, account
+    ):
+        boss_client.post(self.change_url(account), self.form(full_name="Renamed Here"))
+        assert authenticate(email="held@example.com", password="s3cret-probe-pw")
+
+    def test_the_groups_an_edit_grants_land_on_the_successor(
+        self, boss_client, account
+    ):
+        squad = Group.objects.create(name="squad")
+        boss_client.post(
+            self.change_url(account),
+            self.form(full_name="Renamed Here", groups=[str(squad.pk)]),
+        )
+        successor = User.objects.get(email="held@example.com")
+        assert list(successor.groups.values_list("name", flat=True)) == ["squad"]
+
+    def test_saving_and_carrying_on_lands_on_the_successor(self, boss_client, account):
+        response = boss_client.post(
+            self.change_url(account),
+            self.form(full_name="Renamed Here", _continue="1"),
+        )
+        successor = User.objects.get(email="held@example.com")
+        assert response.status_code == 302
+        assert response.url == self.change_url(successor)
+        assert boss_client.get(response.url).status_code == 200
+
+
+@pytest.mark.django_db
 class TestAdminDeleteOnlyClosesTheAccount:
     def test_the_delete_button_closes_the_account(self, client, account):
         boss = User.objects.create_superuser(

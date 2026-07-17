@@ -1,19 +1,24 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+
+from core.admin import VersionedAdminMixin
 
 from .models import User
 
 
 @admin.register(User)
-class CustomUserAdmin(UserAdmin):
+class CustomUserAdmin(VersionedAdminMixin, UserAdmin):
     """Admin for the email-keyed user; the stock one assumes a username.
 
     Deleting an account here ends its validity window: the delete button and the
     ``delete_selected`` action both route to a soft-delete, so they read as they
     always have and leave the row in place. Erasing one for good is the separate
     "destroy" action.
+
+    Editing an account supersedes it under a new primary key. An admin editing
+    their own account is logged out by it, since the session holds the key they
+    logged in with.
 
     The changelist lists live accounts only, so a deleted one leaves it and only
     ``User.history`` still holds it.
@@ -41,26 +46,6 @@ class CustomUserAdmin(UserAdmin):
             },
         ),
     )
-
-    def delete_model(self, request, obj):
-        """Close the account the delete button was pressed on.
-
-        Args:
-            request: The admin request.
-            obj: The account to close.
-        """
-        obj.soft_delete()
-
-    def delete_queryset(self, request, queryset):
-        """Close every account the ``delete_selected`` action was run on.
-
-        One statement, whatever the number of rows.
-
-        Args:
-            request: The admin request.
-            queryset: The selected accounts.
-        """
-        queryset.update(date_v_end=timezone.now())
 
     @admin.action(
         permissions=["destroy"],
