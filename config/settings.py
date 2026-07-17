@@ -121,8 +121,11 @@ DATABASES = {
 ###############
 # Render server
 ###############
-# The site owns the render server's client file: signing a customer up writes
-# their API key and rights into this TOML, which the server reads.
+# The site owns the render server's front: a bridge command turns the live API
+# keys into the two files that grant access. ``clients_file`` is the TOML the
+# server reads for what each client may do; ``nginx_map_file`` is the map nginx
+# reads to turn an API key into a client name; ``font_store_dir`` is the parent
+# a client's own font directory hangs under, named for the client.
 PDF_SERVER_CONFIG = SITE_CONFIG.get("pdf_server")
 if not PDF_SERVER_CONFIG:
     bad_config_file("Missing [pdf_server] section")
@@ -134,6 +137,22 @@ if not PDF_SERVER_CLIENTS_FILE:
         "(ex: '/etc/hqf-pdf-server/clients.toml')"
     )
 PDF_SERVER_CLIENTS_FILE = Path(PDF_SERVER_CLIENTS_FILE)
+
+PDF_SERVER_NGINX_MAP_FILE = PDF_SERVER_CONFIG.get("nginx_map_file")
+if not PDF_SERVER_NGINX_MAP_FILE:
+    bad_config_file(
+        "'nginx_map_file' missing in [pdf_server] section "
+        "(ex: '/etc/nginx/hqf-pdf-clients.map')"
+    )
+PDF_SERVER_NGINX_MAP_FILE = Path(PDF_SERVER_NGINX_MAP_FILE)
+
+PDF_SERVER_FONT_STORE_DIR = PDF_SERVER_CONFIG.get("font_store_dir")
+if not PDF_SERVER_FONT_STORE_DIR:
+    bad_config_file(
+        "'font_store_dir' missing in [pdf_server] section "
+        "(ex: '/etc/hqf-pdf-server/fonts')"
+    )
+PDF_SERVER_FONT_STORE_DIR = Path(PDF_SERVER_FONT_STORE_DIR)
 
 #########
 # Billing

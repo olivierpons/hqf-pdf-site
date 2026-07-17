@@ -37,9 +37,16 @@ host = "localhost"
 port = 5432
 
 [pdf_server]
-# The client file the render server reads. The site writes it: a customer's API
-# key and rights land here. The site's account needs write access to it.
+# The three files a bridge command writes from the live API keys. The site's
+# account needs write access to each. The server reads its clients file at
+# startup, so restart it after a change; nginx reads its map on reload.
+#
+# What the server grants each client (page cap, own fonts).
 clients_file = "/etc/hqf-pdf-server/clients.toml"
+# The API-key-to-client map nginx reads to name the caller.
+nginx_map_file = "/etc/nginx/hqf-pdf-clients.map"
+# The parent a client's own font directory hangs under, named for the client.
+font_store_dir = "/etc/hqf-pdf-server/fonts"
 
 [billing]
 # EUR is the only currency sold today; settings.py rejects anything else.
