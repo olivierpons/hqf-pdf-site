@@ -221,6 +221,13 @@ WSGI_APPLICATION = "config.wsgi.application"
 #################
 AUTH_USER_MODEL = "accounts.User"
 
+# auth.E003 demands a *total* uniqueness on USERNAME_FIELD. A closed User row
+# keeps its email, so uniqueness can only hold over live rows, and Django counts
+# no conditional constraint as total. ``uniq_user_email_when_live`` enforces it
+# where it can hold, and ``User.objects`` filters authentication down to the
+# live row that constraint protects.
+SILENCED_SYSTEM_CHECKS = ["auth.E003"]
+
 PASSWORD_VALIDATION = "django.contrib.auth.password_validation"
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": f"{PASSWORD_VALIDATION}.UserAttributeSimilarityValidator"},

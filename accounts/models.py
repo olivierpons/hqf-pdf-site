@@ -2,9 +2,16 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from core.models import BaseModel, LiveManager
 
-class UserManager(BaseUserManager):
-    """Creates users keyed by email, since :class:`User` has no username."""
+
+class UserManager(BaseUserManager, LiveManager):
+    """Creates users keyed by email, since :class:`User` has no username.
+
+    Inherits :class:`~core.models.LiveManager` so ``User.objects`` — and with it
+    ``get_by_natural_key``, hence authentication — sees live rows only: a
+    soft-deleted account cannot log in, and a superseded one is never returned.
+    """
 
     use_in_migrations = True
 
@@ -53,18 +60,31 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-class User(AbstractUser):
+class User(AbstractUser, BaseModel):
     """A customer account, identified by email.
 
     A customer signs up with an email and pays by bank transfer; a username
     would name nothing the email does not already name.
+
+    Temporally versioned, so editing an account closes its row and inserts a
+    successor under a **new primary key**. A session stores the primary key it
+    logged in with, so a view editing the current user re-issues
+    ``login(request, successor)`` or logs them out.
+
+    ``date_joined`` records when the account was opened and is copied onto each
+    successor; ``date_v_start`` records when that particular row opened.
     """
+
+    # ``last_login`` is written by Django's ``user_logged_in`` signal, in place
+    # and out of our reach. Versioning it would mint a new primary key on every
+    # login and invalidate the session being established.
+    EXTRA_IN_PLACE_FIELDS = frozenset({"last_login"})
 
     username = None
     first_name = None
     last_name = None
 
-    email = models.EmailField(_("[email address]"), unique=True)
+    email = models.EmailField(_("[email address]"))
     # An invoice carries a name, and for a company a VAT number.
     full_name = models.CharField(_("[full name]"), max_length=200)
     company = models.CharField(_("[company]"), max_length=200, blank=True)
@@ -75,9 +95,16 @@ class User(AbstractUser):
 
     objects = UserManager()
 
-    class Meta:
+    class Meta(BaseModel.Meta):
         verbose_name = _("[user]")
         verbose_name_plural = _("[users]")
+        constraints = [
+            models.UniqueConstraint(
+                fields=("email",),
+                condition=models.Q(date_v_end__isnull=True),
+                name="uniq_user_email_when_live",
+            ),
+        ]
 
     def __str__(self):
         return self.email
