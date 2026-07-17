@@ -42,7 +42,7 @@ def bad_config_file(msg):
     template = BASE_DIR / "install" / "config_template.toml"
     print(f"A template exists in {template} and looks like this : \n", file=sys.stderr)
     print(template.open().read(), file=sys.stderr)
-    exit(1)
+    sys.exit(1)
 
 
 if not site_config_path.exists():

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "[hqf-pdf — PDF rendering service]" %}{% endblock %}
+
+{% block content %}
+<div class="row align-items-center py-4">
+  <div class="col-lg-7">
+    <h1 class="display-5 fw-semibold">{% trans "[Generate PDFs from your own application]" %}</h1>
+    <p class="lead mt-3">
+      {% trans "[Send a render request, get a PDF back. Text flow, tables, styled runs, PDF/A-3 and Factur-X invoices — no PDF toolkit to install on your side.]" %}
+    </p>
+    <div class="mt-4">
+      <a class="btn btn-primary btn-lg" href="{% url 'accounts:signup' %}">{% trans "[Create an account]" %}</a>
+      <a class="btn btn-outline-secondary btn-lg ms-2" href="{% url 'accounts:login' %}">{% trans "[Log in]" %}</a>
+    </div>
+  </div>
+  <div class="col-lg-5 mt-4 mt-lg-0">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title h5">{% trans "[How it works]" %}</h2>
+        <ol class="mb-0 ps-3">
+          <li>{% trans "[Create an account.]" %}</li>
+          <li>{% trans "[Get your API key.]" %}</li>
+          <li>{% trans "[Post a render request, receive the PDF.]" %}</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="my-5">
+
+<div class="row g-4">
+  <div class="col-md-4">
+    <h2 class="h5">{% trans "[Monthly plan]" %}</h2>
+    <p class="text-body-secondary mb-0">
+      {% trans "[A fixed number of pages every month. Go past it and you keep rendering: the extra pages are billed on top, and you are warned before they are.]" %}
+    </p>
+  </div>
+  <div class="col-md-4">
+    <h2 class="h5">{% trans "[Payment by bank transfer]" %}</h2>
+    <p class="text-body-secondary mb-0">
+      {% trans "[You get an invoice and pay it by transfer. No card is stored, nothing is charged automatically.]" %}
+    </p>
+  </div>
+  <div class="col-md-4">
+    <h2 class="h5">{% trans "[Prices in euros]" %}</h2>
+    <p class="text-body-secondary mb-0">
+      {% trans "[Every amount on this site is in euros, taxes excluded.]" %}
+    </p>
+  </div>
+</div>
+{% endblock %}

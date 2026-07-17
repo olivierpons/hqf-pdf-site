@@ -1,0 +1,17 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+{# set_language redirects back to next, so switching keeps you on this page. #}
+<form action="{% url 'set_language' %}" method="post" class="d-flex">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ request.get_full_path }}">
+  <select name="language" class="form-select form-select-sm"
+          aria-label="{% trans '[Language]' %}" onchange="this.form.submit()">
+    {% for code, name in LANGUAGES %}
+      <option value="{{ code }}" {% if code == LANGUAGE_CODE %}selected{% endif %}>
+        {{ name }}
+      </option>
+    {% endfor %}
+  </select>
+  <noscript><button type="submit" class="btn btn-sm btn-outline-secondary ms-1">{% trans "[Go]" %}</button></noscript>
+</form>

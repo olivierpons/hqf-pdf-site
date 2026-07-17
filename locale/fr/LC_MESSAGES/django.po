@@ -1,0 +1,174 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-17 12:32+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: accounts/admin.py:17
+msgid "[identity]"
+msgstr "identité"
+
+#: accounts/admin.py:19
+msgid "[permissions]"
+msgstr "permissions"
+
+#: accounts/admin.py:22
+msgid "[dates]"
+msgstr "dates"
+
+#: accounts/forms.py:16
+msgid "[Company (leave empty if you are an individual)]"
+msgstr "Société (laissez vide si vous êtes un particulier)"
+
+#: accounts/forms.py:17
+msgid "[VAT number (companies in the EU)]"
+msgstr "Numéro de TVA (sociétés dans l'UE)"
+
+#: accounts/models.py:67
+msgid "[email address]"
+msgstr "adresse e-mail"
+
+#: accounts/models.py:69
+msgid "[full name]"
+msgstr "nom complet"
+
+#: accounts/models.py:70
+msgid "[company]"
+msgstr "société"
+
+#: accounts/models.py:71
+msgid "[VAT number]"
+msgstr "numéro de TVA"
+
+#: accounts/models.py:79
+msgid "[user]"
+msgstr "utilisateur"
+
+#: accounts/models.py:80
+msgid "[users]"
+msgstr "utilisateurs"
+
+#: templates/_language_picker.html:9
+msgid "[Language]"
+msgstr "Langue"
+
+#: templates/_language_picker.html:16
+msgid "[Go]"
+msgstr "Valider"
+
+#: templates/accounts/dashboard.html:4 templates/accounts/dashboard.html:7
+#: templates/base.html:49
+msgid "[Dashboard]"
+msgstr "Tableau de bord"
+
+#: templates/accounts/dashboard.html:11
+msgid "[Account]"
+msgstr "Compte"
+
+#: templates/accounts/login.html:4 templates/accounts/login.html:9
+#: templates/accounts/login.html:13 templates/accounts/signup.html:17
+#: templates/base.html:59 templates/home.html:15
+msgid "[Log in]"
+msgstr "Se connecter"
+
+#: templates/accounts/login.html:16
+msgid "[No account yet?]"
+msgstr "Pas encore de compte ?"
+
+#: templates/accounts/login.html:17
+msgid "[Create one]"
+msgstr "Créez-en un"
+
+#: templates/accounts/signup.html:4 templates/accounts/signup.html:9
+#: templates/home.html:14
+msgid "[Create an account]"
+msgstr "Créer un compte"
+
+#: templates/accounts/signup.html:13
+msgid "[Create my account]"
+msgstr "Créer mon compte"
+
+#: templates/accounts/signup.html:16
+msgid "[Already have an account?]"
+msgstr "Vous avez déjà un compte ?"
+
+#: templates/base.html:7 templates/base.html:39
+msgid "[hqf-pdf]"
+msgstr "hqf-pdf"
+
+#: templates/base.html:42
+msgid "[Toggle navigation]"
+msgstr "Afficher la navigation"
+
+#: templates/base.html:54
+msgid "[Log out]"
+msgstr "Se déconnecter"
+
+#: templates/base.html:62
+msgid "[Sign up]"
+msgstr "S'inscrire"
+
+#: templates/base.html:85 templates/home.html:4
+msgid "[hqf-pdf — PDF rendering service]"
+msgstr "hqf-pdf — service de rendu PDF"
+
+#: templates/home.html:9
+msgid "[Generate PDFs from your own application]"
+msgstr "Générez vos PDF depuis votre application"
+
+#: templates/home.html:11
+msgid "[Send a render request, get a PDF back. Text flow, tables, styled runs, PDF/A-3 and Factur-X invoices — no PDF toolkit to install on your side.]"
+msgstr "Envoyez une requête de rendu, récupérez un PDF. Texte au fil, tableaux, styles, PDF/A-3 et factures Factur-X — aucune bibliothèque PDF à installer chez vous."
+
+#: templates/home.html:21
+msgid "[How it works]"
+msgstr "Comment ça marche"
+
+#: templates/home.html:23
+msgid "[Create an account.]"
+msgstr "Créez un compte."
+
+#: templates/home.html:24
+msgid "[Get your API key.]"
+msgstr "Récupérez votre clé d'API."
+
+#: templates/home.html:25
+msgid "[Post a render request, receive the PDF.]"
+msgstr "Envoyez une requête de rendu, recevez le PDF."
+
+#: templates/home.html:36
+msgid "[Monthly plan]"
+msgstr "Forfait mensuel"
+
+#: templates/home.html:38
+msgid "[A fixed number of pages every month. Go past it and you keep rendering: the extra pages are billed on top, and you are warned before they are.]"
+msgstr "Un nombre de pages fixe chaque mois. Au-delà, le rendu continue : les pages supplémentaires sont facturées en plus, et vous êtes prévenu avant."
+
+#: templates/home.html:42
+msgid "[Payment by bank transfer]"
+msgstr "Paiement par virement"
+
+#: templates/home.html:44
+msgid "[You get an invoice and pay it by transfer. No card is stored, nothing is charged automatically.]"
+msgstr "Vous recevez une facture et la réglez par virement. Aucune carte enregistrée, aucun prélèvement automatique."
+
+#: templates/home.html:48
+msgid "[Prices in euros]"
+msgstr "Prix en euros"
+
+#: templates/home.html:50
+msgid "[Every amount on this site is in euros, taxes excluded.]"
+msgstr "Tous les montants de ce site sont en euros, hors taxes."

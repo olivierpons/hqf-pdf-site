@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "[Dashboard]" %}{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-4">{% trans "[Dashboard]" %}</h1>
+
+<div class="card">
+  <div class="card-body">
+    <h2 class="h6 text-body-secondary">{% trans "[Account]" %}</h2>
+    <p class="mb-1">{{ user.email }}</p>
+    <p class="mb-0 text-body-secondary">{{ user.full_name }}{% if user.company %} — {{ user.company }}{% endif %}</p>
+  </div>
+</div>
+{% endblock %}

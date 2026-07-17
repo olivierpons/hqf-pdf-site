@@ -65,13 +65,17 @@ max-line-length = 88
 [tool.pylint."messages control"]
 # Black owns formatting; ruff already reports unused imports and undefined
 # names. Docstring policy here is Google-style on the public surface, not a
-# docstring on every module and function.
+# docstring on every module and function. A TODO marks work that is planned,
+# not a defect, so it does not fail the build.
 disable = [
     "missing-module-docstring",
     "missing-class-docstring",
     "missing-function-docstring",
     "line-too-long",
     "wrong-import-position",
+    "fixme",
+    # Django's own form and view hierarchies are deeper than the default 7.
+    "too-many-ancestors",
 ]
 
 [tool.pytest.ini_options]
