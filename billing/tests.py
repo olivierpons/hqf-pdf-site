@@ -1,8 +1,11 @@
+import json
 from datetime import date
 from decimal import Decimal
 
 import pytest
+from django.conf import settings
 from django.db import IntegrityError
+from django.urls import reverse
 from django.utils import timezone
 
 from billing.models import Invoice, Plan, Subscription, UsageRecord, default_currency
@@ -225,3 +228,134 @@ class TestInvoiceModel:
 class TestDefaultCurrency:
     def test_it_reads_the_configured_currency(self):
         assert default_currency() == "EUR"
+
+
+def _event(client_name="acme", event_id="evt-1", pages=3, rendered_at=None):
+    """Return one usage event as the render server would push it."""
+    return {
+        "client_name": client_name,
+        "event_id": event_id,
+        "rendered_at": rendered_at or "2026-06-20T10:00:00+00:00",
+        "pages": pages,
+    }
+
+
+def _post(client, events, token=None):
+    """POST an events batch to the usage feed with the shared token header."""
+    if token is None:
+        token = settings.PDF_SERVER_USAGE_TOKEN
+    return client.post(
+        reverse("billing:ingest_usage"),
+        data=json.dumps({"events": events}),
+        content_type="application/json",
+        headers={"X-HQF-Usage-Token": token},
+    )
+
+
+@pytest.mark.django_db
+class TestIngestUsage:
+    @pytest.fixture(autouse=True)
+    def live_key(self, api_key):
+        """Make the live 'acme' key exist, the client the endpoint resolves."""
+        return api_key
+
+    def test_a_reported_render_becomes_a_usage_row(self, client, api_key):
+        response = _post(client, [_event(pages=7)])
+        assert response.status_code == 200
+        assert response.json() == {"created": 1, "duplicates": 0}
+        row = UsageRecord.objects.get(event_id="evt-1")
+        assert row.account == api_key.account
+        assert row.pages == 7
+
+    def test_a_batch_records_every_event(self, client):
+        response = _post(
+            client,
+            [
+                _event(event_id="evt-1"),
+                _event(event_id="evt-2"),
+                _event(event_id="evt-3"),
+            ],
+        )
+        assert response.json() == {"created": 3, "duplicates": 0}
+        assert UsageRecord.objects.count() == 3
+
+    def test_a_wrong_token_is_refused_and_writes_nothing(self, client):
+        response = _post(client, [_event()], token="not-the-secret")
+        assert response.status_code == 401
+        assert not UsageRecord.objects.exists()
+
+    def test_a_missing_token_is_refused(self, client):
+        response = client.post(
+            reverse("billing:ingest_usage"),
+            data=json.dumps({"events": [_event()]}),
+            content_type="application/json",
+        )
+        assert response.status_code == 401
+
+    def test_a_get_is_refused(self, client):
+        response = client.get(reverse("billing:ingest_usage"))
+        assert response.status_code == 405
+
+    def test_a_body_that_is_not_json_is_refused(self, client):
+        response = client.post(
+            reverse("billing:ingest_usage"),
+            data="not json",
+            content_type="application/json",
+            headers={"X-HQF-Usage-Token": settings.PDF_SERVER_USAGE_TOKEN},
+        )
+        assert response.status_code == 400
+
+    def test_events_must_be_a_list(self, client):
+        response = client.post(
+            reverse("billing:ingest_usage"),
+            data=json.dumps({"events": "nope"}),
+            content_type="application/json",
+            headers={"X-HQF-Usage-Token": settings.PDF_SERVER_USAGE_TOKEN},
+        )
+        assert response.status_code == 400
+
+    def test_an_unknown_client_refuses_the_whole_batch(self, client):
+        response = _post(
+            client,
+            [_event(event_id="evt-1"), _event(client_name="ghost", event_id="evt-2")],
+        )
+        assert response.status_code == 400
+        assert "ghost" in response.json()["clients"]
+        assert not UsageRecord.objects.exists()
+
+    def test_a_revoked_client_is_unknown(self, client, api_key):
+        api_key.revoke()
+        response = _post(client, [_event()])
+        assert response.status_code == 400
+        assert not UsageRecord.objects.exists()
+
+    def test_a_retried_push_is_counted_not_duplicated(self, client):
+        _post(client, [_event(event_id="evt-1")])
+        response = _post(client, [_event(event_id="evt-1")])
+        assert response.json() == {"created": 0, "duplicates": 1}
+        assert UsageRecord.objects.filter(event_id="evt-1").count() == 1
+
+    def test_a_duplicate_within_a_batch_lands_once(self, client):
+        response = _post(
+            client, [_event(event_id="evt-1"), _event(event_id="evt-1", pages=99)]
+        )
+        assert response.json() == {"created": 1, "duplicates": 1}
+        assert UsageRecord.objects.filter(event_id="evt-1").count() == 1
+
+    def test_a_negative_page_count_is_refused(self, client):
+        response = _post(client, [_event(pages=-1)])
+        assert response.status_code == 400
+        assert not UsageRecord.objects.exists()
+
+    def test_a_missing_field_is_refused(self, client):
+        response = _post(client, [{"client_name": "acme", "pages": 3}])
+        assert response.status_code == 400
+
+    def test_an_unparseable_timestamp_is_refused(self, client):
+        response = _post(client, [_event(rendered_at="not-a-date")])
+        assert response.status_code == 400
+
+    def test_a_naive_timestamp_is_made_aware(self, client):
+        response = _post(client, [_event(rendered_at="2026-06-20T10:00:00")])
+        assert response.status_code == 200
+        assert timezone.is_aware(UsageRecord.objects.get(event_id="evt-1").rendered_at)
