@@ -1,0 +1,40 @@
+# Configuration for the CI run only. It holds no real secret: the key is a
+# throwaway and the database is the disposable service the workflow starts. It is
+# committed on purpose so the workflow can point TOML_CONFIG_FILE at it.
+
+[confidential]
+secret_key = "ci-only-not-a-secret-do-not-use-in-production-000000000000"
+
+[debugging]
+debug = false
+
+[security]
+internal_ips = []
+allowed_hosts = ["localhost", "127.0.0.1", "testserver"]
+csrf_trusted_origins = []
+
+[app_paths]
+tmp_dir = "/tmp/hqf_pdf_site"
+
+[databases.default]
+name = "hqf_pdf_site"
+user = "postgres"
+password = "postgres"
+host = "127.0.0.1"
+port = 5432
+
+[pdf_server]
+clients_file = "/tmp/hqf-pdf-ci/clients.toml"
+nginx_map_file = "/tmp/hqf-pdf-ci/clients.map"
+font_store_dir = "/tmp/hqf-pdf-ci/fonts"
+usage_token = "ci-usage-token-not-a-secret"
+
+[billing]
+currency = "EUR"
+
+[front]
+cdn_enabled = true
+
+[static_files]
+static_url = "/static/"
+static_root = "/tmp/hqf-pdf-ci/static"

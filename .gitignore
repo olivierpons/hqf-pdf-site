@@ -29,6 +29,8 @@ db.sqlite3-journal
 /local.toml
 /install/*.toml
 !install/config_template.toml
+# The CI's throwaway config is committed on purpose: it holds no real secret.
+!install/ci.toml
 
 # Tests and coverage
 .pytest_cache/

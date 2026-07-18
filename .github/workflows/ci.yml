@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+env:
+  TOML_CONFIG_FILE: install/ci.toml
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: hqf_pdf_site
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv and Python
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.14"
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Install gettext
+        run: sudo apt-get update && sudo apt-get install -y gettext
+
+      - name: Compile translations
+        run: uv run python manage.py compilemessages --ignore=.venv
+
+      # Comments and docstrings wrap to 88 before Black checks the code.
+      - name: Rewrap comments (check)
+        run: uv run python manage.py rewrap_comments --check --exclude migrations
+
+      - name: Black
+        run: uv run black --check . --exclude .venv
+
+      - name: isort
+        run: uv run isort --check-only . --skip .venv
+
+      - name: Ruff
+        run: uv run ruff check .
+
+      - name: pycodestyle
+        run: uv run pycodestyle .
+
+      - name: Pylint
+        run: uv run pylint $(git ls-files '*.py' | grep -v migrations)
+
+      - name: Translations are complete
+        run: uv run python scripts/check_translations.py
+
+      - name: Django is written at its target version
+        run: |
+          uv run django-upgrade --target-version 6.0 \
+            $(git ls-files '*.py' | grep -v migrations)
+          git diff --exit-code
+
+      - name: Migrations are up to date
+        run: uv run python manage.py makemigrations --check --dry-run
+
+      - name: Dependencies have no known vulnerabilities
+        run: uv run pip-audit
+
+      - name: Tests
+        run: uv run pytest -q
