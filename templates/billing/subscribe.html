@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "[Subscription conditions]" %}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-9">
+    <h1 class="h3 mb-3">{% trans "[Subscription conditions]" %}</h1>
+    <p class="lead">
+      {% trans "[When you have tried the service and want to keep rendering, this is what taking a plan commits you to.]" %}
+    </p>
+
+    <h2 class="h5 mt-4">{% trans "[Plans]" %}</h2>
+    {% if plans %}
+      <div class="row g-3">
+        {% for plan in plans %}
+          <div class="col-md-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h3 class="card-title h6">{{ plan.name }}</h3>
+                <p class="mb-2">
+                  <strong>{{ plan.monthly_price }} €</strong> {% trans "[per month]" %}
+                </p>
+                <p class="mb-0 text-body-secondary small">
+                  {% trans "[Included each month:]" %}
+                  {% if plan.included_pages is None %}
+                    {% trans "[unlimited pages]" %}
+                  {% else %}
+                    {{ plan.included_pages }} {% trans "[pages]" %}
+                  {% endif %}
+                  ·
+                  {% if plan.included_requests is None %}
+                    {% trans "[unlimited requests]" %}
+                  {% else %}
+                    {{ plan.included_requests }} {% trans "[requests]" %}
+                  {% endif %}
+                </p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-body-secondary">{% trans "[No plans are on offer yet.]" %}</p>
+    {% endif %}
+
+    <h2 class="h5 mt-5">{% trans "[The terms]" %}</h2>
+
+    <div class="mt-3">
+      <h3 class="h6">{% trans "[Billing month]" %}</h3>
+      <p class="text-body-secondary">
+        {% trans "[Your month runs from the day you start to the same day of the next month, and every month is billed on that anchor.]" %}
+      </p>
+    </div>
+
+    <div class="mt-3">
+      <h3 class="h6">{% trans "[Going over your quota]" %}</h3>
+      <p class="text-body-secondary">
+        {% trans "[Past the pages and requests your plan includes, rendering does not stop: the extra is billed on top, and you are warned before it is.]" %}
+      </p>
+    </div>
+
+    <div class="mt-3">
+      <h3 class="h6">{% trans "[Payment]" %}</h3>
+      <p class="text-body-secondary">
+        {% trans "[You are sent an invoice and pay it by bank transfer. No card is stored, and nothing is charged automatically. Every amount is in euros, before tax.]" %}
+      </p>
+    </div>
+
+    <div class="mt-3">
+      <h3 class="h6">{% trans "[Cancelling]" %}</h3>
+      <p class="text-body-secondary">
+        {% trans "[You can cancel at any time. Your plan stays active, and billed, until the end of the month already under way; no part of that month is refunded.]" %}
+      </p>
+    </div>
+
+    <div class="mt-3">
+      <h3 class="h6">{% trans "[Changing plan]" %}</h3>
+      <p class="text-body-secondary">
+        {% trans "[Switching plans closes the current one and starts the new one on the day of the change. The part of the month already run is not billed, and nothing is prorated.]" %}
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

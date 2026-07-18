@@ -16,18 +16,41 @@ import json
 import secrets
 
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import JsonResponse
+from django.shortcuts import render
 from django.utils import timezone
 from django.utils.dateparse import parse_datetime
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 from api_keys.models import ApiKey
-from billing.models import UsageRecord
+from billing.models import Plan, UsageRecord
 
 USAGE_TOKEN_HEADER = "X-HQF-Usage-Token"
 EVENT_ID_MAX = UsageRecord._meta.get_field("event_id").max_length
+
+
+@login_required
+def subscribe(request):
+    """Show the plans on offer and the conditions of taking one.
+
+    A draft of the page a customer reaches once they have tried the service and want a
+    plan: the live plans, and the terms — the billing anchor, overage, payment, and how
+    cancelling and switching plans work. It carries no payment step yet; a plan is
+    invoiced and paid by transfer.
+
+    Queries: one, for the live plans.
+
+    Args:
+        request: The current request.
+
+    Returns:
+        The subscription conditions page.
+    """
+    plans = Plan.objects.order_by("monthly_price")
+    return render(request, "billing/subscribe.html", {"plans": plans})
 
 
 def _token_ok(request):

@@ -422,3 +422,87 @@ msgstr "Every amount on this site is in euros, taxes excluded."
 
 #~ msgid "[Accounts closed: {}]"
 #~ msgstr "Accounts closed: {}"
+
+#: templates/billing/subscribe.html:4
+msgid "[Subscription conditions]"
+msgstr "Subscription conditions"
+
+#: templates/billing/subscribe.html:11
+msgid "[When you have tried the service and want to keep rendering, this is what taking a plan commits you to.]"
+msgstr "When you have tried the service and want to keep rendering, this is what taking a plan commits you to."
+
+#: templates/billing/subscribe.html:14
+msgid "[Plans]"
+msgstr "Plans"
+
+#: templates/billing/subscribe.html:23
+msgid "[per month]"
+msgstr "per month"
+
+#: templates/billing/subscribe.html:26
+msgid "[Included each month:]"
+msgstr "Included each month:"
+
+#: templates/billing/subscribe.html:28
+msgid "[unlimited pages]"
+msgstr "unlimited pages"
+
+#: templates/billing/subscribe.html:34
+msgid "[unlimited requests]"
+msgstr "unlimited requests"
+
+#: templates/billing/subscribe.html:36
+msgid "[requests]"
+msgstr "requests"
+
+#: templates/billing/subscribe.html:45
+msgid "[No plans are on offer yet.]"
+msgstr "No plans are on offer yet."
+
+#: templates/billing/subscribe.html:48
+msgid "[The terms]"
+msgstr "The terms"
+
+#: templates/billing/subscribe.html:51
+msgid "[Billing month]"
+msgstr "Billing month"
+
+#: templates/billing/subscribe.html:53
+msgid "[Your month runs from the day you start to the same day of the next month, and every month is billed on that anchor.]"
+msgstr "Your month runs from the day you start to the same day of the next month, and every month is billed on that anchor."
+
+#: templates/billing/subscribe.html:58
+msgid "[Going over your quota]"
+msgstr "Going over your quota"
+
+#: templates/billing/subscribe.html:60
+msgid "[Past the pages and requests your plan includes, rendering does not stop: the extra is billed on top, and you are warned before it is.]"
+msgstr "Past the pages and requests your plan includes, rendering does not stop: the extra is billed on top, and you are warned before it is."
+
+#: templates/billing/subscribe.html:65
+msgid "[Payment]"
+msgstr "Payment"
+
+#: templates/billing/subscribe.html:67
+msgid "[You are sent an invoice and pay it by bank transfer. No card is stored, and nothing is charged automatically. Every amount is in euros, before tax.]"
+msgstr "You are sent an invoice and pay it by bank transfer. No card is stored, and nothing is charged automatically. Every amount is in euros, before tax."
+
+#: templates/billing/subscribe.html:72
+msgid "[Cancelling]"
+msgstr "Cancelling"
+
+#: templates/billing/subscribe.html:74
+msgid "[You can cancel at any time. Your plan stays active, and billed, until the end of the month already under way; no part of that month is refunded.]"
+msgstr "You can cancel at any time. Your plan stays active, and billed, until the end of the month already under way; no part of that month is refunded."
+
+#: templates/billing/subscribe.html:79
+msgid "[Changing plan]"
+msgstr "Changing plan"
+
+#: templates/billing/subscribe.html:81
+msgid "[Switching plans closes the current one and starts the new one on the day of the change. The part of the month already run is not billed, and nothing is prorated.]"
+msgstr "Switching plans closes the current one and starts the new one on the day of the change. The part of the month already run is not billed, and nothing is prorated."
+
+#: templates/accounts/dashboard.html:18
+msgid "[View plans and conditions]"
+msgstr "View plans and conditions"
