@@ -35,6 +35,11 @@ Examples:
   python manage.py rewrap_comments --check
 """
 
+# Vendored reflow tool: the walkers below are text state machines by nature, so their
+# local, branch and statement counts run past the defaults; splitting them would scatter
+# one algorithm across many functions.
+# pylint: disable=too-many-locals,too-many-branches,too-many-statements
+
 from __future__ import annotations
 
 import ast

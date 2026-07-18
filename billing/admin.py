@@ -10,9 +10,8 @@ from .models import Invoice, Plan, Subscription, UsageRecord
 class PlanAdmin(VersionedAdminMixin, admin.ModelAdmin):
     """Admin for the offers on sale.
 
-    Editing a price or a quota supersedes the plan and leaves the old row, so an
-    invoice already cut keeps the numbers it froze. The changelist lists live
-    plans only.
+    Editing a price or a quota supersedes the plan and leaves the old row, so an invoice
+    already cut keeps the numbers it froze. The changelist lists live plans only.
     """
 
     ordering = ("name",)
@@ -57,9 +56,9 @@ class SubscriptionAdmin(VersionedAdminMixin, admin.ModelAdmin):
 class UsageRecordAdmin(VersionedAdminMixin, admin.ModelAdmin):
     """Admin for the renders the server reported, read-only.
 
-    The rows are a machine's log, so nothing here is meant to be typed in; the
-    fields are shown but not edited. Deleting closes the row rather than
-    destroying it, so a period's total stays reproducible.
+    The rows are a machine's log, so nothing here is meant to be typed in; the fields
+    are shown but not edited. Deleting closes the row rather than destroying it, so a
+    period's total stays reproducible.
     """
 
     ordering = ("-rendered_at",)
@@ -79,9 +78,9 @@ class UsageRecordAdmin(VersionedAdminMixin, admin.ModelAdmin):
 class InvoiceAdmin(VersionedAdminMixin, admin.ModelAdmin):
     """Admin for the closed months.
 
-    The frozen numbers and the totals are shown read-only; only the status moves
-    by hand, from drafted through issued to paid, and each move supersedes the
-    row. The changelist lists live invoices only.
+    The frozen numbers and the totals are shown read-only; only the status moves by
+    hand, from drafted through issued to paid, and each move supersedes the row. The
+    changelist lists live invoices only.
     """
 
     ordering = ("-period_start",)

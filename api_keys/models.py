@@ -1,14 +1,13 @@
 """The API keys that let a customer call the render server.
 
-The site is the vault: a key is stored here in clear, and nowhere else holds it.
-The render server authenticates nobody — nginx matches the key a request carries
-against a map the site writes, and forwards the client's name in the
-``X-HQF-Client`` header. Revoking a key therefore means rewriting that map, not
-telling the server anything.
+The site is the vault: a key is stored here in clear, and nowhere else holds it. The
+render server authenticates nobody — nginx matches the key a request carries against a
+map the site writes, and forwards the client's name in the ``X-HQF-Client`` header.
+Revoking a key therefore means rewriting that map, not telling the server anything.
 
-One key, one client the server knows: the key names it, and the entitlements
-alongside it are what the server grants it. Two live keys cannot share a client
-name, so the file the server reads never carries a name twice.
+One key, one client the server knows: the key names it, and the entitlements alongside
+it are what the server grants it. Two live keys cannot share a client name, so the file
+the server reads never carries a name twice.
 """
 
 import secrets
@@ -22,9 +21,9 @@ from core.models import BaseModel
 
 KEY_PREFIX = "sk_live_"
 
-# The client name reaches the server through an HTTP header and becomes the
-# name of the directory holding that client's fonts, so it is held to what is
-# safe in both: no separators, no leading dash, nothing to quote.
+# The client name reaches the server through an HTTP header and becomes the name of the
+# directory holding that client's fonts, so it is held to what is safe in both: no
+# separators, no leading dash, nothing to quote.
 client_name_validator = RegexValidator(
     r"\A[a-z0-9][a-z0-9_-]{0,63}\Z",
     _(
@@ -47,10 +46,9 @@ def generate_key():
 class ApiKey(BaseModel):
     """One customer's key to the render server, and what it may render.
 
-    Temporally versioned: revoking a key closes its validity window and leaves
-    the row, so a key is never reissued and the trail of what called when
-    survives. Editing entitlements mints a successor under a new primary key,
-    which the key value follows.
+    Temporally versioned: revoking a key closes its validity window and leaves the row,
+    so a key is never reissued and the trail of what called when survives. Editing
+    entitlements mints a successor under a new primary key, which the key value follows.
 
     Attributes:
         account: The customer billed for what this key renders.
@@ -99,8 +97,8 @@ class ApiKey(BaseModel):
     def revoke(self):
         """Close this key's validity window. Idempotent.
 
-        The key stops being written into the nginx map, and calls carrying it
-        are refused from the next reload on. Nothing reaches the render server:
-        it never knew the key.
+        The key stops being written into the nginx map, and calls carrying it are
+        refused from the next reload on. Nothing reaches the render server: it never
+        knew the key.
         """
         self.soft_delete()

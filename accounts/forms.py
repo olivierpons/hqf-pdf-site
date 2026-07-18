@@ -10,8 +10,8 @@ class SignupForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("email", "full_name", "company", "vat_number")
-        # Explicit labels skip the capfirst Django applies to a verbose_name,
-        # so these carry their own capital.
+        # Explicit labels skip the capfirst Django applies to a verbose_name, so these
+        # carry their own capital.
         labels = {
             "company": _("[Company (leave empty if you are an individual)]"),
             "vat_number": _("[VAT number (companies in the EU)]"),

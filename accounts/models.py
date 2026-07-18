@@ -9,8 +9,8 @@ class UserManager(BaseUserManager, LiveManager):
     """Creates users keyed by email, since :class:`User` has no username.
 
     Inherits :class:`~core.models.LiveManager` so ``User.objects`` — and with it
-    ``get_by_natural_key``, hence authentication — sees live rows only: a
-    soft-deleted account cannot log in, and a superseded one is never returned.
+    ``get_by_natural_key``, hence authentication — sees live rows only: a soft-deleted
+    account cannot log in, and a superseded one is never returned.
     """
 
     use_in_migrations = True
@@ -63,21 +63,21 @@ class UserManager(BaseUserManager, LiveManager):
 class User(AbstractUser, BaseModel):
     """A customer account, identified by email.
 
-    A customer signs up with an email and pays by bank transfer; a username
-    would name nothing the email does not already name.
+    A customer signs up with an email and pays by bank transfer; a username would name
+    nothing the email does not already name.
 
-    Temporally versioned, so editing an account closes its row and inserts a
-    successor under a **new primary key**. A session stores the primary key it
-    logged in with, so a view editing the current user re-issues
-    ``login(request, successor)`` or logs them out.
+    Temporally versioned, so editing an account closes its row and inserts a successor
+    under a **new primary key**. A session stores the primary key it logged in with, so
+    a view editing the current user re-issues ``login(request, successor)`` or logs them
+    out.
 
     ``date_joined`` records when the account was opened and is copied onto each
     successor; ``date_v_start`` records when that particular row opened.
     """
 
-    # ``last_login`` is written by Django's ``user_logged_in`` signal, in place
-    # and out of our reach. Versioning it would mint a new primary key on every
-    # login and invalidate the session being established.
+    # ``last_login`` is written by Django's ``user_logged_in`` signal, in place and out
+    # of our reach. Versioning it would mint a new primary key on every login and
+    # invalidate the session being established.
     EXTRA_IN_PLACE_FIELDS = frozenset({"last_login"})
 
     username = None

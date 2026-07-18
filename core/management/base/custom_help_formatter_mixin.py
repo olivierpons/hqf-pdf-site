@@ -9,14 +9,14 @@ By default, Django management commands use argparse's standard formatter which:
 - Removes manual indentation in help text
 - Collapses multiple newlines into single spaces
 
-Additionally, ``-h`` and ``--help`` are treated as identical aliases,
-making it impossible to offer a quick memo vs. full documentation.
+Additionally, ``-h`` and ``--help`` are treated as identical aliases, making it
+impossible to offer a quick memo vs. full documentation.
 
 Solution
 --------
-This mixin replaces the default formatter with RawTextHelpFormatter, adds
-epilog support, and optionally splits ``-h`` (short summary) from ``--help``
-(full documentation).
+This mixin replaces the default formatter with RawTextHelpFormatter, adds epilog
+support, and optionally splits ``-h`` (short summary) from ``--help`` (full
+documentation).
 
 Usage
 -----
@@ -119,14 +119,13 @@ With short_help defined:
 
 Why MRO Order Matters
 ---------------------
-Python's Method Resolution Order (MRO) determines which class's method gets
-called first. By placing CustomHelpFormatterMixin BEFORE BaseCommand:
+Python's Method Resolution Order (MRO) determines which class's method gets called
+first. By placing CustomHelpFormatterMixin BEFORE BaseCommand:
 
     class Command(CustomHelpFormatterMixin, BaseCommand)
 
-The mixin's create_parser() is called first, which then calls
-super().create_parser() to get the original parser from BaseCommand,
-and finally applies custom formatting.
+The mixin's create_parser() is called first, which then calls super().create_parser() to
+get the original parser from BaseCommand, and finally applies custom formatting.
 
 Wrong order would skip the mixin entirely:
 
@@ -147,9 +146,8 @@ logger = logging.getLogger(__name__)
 def _is_decoration_line(line):
     """Return True if ``line`` is a pure-punctuation decoration.
 
-    Detects ASCII heading underlines (``---``, ``===``, ``~~~``, ...) so
-    they are not merged into the preceding title when a prose block is
-    reflowed.
+    Detects ASCII heading underlines (``---``, ``===``, ``~~~``, ...) so they are not
+    merged into the preceding title when a prose block is reflowed.
 
     Args:
         line: Single line of text.
@@ -163,21 +161,20 @@ def _is_decoration_line(line):
 
 
 def _reflow_blocks(text, width):
-    # Classifying lines into prose, structured and verbatim blocks while
-    # rewrapping only the prose needs the state and branches it has.
+    # Classifying lines into prose, structured and verbatim blocks while rewrapping only
+    # the prose needs the state and branches it has.
     # pylint: disable=too-many-locals,too-many-branches
     """Reflow prose paragraphs to ``width``, keep structured blocks verbatim.
 
     The input is walked line by line and grouped into three kinds of blocks:
 
         * ``blank``     - a single empty line separator
-        * ``verbatim``  - any run containing at least one indented line or
-                          one decoration line, plus any prose line that
-                          directly introduces an indented line (section
-                          header like ``Examples:`` or argparse-style term
-                          ``-v, --verbosity {0,1,2,3}``)
-        * ``prose``     - everything else: consecutive non-indented,
-                          non-decoration lines not followed by indent
+        * ``verbatim``  - any run containing at least one indented line or one
+          decoration line, plus any prose line that directly introduces an indented line
+          (section header like ``Examples:`` or argparse-style term ``-v, --verbosity
+          {0,1,2,3}``)
+        * ``prose``     - everything else: consecutive non-indented, non-decoration
+          lines not followed by indent
 
         Prose blocks are collapsed to a single paragraph and wrapped with
         ``textwrap.fill`` so the output adapts to the terminal width.
@@ -268,8 +265,8 @@ def _terminal_width():
 class _ShortHelpAction(argparse.Action):
     """Display short help summary and exit.
 
-    Used internally by CustomHelpFormatterMixin to handle ``-h``.
-    Prints the ``short_help`` text stored on the parser instance.
+    Used internally by CustomHelpFormatterMixin to handle ``-h``. Prints the
+    ``short_help`` text stored on the parser instance.
     """
 
     def __init__(
@@ -303,8 +300,8 @@ class _ShortHelpAction(argparse.Action):
 class _FullHelpAction(argparse.Action):
     """Display full help with epilog and exit.
 
-    Used internally by CustomHelpFormatterMixin to handle ``--help``.
-    Falls back to standard ``parser.print_help()`` output.
+    Used internally by CustomHelpFormatterMixin to handle ``--help``. Falls back to
+    standard ``parser.print_help()`` output.
     """
 
     def __init__(
@@ -335,8 +332,8 @@ class CustomHelpFormatterMixin(ABC):  # noqa: B024
     CRITICAL: Place this mixin BEFORE BaseCommand in inheritance:
         class Command(CustomHelpFormatterMixin, BaseCommand)
 
-    This is a mixin class designed to be used with Django's BaseCommand.
-    The super() calls resolve to BaseCommand methods via MRO.
+    This is a mixin class designed to be used with Django's BaseCommand. The super()
+    calls resolve to BaseCommand methods via MRO.
 
     Attributes:
         epilog: Static epilog text displayed after help. Override this
@@ -379,8 +376,8 @@ class CustomHelpFormatterMixin(ABC):  # noqa: B024
     def create_parser(self, prog_name, subcommand, **kwargs):
         """Create parser with custom formatter, epilog, and split help.
 
-        When ``short_help`` is defined (via attribute or get_short_help()),
-        disables argparse's default ``-h``/``--help`` and registers:
+        When ``short_help`` is defined (via attribute or get_short_help()), disables
+        argparse's default ``-h``/``--help`` and registers:
             - ``-h`` → prints short_help memo and exits
             - ``--help`` → prints full argparse help and exits
 
@@ -405,9 +402,9 @@ class CustomHelpFormatterMixin(ABC):  # noqa: B024
             def _format_text(self, text):
                 """Reflow prose paragraphs to the current terminal width.
 
-                Indented blocks, heading underlines, and argparse-style
-                term/definition entries are kept verbatim; prose runs are
-                collapsed and rewrapped to ``self._width``.
+                Indented blocks, heading underlines, and argparse-style term/definition
+                entries are kept verbatim; prose runs are collapsed and rewrapped to
+                ``self._width``.
 
                 Args:
                     text: Text to format.
@@ -450,9 +447,9 @@ class CustomHelpFormatterMixin(ABC):  # noqa: B024
     def get_epilog(self):  # noqa
         """Return dynamic epilog text.
 
-        Override this method in subclasses to generate epilog content
-        dynamically at runtime. Useful when epilog depends on database
-        content, configuration, or other runtime values.
+        Override this method in subclasses to generate epilog content dynamically at
+        runtime. Useful when epilog depends on database content, configuration, or other
+        runtime values.
 
         Returns:
             Epilog string, or empty string for no epilog.
@@ -472,10 +469,9 @@ class CustomHelpFormatterMixin(ABC):  # noqa: B024
     def get_short_help(self):  # noqa
         """Return dynamic short help text.
 
-        Override this method in subclasses to generate short help content
-        dynamically at runtime. When this returns a non-empty string,
-        ``-h`` displays it as a quick memo and ``--help`` displays full
-        documentation.
+        Override this method in subclasses to generate short help content dynamically at
+        runtime. When this returns a non-empty string, ``-h`` displays it as a quick
+        memo and ``--help`` displays full documentation.
 
         Returns:
             Short help string, or empty string for default behavior.

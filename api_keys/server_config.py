@@ -1,14 +1,12 @@
 """Turn the live API keys into the two files the render server's front reads.
 
-The site is the only place a key and its rights live. The render server reads a
-TOML file for what each client may do; nginx reads a map to turn an API key into
-a client name. This module renders both from the keys, as pure text, so the
-command that writes them stays a thin shell over IO and the rendering is tested
-without a filesystem.
+The site is the only place a key and its rights live. The render server reads a TOML
+file for what each client may do; nginx reads a map to turn an API key into a client
+name. This module renders both from the keys, as pure text, so the command that writes
+them stays a thin shell over IO and the rendering is tested without a filesystem.
 
-Both renderings are sorted by client name, so the same keys yield byte-identical
-files: rewriting one when nothing changed is a no-op, and a diff means the keys
-moved.
+Both renderings are sorted by client name, so the same keys yield byte-identical files:
+rewriting one when nothing changed is a no-op, and a diff means the keys moved.
 """
 
 BANNER = (
@@ -54,9 +52,9 @@ def _nginx_string(value):
 def render_clients_toml(keys, font_store_dir):
     """Return the ``clients.toml`` body granting each key what it may render.
 
-    A key allowed fonts of its own is given a font directory named for its
-    client under ``font_store_dir``; the server requires one whenever the right
-    is granted, and creates it if it is missing.
+    A key allowed fonts of its own is given a font directory named for its client under
+    ``font_store_dir``; the server requires one whenever the right is granted, and
+    creates it if it is missing.
 
     Args:
         keys: The live :class:`~api_keys.models.ApiKey` rows.
@@ -87,8 +85,8 @@ def render_nginx_map(keys):
     """Return the nginx map turning an ``Authorization`` header into a client.
 
     An API key reaches nginx as a bearer token, so each key is matched with its
-    ``Bearer`` prefix. A header the map does not carry falls to the empty
-    string, which the front refuses.
+    ``Bearer`` prefix. A header the map does not carry falls to the empty string, which
+    the front refuses.
 
     Args:
         keys: The live :class:`~api_keys.models.ApiKey` rows.

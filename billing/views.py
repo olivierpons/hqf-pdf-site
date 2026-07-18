@@ -1,17 +1,15 @@
 """The render server's usage feed.
 
-The render server reports every render it makes to this endpoint, which turns it
-into a :class:`~billing.models.UsageRecord` that a month's invoice is totted up
-from. The server is the only caller: it authenticates with a shared token in a
-header, so there is no session and no CSRF, and the token is the whole of the
-auth.
+The render server reports every render it makes to this endpoint, which turns it into a
+:class:`~billing.models.UsageRecord` that a month's invoice is totted up from. The
+server is the only caller: it authenticates with a shared token in a header, so there is
+no session and no CSRF, and the token is the whole of the auth.
 
-A push carries a batch of events. Each names the client the render was for, the
-server's own id for it (so a retried push lands once), when it happened, and how
-many pages it produced. The client is resolved to an account through its live
-API key; an event naming a client no live key knows is refused, and the whole
-batch with it, so a misconfigured server is neither billed to the wrong account
-nor dropped in silence.
+A push carries a batch of events. Each names the client the render was for, the server's
+own id for it (so a retried push lands once), when it happened, and how many pages it
+produced. The client is resolved to an account through its live API key; an event naming
+a client no live key knows is refused, and the whole batch with it, so a misconfigured
+server is neither billed to the wrong account nor dropped in silence.
 """
 
 import json
@@ -35,8 +33,8 @@ EVENT_ID_MAX = UsageRecord._meta.get_field("event_id").max_length
 def _token_ok(request):
     """Return whether the request carries the render server's shared token.
 
-    The comparison is constant-time, so a wrong token leaks nothing through how
-    long it takes to reject.
+    The comparison is constant-time, so a wrong token leaks nothing through how long it
+    takes to reject.
     """
     presented = request.headers.get(USAGE_TOKEN_HEADER, "")
     return secrets.compare_digest(presented, settings.PDF_SERVER_USAGE_TOKEN)
@@ -102,14 +100,14 @@ def _clean_event(raw):
 def ingest_usage(request):
     """Record the renders the server reports, one usage row per event.
 
-    Rejects the batch whole on a bad token (401), an unparseable body or a
-    malformed event or unknown client (400). An event whose id is already
-    recorded — a retried push, or a duplicate within the same batch — is counted
-    and skipped, so the same render is never billed twice.
+    Rejects the batch whole on a bad token (401), an unparseable body or a malformed
+    event or unknown client (400). An event whose id is already recorded — a retried
+    push, or a duplicate within the same batch — is counted and skipped, so the same
+    render is never billed twice.
 
-    Queries: one to map the batch's client names to accounts, one to find which
-    event ids are already recorded, then one INSERT per new event, all in a
-    single transaction.
+    Queries: one to map the batch's client names to accounts, one to find which event
+    ids are already recorded, then one INSERT per new event, all in a single
+    transaction.
 
     Args:
         request: The POST carrying ``{"events": [...]}`` as JSON.

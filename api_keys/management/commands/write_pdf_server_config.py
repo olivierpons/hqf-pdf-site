@@ -1,12 +1,12 @@
 """Write the render server's front from the site's live API keys.
 
-The site holds every key and its rights. This turns them into the two files the
-front reads: the server's ``clients.toml`` and nginx's key-to-client map. It
-writes both atomically, so a reader never sees a half-written file.
+The site holds every key and its rights. This turns them into the two files the front
+reads: the server's ``clients.toml`` and nginx's key-to-client map. It writes both
+atomically, so a reader never sees a half-written file.
 
-The files take effect on the next reload: the server reads its clients file at
-startup, nginx reads its map on reload. This command touches neither service —
-reloading them is the operator's step.
+The files take effect on the next reload: the server reads its clients file at startup,
+nginx reads its map on reload. This command touches neither service — reloading them is
+the operator's step.
 """
 
 import os
@@ -26,9 +26,8 @@ from core.management.base.out_mixin import OutMixin
 def _write_atomically(path, contents):
     """Replace ``path`` with ``contents`` in one indivisible step.
 
-    The contents land in a temporary file beside the target, which is then
-    renamed over it: a reader sees either the old file or the new one, never a
-    partial write.
+    The contents land in a temporary file beside the target, which is then renamed over
+    it: a reader sees either the old file or the new one, never a partial write.
 
     Args:
         path: The file to write.
@@ -52,8 +51,8 @@ class Command(CustomHelpFormatterMixin, OutMixin, BaseCommand):
     def get_short_help(self):
         """Return the memo shown with ``-h``.
 
-        Left untranslated: the argument alignment is layout, which a msgid must
-        not carry.
+        Left untranslated: the argument alignment is layout, which a msgid must not
+        carry.
 
         Returns:
             str: The short help text.
@@ -70,8 +69,8 @@ class Command(CustomHelpFormatterMixin, OutMixin, BaseCommand):
     def get_epilog(self):
         """Return the examples shown with ``--help``.
 
-        Left untranslated: the example commands are layout, which a msgid must
-        not carry.
+        Left untranslated: the example commands are layout, which a msgid must not
+        carry.
 
         Returns:
             str: The epilog text.

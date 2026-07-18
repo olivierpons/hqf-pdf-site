@@ -202,8 +202,8 @@ class ANSIFallbackTable:
         self._rows.append(list(cells))
 
     def __str__(self):
-        # Rendering a table to text tracks column widths, borders and per-cell
-        # padding at once, so the locals are many by nature.
+        # Rendering a table to text tracks column widths, borders and per-cell padding
+        # at once, so the locals are many by nature.
         # pylint: disable=too-many-locals
         if not self._columns:
             return ""

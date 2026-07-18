@@ -14,8 +14,8 @@ class TestUserModel:
         user = User.objects.create_user(
             email="Probe@EXAMPLE.COM", password="s3cret-probe-pw", full_name="Probe"
         )
-        # normalize_email lowercases the domain only: the local part is
-        # case-sensitive per RFC 5321.
+        # normalize_email lowercases the domain only: the local part is case-sensitive
+        # per RFC 5321.
         assert user.email == "Probe@example.com"
         assert user.password != "s3cret-probe-pw"
         assert user.check_password("s3cret-probe-pw")
@@ -297,8 +297,8 @@ class TestAdminDestroysAccounts:
         )
         assert response.status_code == 302
 
-        # The closed predecessor goes too, or the account would survive in
-        # history and the erasure would be a lie.
+        # The closed predecessor goes too, or the account would survive in history and
+        # the erasure would be a lie.
         assert not User.history.filter(email="held@example.com").exists()
         assert User.history.count() == 1
 

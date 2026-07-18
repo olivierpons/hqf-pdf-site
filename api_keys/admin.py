@@ -10,16 +10,15 @@ from .models import ApiKey
 class ApiKeyAdmin(VersionedAdminMixin, admin.ModelAdmin):
     """Admin for the keys, where a key is read and revoked.
 
-    Deleting a key here revokes it: the delete button and the
-    ``delete_selected`` action both close its validity window and leave the row,
-    so what a revoked key rendered stays attributable. The changelist lists live
-    keys only.
+    Deleting a key here revokes it: the delete button and the ``delete_selected`` action
+    both close its validity window and leave the row, so what a revoked key rendered
+    stays attributable. The changelist lists live keys only.
 
     Editing a key's entitlements supersedes it, carrying the key value over: the
     customer keeps calling with what they hold, under the rights they now have.
 
-    The key is shown in full: the site is the vault, and a customer who lost
-    theirs is told it from here.
+    The key is shown in full: the site is the vault, and a customer who lost theirs is
+    told it from here.
     """
 
     ordering = ("client_name",)

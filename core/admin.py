@@ -1,10 +1,9 @@
 """Admin plumbing for temporally versioned models.
 
-Django's admin edits a row by writing over it and deletes it by destroying it.
-A model inheriting :class:`~core.models.BaseModel` refuses both, so an admin
-class for one mixes :class:`VersionedAdminMixin` in and keeps every screen,
-permission and button the stock admin gives it: what they call underneath is
-what changes.
+Django's admin edits a row by writing over it and deletes it by destroying it. A model
+inheriting :class:`~core.models.BaseModel` refuses both, so an admin class for one mixes
+:class:`VersionedAdminMixin` in and keeps every screen, permission and button the stock
+admin gives it: what they call underneath is what changes.
 """
 
 from django.urls import reverse
@@ -16,8 +15,8 @@ class VersionedAdminMixin:
 
     Mixed in **before** ``ModelAdmin``, so its methods win:
 
-    * Saving an edit closes the row and inserts a successor, and the screens
-      that follow the save are pointed at it.
+    * Saving an edit closes the row and inserts a successor, and the screens that follow
+      the save are pointed at it.
     * Deleting closes the validity window and leaves the row.
 
     Adding a row is untouched: an INSERT is an INSERT.
@@ -26,13 +25,13 @@ class VersionedAdminMixin:
     def save_model(self, request, obj, form, change):
         """Insert a new row, or supersede the edited one.
 
-        The successor is remembered on the request, because the admin holds the
-        row it handed here and would otherwise send the browser to a primary key
-        that is now a closed predecessor.
+        The successor is remembered on the request, because the admin holds the row it
+        handed here and would otherwise send the browser to a primary key that is now a
+        closed predecessor.
 
-        Many-to-many fields are left out of the successor's changes and settled
-        by :meth:`save_related`: assigning to the forward side of one is not
-        allowed, and the values are not columns of this row.
+        Many-to-many fields are left out of the successor's changes and settled by
+        :meth:`save_related`: assigning to the forward side of one is not allowed, and
+        the values are not columns of this row.
 
         Args:
             request: The admin request.
@@ -56,18 +55,17 @@ class VersionedAdminMixin:
 
         successor = cls.history.get(pk=obj.pk).update(**changes)
         request.versioned_successor = successor
-        # ``save_related`` writes the M2M values through the form's instance,
-        # which is still the predecessor this call just closed.
+        # ``save_related`` writes the M2M values through the form's instance, which is
+        # still the predecessor this call just closed.
         form.instance = successor
 
     def response_change(self, request, obj):
         """Answer the save, naming the row that now holds the values.
 
-        "Save" and "Save as new" build their redirect from the object handed
-        here, so passing the successor is enough. "Save and continue editing"
-        builds it from ``request.path`` — the predecessor's change page, which
-        the live queryset no longer holds — so its redirect is rewritten to the
-        successor's.
+        "Save" and "Save as new" build their redirect from the object handed here, so
+        passing the successor is enough. "Save and continue editing" builds it from
+        ``request.path`` — the predecessor's change page, which the live queryset no
+        longer holds — so its redirect is rewritten to the successor's.
 
         Args:
             request: The admin request.

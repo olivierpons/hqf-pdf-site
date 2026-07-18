@@ -63,6 +63,12 @@ ignore-paths = ["^.*/migrations/.*$"]
 [tool.pylint.format]
 max-line-length = 88
 
+[tool.pylint.similarities]
+# Every management command repeats the same short-help and epilog scaffolding
+# with its own content; that shared shape is a pattern, not duplication to
+# fold away. Only genuinely large repeated blocks should fail the build.
+min-similarity-lines = 30
+
 [tool.pylint."messages control"]
 # Black owns formatting; ruff already reports unused imports and undefined
 # names. Docstring policy here is Google-style on the public surface, not a

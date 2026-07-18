@@ -12,13 +12,12 @@ class CustomUserAdmin(VersionedAdminMixin, UserAdmin):
     """Admin for the email-keyed user; the stock one assumes a username.
 
     Deleting an account here ends its validity window: the delete button and the
-    ``delete_selected`` action both route to a soft-delete, so they read as they
-    always have and leave the row in place. Erasing one for good is the separate
-    "destroy" action.
+    ``delete_selected`` action both route to a soft-delete, so they read as they always
+    have and leave the row in place. Erasing one for good is the separate "destroy"
+    action.
 
-    Editing an account supersedes it under a new primary key. An admin editing
-    their own account is logged out by it, since the session holds the key they
-    logged in with.
+    Editing an account supersedes it under a new primary key. An admin editing their own
+    account is logged out by it, since the session holds the key they logged in with.
 
     The changelist lists live accounts only, so a deleted one leaves it and only
     ``User.history`` still holds it.
@@ -54,11 +53,11 @@ class CustomUserAdmin(VersionedAdminMixin, UserAdmin):
     def destroy_accounts(self, request, queryset):
         """Erase every selected account for good, past versions included.
 
-        Destroying only the selected rows would leave their closed predecessors
-        behind, and the account would survive in ``history``. Every row sharing
-        a selected account's email goes, which is what an erasure request asks
-        for. An email a past version no longer carries is out of reach — an
-        account edited to a new address keeps its older rows.
+        Destroying only the selected rows would leave their closed predecessors behind,
+        and the account would survive in ``history``. Every row sharing a selected
+        account's email goes, which is what an erasure request asks for. An email a past
+        version no longer carries is out of reach — an account edited to a new address
+        keeps its older rows.
 
         Three queries: the emails, then the collect and the cascading delete.
 

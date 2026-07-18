@@ -9,6 +9,9 @@ def main():
     """Run administrative tasks."""
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
     try:
+        # Imported inside main so a missing Django raises the message below
+        # rather than an import error at module load — Django's own pattern.
+        # pylint: disable-next=import-outside-toplevel
         from django.core.management import execute_from_command_line
     except ImportError as exc:
         raise ImportError(
