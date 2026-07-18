@@ -202,6 +202,9 @@ class ANSIFallbackTable:
         self._rows.append(list(cells))
 
     def __str__(self):
+        # Rendering a table to text tracks column widths, borders and per-cell
+        # padding at once, so the locals are many by nature.
+        # pylint: disable=too-many-locals
         if not self._columns:
             return ""
 
@@ -318,9 +321,9 @@ def _ansi_track(iterable, description=None, total=None):
     def _render():
         if total > 0:
             filled = int(width * step / total)
-            bar = "#" * filled + "-" * (width - filled)
+            progress_bar = "#" * filled + "-" * (width - filled)
             percent = 100 * step / total
-            line = f"\r{label} [{bar}] {step}/{total} ({percent:5.1f}%)"
+            line = f"\r{label} [{progress_bar}] {step}/{total} ({percent:5.1f}%)"
         else:
             line = f"\r{label} [{step} items]"
         sys.stderr.write(line)

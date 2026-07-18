@@ -163,6 +163,9 @@ def _is_decoration_line(line):
 
 
 def _reflow_blocks(text, width):
+    # Classifying lines into prose, structured and verbatim blocks while
+    # rewrapping only the prose needs the state and branches it has.
+    # pylint: disable=too-many-locals,too-many-branches
     """Reflow prose paragraphs to ``width``, keep structured blocks verbatim.
 
     The input is walked line by line and grouped into three kinds of blocks:
@@ -423,6 +426,9 @@ class CustomHelpFormatterMixin(ABC):  # noqa: B024
         parser.formatter_class = CustomHelpFormatter
 
         if short_help_content:
+            # Stash the short help on the parser for the custom -h action to read;
+            # argparse offers no public slot for it.
+            # pylint: disable-next=protected-access
             parser._short_help_text = short_help_content
             parser.add_argument(
                 "-h",

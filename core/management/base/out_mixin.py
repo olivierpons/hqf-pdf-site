@@ -86,6 +86,14 @@ class OutMixin:
         escape: Rich escape function (real or fallback).
     """
 
+    # Vendored terminal-output helper. Two pylint findings are kept on purpose:
+    # - invalid-name: OUT_* name the style buckets, and Console/Text/Panel/Table
+    #   alias the Rich classes they hold, so call sites read self.Panel(...); the
+    #   capitalization is deliberate and mirrors those classes.
+    # - too-many-instance-attributes: it holds the streams, styles, lock and Rich
+    #   handles together, and splitting them would not read any clearer.
+    # pylint: disable=invalid-name,too-many-instance-attributes
+
     # Class-level aliases for the Rich UI component *classes*.
     #
     # These three names (``Panel``, ``Table``, ``Text``) are assigned at class scope so
@@ -164,9 +172,8 @@ class OutMixin:
         if use_rich and RICH_AVAILABLE:
             self._use_rich = True
             self.Console = self._build_rich_console()
-            self.Text = RichText
-            self.Panel = RichPanel
-            self.Table = RichTable
+            # Text, Panel and Table already hold the real Rich classes at class
+            # scope; only Console and escape need binding on the Rich path.
             self.escape = rich_escape
         else:
             self._use_rich = False
@@ -301,6 +308,11 @@ class OutMixin:
         self.out(msg, keep_spaces=keep_spaces, **kwargs)
 
     def _out_verbose_impl(self, msg, keep_spaces=True, **kwargs):
+        # This lays out timestamped, styled, possibly multiline output, so it is
+        # inherently branchy; 'msg' is fully consumed into 'messages' before the
+        # loop reuses the name, shadowing nothing live.
+        # pylint: disable=too-many-locals,too-many-branches
+        # pylint: disable=redefined-argument-from-local
         """Implementation of out_verbose without locking.
 
         This is the actual implementation of the output functionality, called by out
@@ -413,18 +425,16 @@ class OutMixin:
             if kwargs.get(style_kwarg):
                 if getattr(self, style_attr):
                     return colorize(text, **getattr(self, style_attr))
-                else:
-                    return (
-                        default_method(text)
-                        if default_method
-                        else colorize(text, **kwargs.get(style_attr))
-                    )
+                return (
+                    default_method(text)
+                    if default_method
+                    else colorize(text, **kwargs.get(style_attr))
+                )
 
         # Apply default style
         if getattr(self, default_style[0]):
             return colorize(text, **getattr(self, default_style[0]))
-        else:
-            return default_style[1](text)
+        return default_style[1](text)
 
     # Original function kept for compatibility
     def out_verbose(self, msg, keep_spaces=True, **kwargs):
