@@ -486,3 +486,28 @@ class TestCloseBillingMonth:
         _usage(account, "evt-1", pages=3, rendered_at=_in_period(day=16))
         self._close()
         assert not Invoice.objects.filter(subscription=subscription).exists()
+
+
+@pytest.mark.django_db
+class TestSubscribeView:
+    """The subscription conditions page: what a customer sees before taking a plan."""
+
+    def _url(self):
+        return reverse("subscribe")
+
+    def test_it_asks_an_anonymous_visitor_to_log_in(self, client):
+        response = client.get(self._url())
+        assert response.status_code == 302
+        assert reverse("accounts:login") in response.url
+
+    def test_it_carries_the_cancellation_clause(self, client, account):
+        client.force_login(account)
+        response = client.get(self._url())
+        assert response.status_code == 200
+        # The clause the page exists to carry: no refund of the running month.
+        assert b"refunded" in response.content
+
+    def test_it_lists_the_live_plans(self, client, account, plan):
+        client.force_login(account)
+        response = client.get(self._url())
+        assert plan.name.encode() in response.content
