@@ -300,4 +300,3 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # fallback covers a CDN outage, not the GDPR question: in the nominal case the
 # visitor's IP reaches the third party.
 CDN_ENABLED = SITE_CONFIG.get("front", {}).get("cdn_enabled", True)
-
