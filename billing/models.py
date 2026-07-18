@@ -1,36 +1,37 @@
 """What a customer is sold, what they used, and what they owe for it.
 
-Four models carry billing, all temporally versioned (see
-:mod:`core.models.base`): editing a price or a plan mints a successor and leaves
-the old row, so an invoice already issued keeps pointing at the numbers that were
-true when it was cut.
+Four models carry billing, all temporally versioned (see :mod:`core.models.base`):
+editing a price or a plan mints a successor and leaves the old row, so an invoice
+already issued keeps pointing at the numbers that were true when it was cut.
 
-* :class:`Plan` — an offer on sale. Free, premium, gold or anything else is just
-  another row; the range of offers is data, not code.
-* :class:`Subscription` — one account on one plan, from a start date whose
-  day-of-month is the billing anchor.
-* :class:`UsageRecord` — one render the server reported, page count and all. One
-  row is one request; the number of requests is how many rows there are.
-* :class:`Invoice` — a closed month, with the plan's numbers frozen onto it and
-  the used-versus-included overage worked out.
+* :class:`Plan` — an offer on sale. Free, premium, gold or anything else is just another
+  row; the range of offers is data, not code.
+* :class:`Subscription` — one account on one plan, from a start date whose day-of-month
+  is the billing anchor.
+* :class:`UsageRecord` — one render the server reported, page count and all. One row is
+  one request; the number of requests is how many rows there are.
+* :class:`Invoice` — a closed month, with the plan's numbers frozen onto it and the
+  used-versus-included overage worked out.
 
 An included quota of ``None`` means *unlimited*, the convention
-:attr:`api_keys.models.ApiKey.max_pages` already uses: no cap on that dimension,
-so it never runs into overage. Money is stored in the single currency
-``settings.BILLING_CURRENCY`` enforces; :class:`Invoice` snapshots the currency
-against the day a second one is sold.
+:attr:`api_keys.models.ApiKey.max_pages` already uses: no cap on that dimension, so it
+never runs into overage. Money is stored in the single currency
+``settings.BILLING_CURRENCY`` enforces; :class:`Invoice` snapshots the currency against
+the day a second one is sold.
 """
 
 from decimal import ROUND_HALF_UP, Decimal
 
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from billing.periods import day_start_utc, period_containing
 from core.models import BaseModel
 
-# Money rounded to the currency's minor unit. EUR has two decimal places, so a
-# computed amount is quantized here before it is stored or shown.
+# Money rounded to the currency's minor unit. EUR has two decimal places, so a computed
+# amount is quantized here before it is stored or shown.
 MONEY_QUANTUM = Decimal("0.01")
 
 
@@ -47,10 +48,10 @@ def default_currency():
 class Plan(BaseModel):
     """An offer on sale: a monthly price, what it includes, and overage rates.
 
-    A quota left as ``None`` is unlimited on that dimension, so that dimension
-    never bills overage — a free or a top tier is expressed by the numbers on the
-    row, not by a new model. Editing any of them supersedes the plan; invoices
-    already cut keep the frozen copies they took.
+    A quota left as ``None`` is unlimited on that dimension, so that dimension never
+    bills overage — a free or a top tier is expressed by the numbers on the row, not by
+    a new model. Editing any of them supersedes the plan; invoices already cut keep the
+    frozen copies they took.
 
     Attributes:
         name: What the offer is called. Unique among live plans.
@@ -106,9 +107,9 @@ class Plan(BaseModel):
 class Subscription(BaseModel):
     """One account on one plan, anchored to a start date.
 
-    The day-of-month of ``started_on`` is the billing anchor: a month runs from
-    that day to the same day of the next month. An account holds one live
-    subscription at a time; switching plans supersedes it.
+    The day-of-month of ``started_on`` is the billing anchor: a month runs from that day
+    to the same day of the next month. An account holds one live subscription at a time;
+    switching plans supersedes it.
 
     Attributes:
         account: The customer this subscription bills.
@@ -145,16 +146,54 @@ class Subscription(BaseModel):
     def __str__(self):
         return f"{self.account} / {self.plan}"
 
+    def cancel(self, on=None):
+        """End the subscription at the close of the period ``on`` falls in.
+
+        It stays valid — usable and billable — until that period's end, and none of it
+        is refunded. Setting the validity end is all it takes: the monthly close reads
+        that date and bills the final period like any other.
+
+        Args:
+            on: The day the cancellation is requested. Defaults to today.
+        """
+        on = on or timezone.localdate()
+        _start, end = period_containing(self.started_on.day, on)
+        self.date_v_end = day_start_utc(end)
+        self.save(update_fields=["date_v_end"])
+
+    def change_plan(self, new_plan, on=None):
+        """Move the account to ``new_plan``, re-anchored on the day of change.
+
+        The current subscription closes now and a fresh one, anchored on ``on``, opens
+        on ``new_plan``. The part-period already run is not billed — its period is no
+        longer covered to its end — and nothing is prorated. Invoices already cut stay
+        attached to the subscription that produced them.
+
+        Args:
+            new_plan: The plan to move to.
+            on: The day the change takes effect, and the new anchor. Defaults
+                to today.
+
+        Returns:
+            Subscription: The new subscription.
+        """
+        on = on or timezone.localdate()
+        self.date_v_end = day_start_utc(on)
+        self.save(update_fields=["date_v_end"])
+        return Subscription.objects.create(
+            account=self.account, plan=new_plan, started_on=on
+        )
+
 
 class UsageRecord(BaseModel):
     """One render the server reported, ready to be totted up into an invoice.
 
-    One row is one request; a period's request count is how many rows fall in it,
-    and its page count is their pages summed. The render is named by the client
-    the server forwarded, not by a foreign key to the key that made it: a key is
-    versioned and its primary key moves under it, but this log is append-only and
-    must not move with it. The server's own event id is unique among live rows,
-    so a retried push is recorded once.
+    One row is one request; a period's request count is how many rows fall in it, and
+    its page count is their pages summed. The render is named by the client the server
+    forwarded, not by a foreign key to the key that made it: a key is versioned and its
+    primary key moves under it, but this log is append-only and must not move with it.
+    The server's own event id is unique among live rows, so a retried push is recorded
+    once.
 
     Attributes:
         account: The customer billed for this render.
@@ -193,10 +232,10 @@ class UsageRecord(BaseModel):
 class Invoice(BaseModel):
     """A closed billing month, with the plan's numbers frozen onto it.
 
-    The plan's price and quotas are copied here at close, not read live, so a
-    later price change never rewrites a bill. Overage on a dimension is what was
-    used beyond what was included, and nothing when the plan included it without
-    limit. Recomputing totals is arithmetic on the row's own fields — no query.
+    The plan's price and quotas are copied here at close, not read live, so a later
+    price change never rewrites a bill. Overage on a dimension is what was used beyond
+    what was included, and nothing when the plan included it without limit. Recomputing
+    totals is arithmetic on the row's own fields — no query.
 
     Attributes:
         account: The customer billed.
@@ -291,10 +330,10 @@ class Invoice(BaseModel):
     def recompute_totals(self):
         """Set the overage and total fields from what was used and included.
 
-        A dimension included without limit (quota ``None``) never bills overage.
-        An overage rate left ``None`` counts as zero, so an unlimited dimension
-        contributes nothing whatever its used count. The amount and the total are
-        quantized to the currency's minor unit. In memory only: the caller saves.
+        A dimension included without limit (quota ``None``) never bills overage. An
+        overage rate left ``None`` counts as zero, so an unlimited dimension contributes
+        nothing whatever its used count. The amount and the total are quantized to the
+        currency's minor unit. In memory only: the caller saves.
         """
         self.overage_pages = _overage_units(self.used_pages, self.included_pages)
         self.overage_requests = _overage_units(

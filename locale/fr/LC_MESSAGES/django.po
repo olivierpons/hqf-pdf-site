@@ -143,6 +143,9 @@ msgstr "Fin de la période, exclue."
 msgid "[Invoice date; defaults to today.]"
 msgstr "Date de la facture ; par défaut aujourd'hui."
 
+msgid "[Day to reckon the close on; defaults to today.]"
+msgstr "Jour d'arrêté de la clôture ; par défaut aujourd'hui."
+
 #: billing/management/commands/close_billing_month.py:124
 msgid "[Start of the period, inclusive.]"
 msgstr "Début de la période, inclus."

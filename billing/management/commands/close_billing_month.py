@@ -1,21 +1,21 @@
-"""Close a billing period into one draft invoice per subscription.
+"""Close each subscription's due billing months into draft invoices.
 
-A thin shell over :func:`billing.close.build_period_invoices`: it parses the
-period, builds the invoices, and either prints them (``--dry-run``) or saves them
-in one transaction.
+A thin shell over :func:`billing.close.build_invoices`: it reckons the close on a given
+day, builds the invoices each subscription owes by then, and either prints them
+(``--dry-run``) or saves them in one transaction.
 """
 
 import argparse
 from datetime import datetime
 from pathlib import Path
 
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.utils import timezone
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 
-from billing.close import build_period_invoices
+from billing.close import build_invoices
 from core.management.base.custom_help_formatter_mixin import CustomHelpFormatterMixin
 from core.management.base.out_mixin import OutMixin
 
@@ -50,18 +50,17 @@ class Command(CustomHelpFormatterMixin, OutMixin, BaseCommand):
     def get_short_help(self):
         """Return the memo shown with ``-h``.
 
-        Left untranslated: the argument alignment is layout, which a msgid must
-        not carry.
+        Left untranslated: the argument alignment is layout, which a msgid must not
+        carry.
 
         Returns:
             str: The short help text.
         """
         cmd = Path(__file__).stem
         return (
-            f"{cmd} — cut one draft invoice per subscription for a period\n"
+            f"{cmd} — cut the draft invoices each subscription owes by a day\n"
             "\n"
-            "  -s / --start       Period start, inclusive (YYYY-MM-DD)\n"
-            "  -e / --end         Period end, exclusive (YYYY-MM-DD)\n"
+            "  -o / --on          Day to reckon the close on (default: today)\n"
             "  -i / --issued-on   Invoice date (default: today)\n"
             "  -d / --dry-run     Print the invoices instead of saving them\n"
             "\n"
@@ -71,8 +70,8 @@ class Command(CustomHelpFormatterMixin, OutMixin, BaseCommand):
     def get_epilog(self):
         """Return the examples shown with ``--help``.
 
-        Left untranslated: the example commands are layout, which a msgid must
-        not carry.
+        Left untranslated: the example commands are layout, which a msgid must not
+        carry.
 
         Returns:
             str: The epilog text.
@@ -80,11 +79,11 @@ class Command(CustomHelpFormatterMixin, OutMixin, BaseCommand):
         cmd = Path(__file__).stem
         return (
             "Examples:\n"
-            "  # Cut June's invoices (period runs to but excludes 15 Jul):\n"
-            f"  python manage.py {cmd} --start 2026-06-15 --end 2026-07-15\n"
+            "  # Cut every invoice owed as of today:\n"
+            f"  python manage.py {cmd}\n"
             "\n"
-            "  # See what would be cut, saving nothing:\n"
-            f"  python manage.py {cmd} -s 2026-06-15 -e 2026-07-15 --dry-run"
+            "  # See what would be cut as of a given day, saving nothing:\n"
+            f"  python manage.py {cmd} --on 2026-07-15 --dry-run"
         )
 
     def add_arguments(self, parser):
@@ -100,14 +99,6 @@ class Command(CustomHelpFormatterMixin, OutMixin, BaseCommand):
             help=_("[Build the invoices and print them instead of saving.]"),
         )
         parser.add_argument(
-            "-e",
-            "--end",
-            type=_date,
-            required=True,
-            metavar="YYYY-MM-DD",
-            help=_("[End of the period, exclusive.]"),
-        )
-        parser.add_argument(
             "-i",
             "--issued-on",
             type=_date,
@@ -116,36 +107,31 @@ class Command(CustomHelpFormatterMixin, OutMixin, BaseCommand):
             help=_("[Invoice date; defaults to today.]"),
         )
         parser.add_argument(
-            "-s",
-            "--start",
+            "-o",
+            "--on",
             type=_date,
-            required=True,
+            default=None,
             metavar="YYYY-MM-DD",
-            help=_("[Start of the period, inclusive.]"),
+            help=_("[Day to reckon the close on; defaults to today.]"),
         )
 
     def handle(self, *args, **options):
-        """Build the period's invoices, then print or save them.
+        """Build the invoices owed by the close day, then print or save them.
 
         Args:
             *args: Unused.
             **options: Parsed arguments.
-
-        Raises:
-            CommandError: The end date is not after the start date.
         """
-        start = options["start"]
-        end = options["end"]
-        if end <= start:
-            raise CommandError(gettext("[The end date must be after the start date.]"))
+        on = options["on"] or timezone.localdate()
         issued_on = options["issued_on"] or timezone.localdate()
 
-        invoices, skipped = build_period_invoices(start, end, issued_on)
+        invoices, skipped = build_invoices(on, issued_on)
 
         if options["dry_run"]:
             for invoice in invoices:
                 self.out(
-                    f"{invoice.account} {start}..{end}  "
+                    f"{invoice.account} "
+                    f"{invoice.period_start}..{invoice.period_end}  "
                     f"pages={invoice.used_pages} requests={invoice.used_requests}  "
                     f"total={invoice.total} {invoice.currency}"
                 )

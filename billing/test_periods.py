@@ -42,14 +42,14 @@ class TestLastClosedPeriod:
     """The period ready to invoice: the one just ended, not the one running."""
 
     def test_it_is_the_period_before_the_running_one(self):
-        # On the 20th, the period that started on the 14th is still running;
-        # the one that closed is the month before it.
+        # On the 20th, the period that started on the 14th is still running; the one
+        # that closed is the month before it.
         start, end = last_closed_period(14, date(2026, 2, 20))
         assert (start, end) == (date(2026, 1, 14), date(2026, 2, 14))
 
     def test_on_the_anchor_day_the_period_that_just_ended_is_closed(self):
-        # The 14th ends one period and opens the next; what closed is the one
-        # ending today.
+        # The 14th ends one period and opens the next; what closed is the one ending
+        # today.
         start, end = last_closed_period(14, date(2026, 2, 14))
         assert (start, end) == (date(2026, 1, 14), date(2026, 2, 14))
 

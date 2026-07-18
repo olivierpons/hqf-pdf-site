@@ -1,11 +1,10 @@
 import json
-from datetime import date, datetime
+from datetime import UTC, date, datetime
 from decimal import Decimal
 
 import pytest
 from django.conf import settings
 from django.core.management import call_command
-from django.core.management.base import CommandError
 from django.db import IntegrityError
 from django.urls import reverse
 from django.utils import timezone
@@ -95,11 +94,21 @@ class TestSubscriptionModel:
         )
         assert again.pk != subscription.pk
 
-    def test_switching_plans_mints_a_successor(self, subscription):
+    def test_changing_plan_closes_the_old_and_anchors_the_new(self, subscription):
         gold = Plan.objects.create(name="Gold", monthly_price=Decimal("199.00"))
-        successor = subscription.update(plan=gold)
-        assert successor.pk != subscription.pk
-        assert successor.plan == gold
+        new = subscription.change_plan(gold, on=date(2026, 6, 20))
+        assert new.pk != subscription.pk
+        assert new.plan == gold
+        assert new.started_on == date(2026, 6, 20)
+        # The old row is closed at the change day, not left live.
+        assert subscription.date_v_end is not None
+        assert not Subscription.objects.filter(pk=subscription.pk).exists()
+
+    def test_cancelling_ends_the_window_at_the_period_close(self, subscription):
+        # Anchored on the 15th, a cancellation on 20 Jun keeps the window open until the
+        # period closes on 15 Jul.
+        subscription.cancel(on=date(2026, 6, 20))
+        assert subscription.date_v_end.date() == date(2026, 7, 15)
 
 
 @pytest.mark.django_db
@@ -390,7 +399,9 @@ class TestCloseBillingMonth:
         return subscription
 
     def _close(self, **overrides):
-        options = {"start": PERIOD_START, "end": PERIOD_END}
+        # Reckoned on the period's end day, the month that just closed is the June
+        # period the fixture subscription is anchored to.
+        options = {"on": PERIOD_END}
         options.update(overrides)
         call_command("close_billing_month", **options)
 
@@ -406,17 +417,20 @@ class TestCloseBillingMonth:
         assert invoice.period_end == PERIOD_END
 
     def test_usage_outside_the_period_is_left_out(self, account):
+        # The period runs [15 Jun 00:00 UTC, 15 Jul 00:00 UTC): a render on the last UTC
+        # instant before it and one on the first UTC instant of the next both fall
+        # outside.
         _usage(
             account,
             "before",
             pages=4,
-            rendered_at=timezone.make_aware(datetime(2026, 6, 14, 23)),
+            rendered_at=datetime(2026, 6, 14, 23, tzinfo=UTC),
         )
         _usage(
             account,
             "after",
             pages=4,
-            rendered_at=timezone.make_aware(datetime(2026, 7, 15, 0)),
+            rendered_at=datetime(2026, 7, 15, 0, tzinfo=UTC),
         )
         _usage(account, "inside", pages=9, rendered_at=_in_period())
         self._close()
@@ -452,6 +466,23 @@ class TestCloseBillingMonth:
         self._close(dry_run=True)
         assert not Invoice.objects.exists()
 
-    def test_the_end_must_be_after_the_start(self):
-        with pytest.raises(CommandError):
-            self._close(start=PERIOD_END, end=PERIOD_START)
+    def test_a_cancelled_subscriptions_final_period_is_billed(
+        self, account, subscription
+    ):
+        # Cancelled mid-June, the subscription stays valid to the period's close on 15
+        # Jul, so that final period is still billed.
+        subscription.cancel(on=date(2026, 6, 20))
+        _usage(account, "evt-1", pages=3, rendered_at=_in_period())
+        self._close()
+        invoice = Invoice.objects.get(account=account)
+        assert invoice.period_start == PERIOD_START
+        assert invoice.period_end == PERIOD_END
+
+    def test_a_plan_changes_part_period_is_not_billed(self, account, subscription):
+        # Switching plan on 20 Jun cuts the June period short: it is not covered to its
+        # 15 Jul close, so it is not billed for the old subscription.
+        gold = Plan.objects.create(name="Gold", monthly_price=Decimal("199.00"))
+        subscription.change_plan(gold, on=date(2026, 6, 20))
+        _usage(account, "evt-1", pages=3, rendered_at=_in_period(day=16))
+        self._close()
+        assert not Invoice.objects.filter(subscription=subscription).exists()

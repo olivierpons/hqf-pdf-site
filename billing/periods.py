@@ -1,18 +1,34 @@
 """Where a subscription's billing months fall.
 
-A subscription is anchored on the day-of-month it started on: its months run
-from that day to the same day of the next month. A month with no such day — the
-31st in a 30-day month, the 29th of a common February — ends on its last day
-instead. The anchor is not moved, only clamped for the months too short to hold
-it, so a 31st-anchored subscription still bills on the 31st every month that has
-one.
+A subscription is anchored on the day-of-month it started on: its months run from that
+day to the same day of the next month. A month with no such day — the 31st in a 30-day
+month, the 29th of a common February — ends on its last day instead. The anchor is not
+moved, only clamped for the months too short to hold it, so a 31st-anchored subscription
+still bills on the 31st every month that has one.
 
-Pure date arithmetic: no database, and no clock. The caller says which day to
-reckon from.
+Pure date arithmetic: no database, and no clock. The caller says which day to reckon
+from. :func:`day_start_utc` turns a day into the instant it begins at, in UTC, so a
+period edge and a stored timestamp compare on one timeline.
 """
 
 import calendar
-from datetime import date, timedelta
+from datetime import UTC, date, datetime, time, timedelta
+
+
+def day_start_utc(day):
+    """Return midnight UTC of ``day`` as an aware datetime.
+
+    Billing reckons every day boundary in UTC — stored timestamps are UTC too — so a
+    period edge and a render time sit on one timeline with no offset in play, and
+    reading a boundary back as a day never lands on the day before.
+
+    Args:
+        day: The calendar day.
+
+    Returns:
+        datetime: ``day`` at 00:00, tagged UTC.
+    """
+    return datetime.combine(day, time.min, tzinfo=UTC)
 
 
 def _clamp_to_month(anchor_day, year, month):
@@ -66,8 +82,8 @@ def period_containing(anchor_day, reference):
 def last_closed_period(anchor_day, on):
     """Return the most recent ``[start, end)`` whose end is on or before ``on``.
 
-    This is the period ready to invoice on ``on``: the one that has just ended,
-    not the one still running.
+    This is the period ready to invoice on ``on``: the one that has just ended, not the
+    one still running.
 
     Args:
         anchor_day: The subscription's anchor day, 1 to 31.

@@ -143,6 +143,9 @@ msgstr "End of the period, exclusive."
 msgid "[Invoice date; defaults to today.]"
 msgstr "Invoice date; defaults to today."
 
+msgid "[Day to reckon the close on; defaults to today.]"
+msgstr "Day to reckon the close on; defaults to today."
+
 #: billing/management/commands/close_billing_month.py:124
 msgid "[Start of the period, inclusive.]"
 msgstr "Start of the period, inclusive."
