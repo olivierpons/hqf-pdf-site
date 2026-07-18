@@ -44,9 +44,13 @@ jobs:
       - name: Compile translations
         run: uv run python manage.py compilemessages --ignore=.venv
 
-      # Comments and docstrings wrap to 88 before Black checks the code.
+      # Comments and docstrings wrap to 88 before Black checks the code. The
+      # in-tree .venv is excluded: uv puts it under the repo, so the command's
+      # app discovery would otherwise reach the installed packages under it.
       - name: Rewrap comments (check)
-        run: uv run python manage.py rewrap_comments --check --exclude migrations
+        run: >-
+          uv run python manage.py rewrap_comments
+          --check --exclude migrations --exclude .venv
 
       - name: Black
         run: uv run black --check . --exclude .venv
