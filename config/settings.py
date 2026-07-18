@@ -301,4 +301,3 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # visitor's IP reaches the third party.
 CDN_ENABLED = SITE_CONFIG.get("front", {}).get("cdn_enabled", True)
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
