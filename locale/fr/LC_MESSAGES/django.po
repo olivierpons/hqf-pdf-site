@@ -360,6 +360,10 @@ msgstr "hqf-pdf"
 msgid "[Toggle navigation]"
 msgstr "Afficher la navigation"
 
+#: templates/base.html:83
+msgid "[Switch between light and dark theme]"
+msgstr "Basculer entre le thème clair et sombre"
+
 #: templates/base.html:54
 msgid "[Log out]"
 msgstr "Se déconnecter"
