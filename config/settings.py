@@ -97,6 +97,10 @@ TMP_DIR.mkdir(parents=True, exist_ok=True)
 ###########
 # Databases
 ###########
+# The site runs on SQLite: the whole database is a single file. The config's
+# 'name' is the path to that file; a relative path hangs under BASE_DIR so a
+# bare file name lands beside the project rather than wherever the process was
+# started from.
 DATABASES_CONFIG = SITE_CONFIG.get("databases")
 if not DATABASES_CONFIG or not DATABASES_CONFIG.get("default"):
     bad_config_file("[databases] section or its 'default' entry is missing")
@@ -105,15 +109,14 @@ default_db = DATABASES_CONFIG["default"]
 if not default_db.get("name"):
     bad_config_file("'name' missing in [databases.default] section")
 
+db_path = Path(default_db["name"])
+if not db_path.is_absolute():
+    db_path = BASE_DIR / db_path
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": default_db["name"],
-        "USER": default_db.get("user"),
-        "PASSWORD": default_db.get("password"),
-        "HOST": default_db.get("host") or "localhost",
-        "PORT": default_db.get("port") or 5432,
-        "CONN_MAX_AGE": 60,
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": db_path,
         "ATOMIC_REQUESTS": True,
     }
 }

@@ -17,11 +17,7 @@ csrf_trusted_origins = []
 tmp_dir = "/tmp/hqf_pdf_site"
 
 [databases.default]
-name = "hqf_pdf_site"
-user = "postgres"
-password = "postgres"
-host = "127.0.0.1"
-port = 5432
+name = "/tmp/hqf-pdf-ci/db.sqlite3"
 
 [pdf_server]
 clients_file = "/tmp/hqf-pdf-ci/clients.toml"
