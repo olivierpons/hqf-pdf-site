@@ -10,9 +10,11 @@
           rel="stylesheet"
           integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
           crossorigin="anonymous">
-    {# Serves our own copy when the CDN is unreachable or its file no longer
-       matches the hash above: the probe reads a rule only Bootstrap defines,
-       and injects the local stylesheet when nothing applied it. #}
+    {% comment %}
+      Serves our own copy when the CDN is unreachable or its file no longer
+      matches the hash above: the probe reads a rule only Bootstrap defines,
+      and injects the local stylesheet when nothing applied it.
+    {% endcomment %}
     <script>
       window.addEventListener("DOMContentLoaded", function () {
         var probe = document.createElement("div");
