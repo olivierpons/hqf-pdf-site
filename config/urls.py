@@ -16,6 +16,7 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path("admin/", admin.site.urls),
     path("", TemplateView.as_view(template_name="home.html"), name="home"),
+    path("examples/", include("examples.urls")),
     path("accounts/", include("accounts.urls")),
     path("subscribe/", billing_views.subscribe, name="subscribe"),
 )

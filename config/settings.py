@@ -210,6 +210,7 @@ INSTALLED_APPS = [
     "accounts",
     "api_keys",
     "billing",
+    "examples",
 ]
 
 MIDDLEWARE = [
@@ -238,6 +239,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "config.context_processors.front",
+                "config.context_processors.seo",
             ],
         },
     },
