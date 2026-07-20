@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block extra_head %}
+  {# JSON-LD: our own serialised, non-user data — safe to mark safe. #}
+  <script type="application/ld+json">{{ jsonld|safe }}</script>
+{% endblock %}
+
+{% block content %}
+<div class="py-3">
+  <h1 class="display-6 fw-semibold">{% trans "[What hqf-pdf renders]" %}</h1>
+  <p class="lead mt-3 mb-2">
+    {% trans "[Every feature of the engine has a small example that produces a real PDF. Below is what each one shows; open the rendered samples to see the files themselves.]" %}
+  </p>
+  <p>
+    <a class="btn btn-primary" href="{{ samples_url }}">{% trans "[View the rendered samples]" %}</a>
+  </p>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-1">
+  {% for example in examples %}
+    <div class="col">
+      <article class="card h-100">
+        <div class="card-body d-flex flex-column">
+          <h2 class="card-title h5">{{ example.title }}</h2>
+          <p class="card-text text-body-secondary flex-grow-1">{{ example.summary }}</p>
+          <p class="mb-3">
+            <span class="visually-hidden">{% trans "[Available for:]" %}</span>
+            {% if example.rust %}<span class="badge text-bg-secondary">Rust</span>{% endif %}
+            {% if example.python %}<span class="badge text-bg-secondary">Python</span>{% endif %}
+          </p>
+          <div class="mt-auto d-flex flex-wrap gap-2">
+            {% if example.kind == "pdf" %}
+              <a class="btn btn-sm btn-outline-primary" href="{{ samples_url }}#{{ example.slug }}">{% trans "[View sample]" %}</a>
+              <a class="btn btn-sm btn-outline-secondary" href="{% static "examples/samples/"|add:example.file %}" download>{% trans "[Download PDF]" %}</a>
+            {% else %}
+              <a class="btn btn-sm btn-outline-secondary" href="{% static "examples/samples/"|add:example.file %}" download>{% trans "[Download ICC profile]" %}</a>
+            {% endif %}
+          </div>
+        </div>
+      </article>
+    </div>
+  {% endfor %}
+</div>
+
+<section class="mt-5 pt-3 border-top">
+  <h2 class="h4">{% trans "[PDF server examples]" %}</h2>
+  <p class="text-body-secondary mb-0">
+    {% trans "[The hosted render server has its own set of examples. They will appear here once their samples are rendered.]" %}
+  </p>
+  {# TODO: add the render server's rendered samples once the server repo produces them (own section, mirror the structure above). #}
+</section>
+{% endblock %}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 23:25+0200\n"
+"POT-Creation-Date: 2026-07-19 15:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,23 +17,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: accounts/admin.py:33
+#: accounts/admin.py:32
 msgid "[identity]"
 msgstr "identity"
 
-#: accounts/admin.py:35
+#: accounts/admin.py:34
 msgid "[permissions]"
 msgstr "permissions"
 
-#: accounts/admin.py:38
+#: accounts/admin.py:37
 msgid "[dates]"
 msgstr "dates"
 
-#: accounts/admin.py:52
+#: accounts/admin.py:51
 msgid "[Destroy the selected accounts and all their history]"
 msgstr "Destroy the selected accounts and all their history"
 
-#: accounts/admin.py:71
+#: accounts/admin.py:70
 msgid "[Rows destroyed: {}]"
 msgstr "Rows destroyed: {}"
 
@@ -69,61 +69,61 @@ msgstr "user"
 msgid "[users]"
 msgstr "users"
 
-#: api_keys/admin.py:39
+#: api_keys/admin.py:38
 msgid "[entitlements]"
 msgstr "entitlements"
 
-#: api_keys/management/commands/write_pdf_server_config.py:46
+#: api_keys/management/commands/write_pdf_server_config.py:45
 msgid "[Write the render server's client file and nginx's API-key map from the site's live API keys. Both are overwritten from scratch on every run. The server reads its client file at startup and nginx reads its map on reload, so restart the server and reload nginx afterwards.]"
 msgstr "Write the render server's client file and nginx's API-key map from the site's live API keys. Both are overwritten from scratch on every run. The server reads its client file at startup and nginx reads its map on reload, so restart the server and reload nginx afterwards."
 
-#: api_keys/management/commands/write_pdf_server_config.py:99
+#: api_keys/management/commands/write_pdf_server_config.py:98
 msgid "[Print both files to stdout instead of writing them.]"
 msgstr "Print both files to stdout instead of writing them."
 
-#: api_keys/management/commands/write_pdf_server_config.py:125
+#: api_keys/management/commands/write_pdf_server_config.py:124
 #, python-brace-format
 msgid "[Wrote {count} client(s) to {clients} and {nginx}.]"
 msgstr "Wrote {count} client(s) to {clients} and {nginx}."
 
-#: api_keys/models.py:31
+#: api_keys/models.py:30
 msgid "[A client name holds up to 64 lowercase letters, digits, underscores and dashes, and starts with a letter or a digit.]"
 msgstr "A client name holds up to 64 lowercase letters, digits, underscores and dashes, and starts with a letter or a digit."
 
-#: api_keys/models.py:69 billing/models.py:124 billing/models.py:171
-#: billing/models.py:232
+#: api_keys/models.py:67 billing/models.py:125 billing/models.py:210
+#: billing/models.py:271
 msgid "[account]"
 msgstr "account"
 
-#: api_keys/models.py:72 billing/models.py:173
+#: api_keys/models.py:70 billing/models.py:212
 msgid "[client name]"
 msgstr "client name"
 
-#: api_keys/models.py:74
+#: api_keys/models.py:72
 msgid "[key]"
 msgstr "key"
 
-#: api_keys/models.py:76
+#: api_keys/models.py:74
 msgid "[allowed to use its own fonts]"
 msgstr "allowed to use its own fonts"
 
-#: api_keys/models.py:78
+#: api_keys/models.py:76
 msgid "[max pages]"
 msgstr "max pages"
 
-#: api_keys/models.py:81
+#: api_keys/models.py:79
 msgid "[API key]"
 msgstr "API key"
 
-#: api_keys/models.py:82
+#: api_keys/models.py:80
 msgid "[API keys]"
 msgstr "API keys"
 
-#: billing/admin.py:31
+#: billing/admin.py:30
 msgid "[included]"
 msgstr "included"
 
-#: billing/admin.py:35
+#: billing/admin.py:34
 msgid "[overage rates]"
 msgstr "overage rates"
 
@@ -131,182 +131,395 @@ msgstr "overage rates"
 msgid "[Close a billing period: total each subscription's usage over it and cut one draft invoice per account, snapshotting the plan. Re-running adds nothing.]"
 msgstr "Close a billing period: total each subscription's usage over it and cut one draft invoice per account, snapshotting the plan. Re-running adds nothing."
 
-#: billing/management/commands/close_billing_month.py:100
+#: billing/management/commands/close_billing_month.py:99
 msgid "[Build the invoices and print them instead of saving.]"
 msgstr "Build the invoices and print them instead of saving."
 
-#: billing/management/commands/close_billing_month.py:108
-msgid "[End of the period, exclusive.]"
-msgstr "End of the period, exclusive."
-
-#: billing/management/commands/close_billing_month.py:116
+#: billing/management/commands/close_billing_month.py:107
 msgid "[Invoice date; defaults to today.]"
 msgstr "Invoice date; defaults to today."
 
+#: billing/management/commands/close_billing_month.py:115
 msgid "[Day to reckon the close on; defaults to today.]"
 msgstr "Day to reckon the close on; defaults to today."
 
-#: billing/management/commands/close_billing_month.py:124
-msgid "[Start of the period, inclusive.]"
-msgstr "Start of the period, inclusive."
-
-#: billing/management/commands/close_billing_month.py:140
-msgid "[The end date must be after the start date.]"
-msgstr "The end date must be after the start date."
-
-#: billing/management/commands/close_billing_month.py:153
+#: billing/management/commands/close_billing_month.py:139
 #, python-brace-format
 msgid "[Would cut {created} invoice(s), skipped {skipped}.]"
 msgstr "Would cut {created} invoice(s), skipped {skipped}."
 
-#: billing/management/commands/close_billing_month.py:164
+#: billing/management/commands/close_billing_month.py:150
 #, python-brace-format
 msgid "[Cut {created} invoice(s), skipped {skipped} already billed.]"
 msgstr "Cut {created} invoice(s), skipped {skipped} already billed."
 
-#: billing/models.py:66
+#: billing/models.py:67
 msgid "[plan name]"
 msgstr "plan name"
 
-#: billing/models.py:68 billing/models.py:251
+#: billing/models.py:69 billing/models.py:290
 msgid "[monthly price]"
 msgstr "monthly price"
 
-#: billing/models.py:71 billing/models.py:254
+#: billing/models.py:72 billing/models.py:293
 msgid "[included pages]"
 msgstr "included pages"
 
-#: billing/models.py:74 billing/models.py:257
+#: billing/models.py:75 billing/models.py:296
 msgid "[included requests]"
 msgstr "included requests"
 
-#: billing/models.py:77 billing/models.py:260
+#: billing/models.py:78 billing/models.py:299
 msgid "[overage price per page]"
 msgstr "overage price per page"
 
-#: billing/models.py:84 billing/models.py:267
+#: billing/models.py:85 billing/models.py:306
 msgid "[overage price per request]"
 msgstr "overage price per request"
 
-#: billing/models.py:92 billing/models.py:130
+#: billing/models.py:93 billing/models.py:131
 msgid "[plan]"
 msgstr "plan"
 
-#: billing/models.py:93
+#: billing/models.py:94
 msgid "[plans]"
 msgstr "plans"
 
-#: billing/models.py:132
+#: billing/models.py:133
 msgid "[started on]"
 msgstr "started on"
 
-#: billing/models.py:135 billing/models.py:238
+#: billing/models.py:136 billing/models.py:277
 msgid "[subscription]"
 msgstr "subscription"
 
-#: billing/models.py:136
+#: billing/models.py:137
 msgid "[subscriptions]"
 msgstr "subscriptions"
 
-#: billing/models.py:174
+#: billing/models.py:213
 msgid "[event id]"
 msgstr "event id"
 
-#: billing/models.py:175
+#: billing/models.py:214
 msgid "[rendered at]"
 msgstr "rendered at"
 
-#: billing/models.py:176
+#: billing/models.py:215 templates/billing/subscribe.html:30
 msgid "[pages]"
 msgstr "pages"
 
-#: billing/models.py:179
+#: billing/models.py:218
 msgid "[usage record]"
 msgstr "usage record"
 
-#: billing/models.py:180
+#: billing/models.py:219
 msgid "[usage records]"
 msgstr "usage records"
 
-#: billing/models.py:223
+#: billing/models.py:262
 msgid "[draft]"
 msgstr "draft"
 
-#: billing/models.py:224
+#: billing/models.py:263
 msgid "[issued]"
 msgstr "issued"
 
-#: billing/models.py:225
+#: billing/models.py:264
 msgid "[paid]"
 msgstr "paid"
 
-#: billing/models.py:226
+#: billing/models.py:265
 msgid "[canceled]"
 msgstr "canceled"
 
-#: billing/models.py:240
+#: billing/models.py:279
 msgid "[period start]"
 msgstr "period start"
 
-#: billing/models.py:241
+#: billing/models.py:280
 msgid "[period end]"
 msgstr "period end"
 
-#: billing/models.py:242
+#: billing/models.py:281
 msgid "[issued on]"
 msgstr "issued on"
 
-#: billing/models.py:243
+#: billing/models.py:282
 msgid "[currency]"
 msgstr "currency"
 
-#: billing/models.py:245
+#: billing/models.py:284
 msgid "[status]"
 msgstr "status"
 
-#: billing/models.py:273
+#: billing/models.py:312
 msgid "[used pages]"
 msgstr "used pages"
 
-#: billing/models.py:274
+#: billing/models.py:313
 msgid "[used requests]"
 msgstr "used requests"
 
-#: billing/models.py:275
+#: billing/models.py:314
 msgid "[overage pages]"
 msgstr "overage pages"
 
-#: billing/models.py:276
+#: billing/models.py:315
 msgid "[overage requests]"
 msgstr "overage requests"
 
-#: billing/models.py:278
+#: billing/models.py:317
 msgid "[overage amount]"
 msgstr "overage amount"
 
-#: billing/models.py:281
+#: billing/models.py:320
 msgid "[total]"
 msgstr "total"
 
-#: billing/models.py:285
+#: billing/models.py:324
 msgid "[invoice]"
 msgstr "invoice"
 
-#: billing/models.py:286
+#: billing/models.py:325
 msgid "[invoices]"
 msgstr "invoices"
 
-#: core/management/base/out_mixin.py:457 core/management/base/out_mixin.py:473
+#: config/context_processors.py:53
+msgid "[hqf-pdf — generate PDFs from your own application]"
+msgstr "hqf-pdf — generate PDFs from your own application"
+
+#: config/context_processors.py:56
+msgid "[Send a render request, get a PDF back: text flow, tables, styled runs, PDF/A-3 and Factur-X invoices, with no PDF toolkit to install on your side.]"
+msgstr "Send a render request, get a PDF back: text flow, tables, styled runs, PDF/A-3 and Factur-X invoices, with no PDF toolkit to install on your side."
+
+#: core/management/base/out_mixin.py:467 core/management/base/out_mixin.py:483
 msgid "[Error: {}]"
 msgstr "Error: {}"
 
-#: core/management/base/out_mixin.py:484
+#: core/management/base/out_mixin.py:494
 msgid "[With option '{}']"
 msgstr "With option '{}'"
 
-#: core/management/base/out_mixin.py:486
+#: core/management/base/out_mixin.py:496
 msgid "[Without option '{}']"
 msgstr "Without option '{}'"
+
+#: core/management/commands/rewrap_comments.py:193
+msgid "[Re-flow narrow comment blocks at the project line width.]"
+msgstr "Re-flow narrow comment blocks at the project line width."
+
+#: core/management/commands/rewrap_comments.py:196
+msgid "[Rewrap comment blocks to project width. Use --help for full documentation.]"
+msgstr "Rewrap comment blocks to project width. Use --help for full documentation."
+
+#: core/management/commands/rewrap_comments.py:202
+msgid "[Walks the given paths, finds consecutive ``#``-comment blocks at the same indent and rewraps each block to the target width. Bullets and numbered list items each stay on their own line. Skips shebangs, encoding lines, separator decorations and tooling pragmas (noqa, type:, fmt:, pragma:, pylint:, isort:). Idempotent and Black-stable.]"
+msgstr "Walks the given paths, finds consecutive ``#``-comment blocks at the same indent and rewraps each block to the target width. Bullets and numbered list items each stay on their own line. Skips shebangs, encoding lines, separator decorations and tooling pragmas (noqa, type:, fmt:, pragma:, pylint:, isort:). Idempotent and Black-stable."
+
+#: core/management/commands/rewrap_comments.py:219
+msgid "[Files or directories. Defaults to the project app dirs (app, core, websearch).]"
+msgstr "Files or directories. Defaults to the project app dirs (app, core, websearch)."
+
+#: core/management/commands/rewrap_comments.py:228
+msgid "[Target maximum line width. Default: 88.]"
+msgstr "Target maximum line width. Default: 88."
+
+#: core/management/commands/rewrap_comments.py:236
+msgid "[Allow line breaks at hyphens inside hyphenated words. Off by default.]"
+msgstr "Allow line breaks at hyphens inside hyphenated words. Off by default."
+
+#: core/management/commands/rewrap_comments.py:247
+msgid "[Substring filter. Any path containing this substring is skipped. Repeatable.]"
+msgstr "Substring filter. Any path containing this substring is skipped. Repeatable."
+
+#: core/management/commands/rewrap_comments.py:258
+msgid "[Do not write changes; print a unified diff of what would change.]"
+msgstr "Do not write changes; print a unified diff of what would change."
+
+#: core/management/commands/rewrap_comments.py:269
+msgid "[Exit code 1 if any file would change. Implies --dry-run. Useful for CI.]"
+msgstr "Exit code 1 if any file would change. Implies --dry-run. Useful for CI."
+
+#: core/management/commands/rewrap_comments.py:286
+msgid "[No Python files matched the given paths.]"
+msgstr "No Python files matched the given paths."
+
+#: core/management/commands/rewrap_comments.py:308
+msgid "[--check: comment blocks need rewrapping.]"
+msgstr "--check: comment blocks need rewrapping."
+
+#: examples/catalog.py:27
+msgid "[A minimal PDF]"
+msgstr "A minimal PDF"
+
+#: examples/catalog.py:28
+msgid "[The smallest complete file: a page, and text on it.]"
+msgstr "The smallest complete file: a page, and text on it."
+
+#: examples/catalog.py:36
+msgid "[Embedded, subset fonts]"
+msgstr "Embedded, subset fonts"
+
+#: examples/catalog.py:37
+msgid "[Text in an embedded font, subset to the glyphs it draws.]"
+msgstr "Text in an embedded font, subset to the glyphs it draws."
+
+#: examples/catalog.py:45
+msgid "[Paragraph flow and alignment]"
+msgstr "Paragraph flow and alignment"
+
+#: examples/catalog.py:47
+msgid "[A paragraph broken into lines, set four ways: left, right, centred, justified.]"
+msgstr "A paragraph broken into lines, set four ways: left, right, centred, justified."
+
+#: examples/catalog.py:57
+msgid "[Breaking an overlong word]"
+msgstr "Breaking an overlong word"
+
+#: examples/catalog.py:59
+msgid "[A word too wide for its column: left whole, or cut to the edge.]"
+msgstr "A word too wide for its column: left whole, or cut to the edge."
+
+#: examples/catalog.py:68
+msgid "[Styled runs inside a paragraph]"
+msgstr "Styled runs inside a paragraph"
+
+#: examples/catalog.py:70
+msgid "[A paragraph whose style changes inside it: size, underline, colour.]"
+msgstr "A paragraph whose style changes inside it: size, underline, colour."
+
+#: examples/catalog.py:79
+msgid "[A multi-page invoice table]"
+msgstr "A multi-page invoice table"
+
+#: examples/catalog.py:81
+msgid "[An invoice table, laid out across as many pages as its lines need.]"
+msgstr "An invoice table, laid out across as many pages as its lines need."
+
+#: examples/catalog.py:90
+msgid "[Cell margin, border, padding and fill]"
+msgstr "Cell margin, border, padding and fill"
+
+#: examples/catalog.py:92
+msgid "[What a cell can do with its own box: margin, border, padding, fill.]"
+msgstr "What a cell can do with its own box: margin, border, padding, fill."
+
+#: examples/catalog.py:101
+msgid "[A self-paginating table]"
+msgstr "A self-paginating table"
+
+#: examples/catalog.py:103
+msgid "[A long table handed over whole, deciding its own pagination.]"
+msgstr "A long table handed over whole, deciding its own pagination."
+
+#: examples/catalog.py:112
+msgid "[A narrow table with wide content]"
+msgstr "A narrow table with wide content"
+
+#: examples/catalog.py:114
+msgid "[A day's meals in a narrow table: a dish too wide for its column, left whole or cut to it.]"
+msgstr "A day's meals in a narrow table: a dish too wide for its column, left whole or cut to it."
+
+#: examples/catalog.py:124
+msgid "[Images on a page]"
+msgstr "Images on a page"
+
+#: examples/catalog.py:125
+msgid "[Images placed on a page.]"
+msgstr "Images placed on a page."
+
+#: examples/catalog.py:133
+msgid "[Code 128 and EAN-13 barcodes]"
+msgstr "Code 128 and EAN-13 barcodes"
+
+#: examples/catalog.py:134
+msgid "[A page of barcodes, drawn as bars: Code 128 and EAN-13.]"
+msgstr "A page of barcodes, drawn as bars: Code 128 and EAN-13."
+
+#: examples/catalog.py:142
+msgid "[QR codes]"
+msgstr "QR codes"
+
+#: examples/catalog.py:143
+msgid "[A page of QR codes, drawn as squares.]"
+msgstr "A page of QR codes, drawn as squares."
+
+#: examples/catalog.py:151
+msgid "[Internal and external links]"
+msgstr "Internal and external links"
+
+#: examples/catalog.py:152
+msgid "[Pages that link out of themselves and to each other.]"
+msgstr "Pages that link out of themselves and to each other."
+
+#: examples/catalog.py:160
+msgid "[Custom page labels]"
+msgstr "Custom page labels"
+
+#: examples/catalog.py:162
+msgid "[Pages numbered by their labels rather than their position.]"
+msgstr "Pages numbered by their labels rather than their position."
+
+#: examples/catalog.py:171
+msgid "[An overlay on a letterhead]"
+msgstr "An overlay on a letterhead"
+
+#: examples/catalog.py:172
+msgid "[An invoice laid on a letterhead somebody else made.]"
+msgstr "An invoice laid on a letterhead somebody else made."
+
+#: examples/catalog.py:180
+msgid "[An interactive form]"
+msgstr "An interactive form"
+
+#: examples/catalog.py:182
+msgid "[A form a reader fills in: text boxes, a check box, a drop-down, radio buttons.]"
+msgstr "A form a reader fills in: text boxes, a check box, a drop-down, radio buttons."
+
+#: examples/catalog.py:192
+msgid "[A Factur-X electronic invoice]"
+msgstr "A Factur-X electronic invoice"
+
+#: examples/catalog.py:193
+msgid "[An electronic invoice: a PDF/A-3 file carrying its own XML.]"
+msgstr "An electronic invoice: a PDF/A-3 file carrying its own XML."
+
+#: examples/catalog.py:201
+msgid "[An archivable PDF/A-3 form]"
+msgstr "An archivable PDF/A-3 form"
+
+#: examples/catalog.py:203
+msgid "[A form that is also a PDF/A-3 file: every field baked in, needing no reader.]"
+msgstr "A form that is also a PDF/A-3 file: every field baked in, needing no reader."
+
+#: examples/catalog.py:213
+msgid "[The embedded ICC profile]"
+msgstr "The embedded ICC profile"
+
+#: examples/catalog.py:214
+msgid "[The ICC profile the library embeds in a PDF/A file.]"
+msgstr "The ICC profile the library embeds in a PDF/A file."
+
+#: examples/views.py:59
+msgid "[PDF examples rendered by hqf-pdf]"
+msgstr "PDF examples rendered by hqf-pdf"
+
+#: examples/views.py:84
+msgid "[PDF examples gallery — see what hqf-pdf renders]"
+msgstr "PDF examples gallery — see what hqf-pdf renders"
+
+#: examples/views.py:86
+msgid "[Browse the PDFs hqf-pdf produces: text flow, tables, styled runs, images, barcodes, QR codes, interactive forms, PDF/A-3 and Factur-X invoices. Every sample is viewable and downloadable.]"
+msgstr "Browse the PDFs hqf-pdf produces: text flow, tables, styled runs, images, barcodes, QR codes, interactive forms, PDF/A-3 and Factur-X invoices. Every sample is viewable and downloadable."
+
+#: examples/views.py:111
+msgid "[Rendered PDF samples from hqf-pdf]"
+msgstr "Rendered PDF samples from hqf-pdf"
+
+#: examples/views.py:113
+msgid "[View and download the PDFs hqf-pdf renders, from a minimal page to PDF/A-3 and Factur-X invoices, each shown inline in your browser.]"
+msgstr "View and download the PDFs hqf-pdf renders, from a minimal page to PDF/A-3 and Factur-X invoices, each shown inline in your browser."
 
 #: templates/_language_picker.html:9
 msgid "[Language]"
@@ -317,7 +530,7 @@ msgid "[Go]"
 msgstr "Go"
 
 #: templates/accounts/dashboard.html:4 templates/accounts/dashboard.html:7
-#: templates/base.html:49
+#: templates/base.html:68
 msgid "[Dashboard]"
 msgstr "Dashboard"
 
@@ -325,9 +538,13 @@ msgstr "Dashboard"
 msgid "[Account]"
 msgstr "Account"
 
+#: templates/accounts/dashboard.html:18
+msgid "[View plans and conditions]"
+msgstr "View plans and conditions"
+
 #: templates/accounts/login.html:4 templates/accounts/login.html:9
 #: templates/accounts/login.html:13 templates/accounts/signup.html:17
-#: templates/base.html:59 templates/home.html:15
+#: templates/base.html:78 templates/home.html:15
 msgid "[Log in]"
 msgstr "Log in"
 
@@ -352,11 +569,11 @@ msgstr "Create my account"
 msgid "[Already have an account?]"
 msgstr "Already have an account?"
 
-#: templates/base.html:7 templates/base.html:39
+#: templates/base.html:53
 msgid "[hqf-pdf]"
 msgstr "hqf-pdf"
 
-#: templates/base.html:42
+#: templates/base.html:56
 msgid "[Toggle navigation]"
 msgstr "Toggle navigation"
 
@@ -364,70 +581,23 @@ msgstr "Toggle navigation"
 msgid "[Switch between light and dark theme]"
 msgstr "Switch between light and dark theme"
 
-#: templates/base.html:54
+#: templates/base.html:62
+msgid "[Examples]"
+msgstr "Examples"
+
+#: templates/base.html:73
 msgid "[Log out]"
 msgstr "Log out"
 
-#: templates/base.html:62
+#: templates/base.html:81
 msgid "[Sign up]"
 msgstr "Sign up"
 
-#: templates/base.html:85 templates/home.html:4
+#: templates/base.html:104 templates/home.html:4
 msgid "[hqf-pdf — PDF rendering service]"
 msgstr "hqf-pdf — PDF rendering service"
 
-#: templates/home.html:9
-msgid "[Generate PDFs from your own application]"
-msgstr "Generate PDFs from your own application"
-
-#: templates/home.html:11
-msgid "[Send a render request, get a PDF back. Text flow, tables, styled runs, PDF/A-3 and Factur-X invoices — no PDF toolkit to install on your side.]"
-msgstr "Send a render request, get a PDF back. Text flow, tables, styled runs, PDF/A-3 and Factur-X invoices — no PDF toolkit to install on your side."
-
-#: templates/home.html:21
-msgid "[How it works]"
-msgstr "How it works"
-
-#: templates/home.html:23
-msgid "[Create an account.]"
-msgstr "Create an account."
-
-#: templates/home.html:24
-msgid "[Get your API key.]"
-msgstr "Get your API key."
-
-#: templates/home.html:25
-msgid "[Post a render request, receive the PDF.]"
-msgstr "Post a render request, receive the PDF."
-
-#: templates/home.html:36
-msgid "[Monthly plan]"
-msgstr "Monthly plan"
-
-#: templates/home.html:38
-msgid "[A fixed number of pages every month. Go past it and you keep rendering: the extra pages are billed on top, and you are warned before they are.]"
-msgstr "A fixed number of pages every month. Go past it and you keep rendering: the extra pages are billed on top, and you are warned before they are."
-
-#: templates/home.html:42
-msgid "[Payment by bank transfer]"
-msgstr "Payment by bank transfer"
-
-#: templates/home.html:44
-msgid "[You get an invoice and pay it by transfer. No card is stored, nothing is charged automatically.]"
-msgstr "You get an invoice and pay it by transfer. No card is stored, nothing is charged automatically."
-
-#: templates/home.html:48
-msgid "[Prices in euros]"
-msgstr "Prices in euros"
-
-#: templates/home.html:50
-msgid "[Every amount on this site is in euros, taxes excluded.]"
-msgstr "Every amount on this site is in euros, taxes excluded."
-
-#~ msgid "[Accounts closed: {}]"
-#~ msgstr "Accounts closed: {}"
-
-#: templates/billing/subscribe.html:4
+#: templates/billing/subscribe.html:4 templates/billing/subscribe.html:9
 msgid "[Subscription conditions]"
 msgstr "Subscription conditions"
 
@@ -507,6 +677,129 @@ msgstr "Changing plan"
 msgid "[Switching plans closes the current one and starts the new one on the day of the change. The part of the month already run is not billed, and nothing is prorated.]"
 msgstr "Switching plans closes the current one and starts the new one on the day of the change. The part of the month already run is not billed, and nothing is prorated."
 
-#: templates/accounts/dashboard.html:18
-msgid "[View plans and conditions]"
-msgstr "View plans and conditions"
+#: templates/examples/catalog.html:11
+msgid "[What hqf-pdf renders]"
+msgstr "What hqf-pdf renders"
+
+#: templates/examples/catalog.html:13
+msgid "[Every feature of the engine has a small example that produces a real PDF. Below is what each one shows; open the rendered samples to see the files themselves.]"
+msgstr "Every feature of the engine has a small example that produces a real PDF. Below is what each one shows; open the rendered samples to see the files themselves."
+
+#: templates/examples/catalog.html:16
+msgid "[View the rendered samples]"
+msgstr "View the rendered samples"
+
+#: templates/examples/catalog.html:28
+#: templates/examples/rendered_samples.html:20
+msgid "[Available for:]"
+msgstr "Available for:"
+
+#: templates/examples/catalog.html:34
+msgid "[View sample]"
+msgstr "View sample"
+
+#: templates/examples/catalog.html:35
+#: templates/examples/rendered_samples.html:30
+msgid "[Download PDF]"
+msgstr "Download PDF"
+
+#: templates/examples/catalog.html:37
+#: templates/examples/rendered_samples.html:33
+msgid "[Download ICC profile]"
+msgstr "Download ICC profile"
+
+#: templates/examples/catalog.html:47
+msgid "[PDF server examples]"
+msgstr "PDF server examples"
+
+#: templates/examples/catalog.html:49
+msgid "[The hosted render server has its own set of examples. They will appear here once their samples are rendered.]"
+msgstr "The hosted render server has its own set of examples. They will appear here once their samples are rendered."
+
+#: templates/examples/rendered_samples.html:6
+msgid "[Rendered PDF samples]"
+msgstr "Rendered PDF samples"
+
+#: templates/examples/rendered_samples.html:8
+msgid "[Each file below was produced by one example. View it inline or download it; nothing is generated on request — these are the exact bytes the engine wrote.]"
+msgstr "Each file below was produced by one example. View it inline or download it; nothing is generated on request — these are the exact bytes the engine wrote."
+
+#: templates/examples/rendered_samples.html:11
+msgid "[Back to the catalogue]"
+msgstr "Back to the catalogue"
+
+#: templates/examples/rendered_samples.html:27
+msgid "[Your browser cannot display this PDF inline. Use the download link below.]"
+msgstr "Your browser cannot display this PDF inline. Use the download link below."
+
+#: templates/examples/rendered_samples.html:32
+msgid "[This sample is a colour profile, not a page. Download it to inspect it.]"
+msgstr "This sample is a colour profile, not a page. Download it to inspect it."
+
+#: templates/examples/rendered_samples.html:39
+msgid "[PDF server samples]"
+msgstr "PDF server samples"
+
+#: templates/examples/rendered_samples.html:41
+msgid "[Samples from the hosted render server will be added here once they are rendered.]"
+msgstr "Samples from the hosted render server will be added here once they are rendered."
+
+#: templates/home.html:9
+msgid "[Generate PDFs from your own application]"
+msgstr "Generate PDFs from your own application"
+
+#: templates/home.html:11
+msgid "[Send a render request, get a PDF back. Text flow, tables, styled runs, PDF/A-3 and Factur-X invoices — no PDF toolkit to install on your side.]"
+msgstr "Send a render request, get a PDF back. Text flow, tables, styled runs, PDF/A-3 and Factur-X invoices — no PDF toolkit to install on your side."
+
+#: templates/home.html:21
+msgid "[How it works]"
+msgstr "How it works"
+
+#: templates/home.html:23
+msgid "[Create an account.]"
+msgstr "Create an account."
+
+#: templates/home.html:24
+msgid "[Get your API key.]"
+msgstr "Get your API key."
+
+#: templates/home.html:25
+msgid "[Post a render request, receive the PDF.]"
+msgstr "Post a render request, receive the PDF."
+
+#: templates/home.html:36
+msgid "[Monthly plan]"
+msgstr "Monthly plan"
+
+#: templates/home.html:38
+msgid "[A fixed number of pages every month. Go past it and you keep rendering: the extra pages are billed on top, and you are warned before they are.]"
+msgstr "A fixed number of pages every month. Go past it and you keep rendering: the extra pages are billed on top, and you are warned before they are."
+
+#: templates/home.html:42
+msgid "[Payment by bank transfer]"
+msgstr "Payment by bank transfer"
+
+#: templates/home.html:44
+msgid "[You get an invoice and pay it by transfer. No card is stored, nothing is charged automatically.]"
+msgstr "You get an invoice and pay it by transfer. No card is stored, nothing is charged automatically."
+
+#: templates/home.html:48
+msgid "[Prices in euros]"
+msgstr "Prices in euros"
+
+#: templates/home.html:50
+msgid "[Every amount on this site is in euros, taxes excluded.]"
+msgstr "Every amount on this site is in euros, taxes excluded."
+
+#~ msgid "[End of the period, exclusive.]"
+#~ msgstr "End of the period, exclusive."
+
+#~ msgid "[Start of the period, inclusive.]"
+#~ msgstr "Start of the period, inclusive."
+
+#~ msgid "[The end date must be after the start date.]"
+#~ msgstr "The end date must be after the start date."
+
+#~ msgid "[Accounts closed: {}]"
+#~ msgstr "Accounts closed: {}"

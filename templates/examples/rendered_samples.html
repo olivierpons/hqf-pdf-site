@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block content %}
+<div class="py-3">
+  <h1 class="display-6 fw-semibold">{% trans "[Rendered PDF samples]" %}</h1>
+  <p class="lead mt-3 mb-2">
+    {% trans "[Each file below was produced by one example. View it inline or download it; nothing is generated on request — these are the exact bytes the engine wrote.]" %}
+  </p>
+  <p>
+    <a class="btn btn-outline-secondary" href="{% url 'examples:catalog' %}">{% trans "[Back to the catalogue]" %}</a>
+  </p>
+</div>
+
+{% for sample in samples %}
+  <section id="{{ sample.slug }}" class="mb-5 pb-3 border-bottom">
+    <h2 class="h4">{{ sample.title }}</h2>
+    <p class="text-body-secondary">{{ sample.summary }}</p>
+    <p class="mb-3">
+      <span class="visually-hidden">{% trans "[Available for:]" %}</span>
+      {% if sample.rust %}<span class="badge text-bg-secondary">Rust</span>{% endif %}
+      {% if sample.python %}<span class="badge text-bg-secondary">Python</span>{% endif %}
+    </p>
+    {% if sample.kind == "pdf" %}
+      <div class="ratio ratio-1x1 border rounded mb-3" style="max-width: 640px;">
+        <object data="{{ sample.url }}#view=FitH" type="application/pdf" title="{{ sample.title }}">
+          <p class="p-3">{% trans "[Your browser cannot display this PDF inline. Use the download link below.]" %}</p>
+        </object>
+      </div>
+      <a class="btn btn-sm btn-outline-secondary" href="{{ sample.url }}" download>{% trans "[Download PDF]" %}</a>
+    {% else %}
+      <p class="mb-2">{% trans "[This sample is a colour profile, not a page. Download it to inspect it.]" %}</p>
+      <a class="btn btn-sm btn-outline-secondary" href="{{ sample.url }}" download>{% trans "[Download ICC profile]" %}</a>
+    {% endif %}
+  </section>
+{% endfor %}
+
+<section class="mb-4">
+  <h2 class="h4">{% trans "[PDF server samples]" %}</h2>
+  <p class="text-body-secondary mb-0">
+    {% trans "[Samples from the hosted render server will be added here once they are rendered.]" %}
+  </p>
+  {# TODO: embed the render server's rendered samples once the server repo produces them. #}
+</section>
+{% endblock %}

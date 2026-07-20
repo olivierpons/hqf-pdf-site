@@ -16,7 +16,20 @@
       document.documentElement.setAttribute("data-bs-theme", theme);
     })();
   </script>
-  <title>{% block title %}{% trans "[hqf-pdf]" %}{% endblock %}</title>
+  <title>{% block title %}{{ meta_title|default:default_meta_title }}{% endblock %}</title>
+  {% block seo %}
+    <meta name="description" content="{{ meta_description|default:default_meta_description }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    {% for alt in hreflang_alternates %}<link rel="alternate" hreflang="{{ alt.code }}" href="{{ alt.url }}">
+    {% endfor %}<link rel="alternate" hreflang="x-default" href="{{ x_default_url }}">
+    <meta property="og:type" content="{{ og_type|default:'website' }}">
+    <meta property="og:site_name" content="{{ site_name }}">
+    <meta property="og:title" content="{{ meta_title|default:default_meta_title }}">
+    <meta property="og:description" content="{{ meta_description|default:default_meta_description }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:locale" content="{{ LANGUAGE_CODE }}">
+    <meta name="twitter:card" content="summary">
+  {% endblock %}
   <link href="{% static 'css/site.css' %}" rel="stylesheet">
   {% if CDN_ENABLED %}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
@@ -46,6 +59,7 @@
   {% else %}
     <link href="{% static 'vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
   {% endif %}
+  {% block extra_head %}{% endblock %}
 </head>
 <body class="d-flex flex-column min-vh-100">
 
@@ -58,6 +72,11 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbar-main">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'examples:catalog' %}">{% trans "[Examples]" %}</a>
+        </li>
+      </ul>
       <ul class="navbar-nav ms-auto align-items-lg-center">
         {% if user.is_authenticated %}
           <li class="nav-item">
