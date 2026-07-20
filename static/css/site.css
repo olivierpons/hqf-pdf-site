@@ -1,0 +1,16 @@
+/* Theme toggle icon: show the sun in dark mode (click to go light) and the
+   moon in light mode (click to go dark). The base template always stamps
+   data-bs-theme on <html> before paint, so one of the two is always current. */
+.theme-icon-light,
+.theme-icon-dark {
+  line-height: 1;
+  font-size: 1.1rem;
+}
+
+[data-bs-theme="dark"] .theme-icon-dark {
+  display: none;
+}
+
+[data-bs-theme="light"] .theme-icon-light {
+  display: none;
+}
