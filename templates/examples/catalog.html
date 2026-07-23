@@ -10,7 +10,7 @@
 <div class="py-3">
   <h1 class="display-6 fw-semibold">{% trans "[What hqf-pdf renders]" %}</h1>
   <p class="lead mt-3 mb-2">
-    {% trans "[Every feature of the engine has a small example that produces a real PDF. Below is what each one shows; open the rendered samples to see the files themselves.]" %}
+    {% trans "[Whole documents — invoices, delivery notes, payslips, contracts — and a small example for every feature they are built from, each producing a real PDF. Below is what each one shows; open the rendered samples to see the files themselves.]" %}
   </p>
   <p>
     <a class="btn btn-primary" href="{{ samples_url }}">{% trans "[View the rendered samples]" %}</a>
@@ -30,7 +30,9 @@
             {% if example.python %}<span class="badge text-bg-secondary">Python</span>{% endif %}
           </p>
           <div class="mt-auto d-flex flex-wrap gap-2">
-            {% if example.kind == "pdf" %}
+            {% if not example.file %}
+              <span class="text-body-secondary small">{% trans "[Ships with the library; no rendered sample published yet.]" %}</span>
+            {% elif example.kind == "pdf" %}
               <a class="btn btn-sm btn-outline-primary" href="{{ samples_url }}#{{ example.slug }}">{% trans "[View sample]" %}</a>
               <a class="btn btn-sm btn-outline-secondary" href="{% static "examples/samples/"|add:example.file %}" download>{% trans "[Download PDF]" %}</a>
             {% else %}

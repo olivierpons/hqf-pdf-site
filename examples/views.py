@@ -35,8 +35,8 @@ def _catalog_jsonld(request):
 
     Describes the page as a ``CollectionPage`` whose main entity is an ordered
     ``ItemList`` of the examples, each a ``ListItem`` naming the example and pointing at
-    its rendered sample. Lazy titles are resolved against the active language before
-    serialisation.
+    its rendered sample when one is published. Lazy titles are resolved against the
+    active language before serialisation.
 
     Args:
         request: The current request, for absolute URLs.
@@ -44,15 +44,17 @@ def _catalog_jsonld(request):
     Returns:
         A JSON string.
     """
-    items = [
-        {
+    items = []
+    for position, example in enumerate(EXAMPLES, start=1):
+        item = {
             "@type": "ListItem",
             "position": position,
             "name": str(example["title"]),
-            "url": _sample_url(request, example),
+            "description": str(example["summary"]),
         }
-        for position, example in enumerate(EXAMPLES, start=1)
-    ]
+        if example["file"]:
+            item["url"] = _sample_url(request, example)
+        items.append(item)
     document = {
         "@context": "https://schema.org",
         "@type": "CollectionPage",
@@ -83,9 +85,10 @@ def catalog(request):
         "samples_url": reverse("examples:rendered_samples"),
         "meta_title": _("[PDF examples gallery — see what hqf-pdf renders]"),
         "meta_description": _(
-            "[Browse the PDFs hqf-pdf produces: text flow, tables, styled runs, "
-            "images, barcodes, QR codes, interactive forms, PDF/A-3 and Factur-X "
-            "invoices. Every sample is viewable and downloadable.]"
+            "[Browse the PDFs hqf-pdf produces: invoices, delivery notes, "
+            "payslips, contracts, certificates and labels, plus text flow, "
+            "tables, images, barcodes, QR codes, forms and Factur-X PDF/A-3. "
+            "Every sample is viewable and downloadable.]"
         ),
         "jsonld": _catalog_jsonld(request),
     }
@@ -93,7 +96,10 @@ def catalog(request):
 
 
 def rendered_samples(request):
-    """Show every rendered sample inline, each with a download link.
+    """Show every published sample inline, each with a download link.
+
+    Examples whose sample file is not published are left out of this page; the
+    catalogue still lists them.
 
     Queries: none.
 
@@ -104,14 +110,17 @@ def rendered_samples(request):
         The rendered-samples page.
     """
     samples = [
-        {**example, "url": _sample_url(request, example)} for example in EXAMPLES
+        {**example, "url": _sample_url(request, example)}
+        for example in EXAMPLES
+        if example["file"]
     ]
     context = {
         "samples": samples,
         "meta_title": _("[Rendered PDF samples from hqf-pdf]"),
         "meta_description": _(
             "[View and download the PDFs hqf-pdf renders, from a minimal page to "
-            "PDF/A-3 and Factur-X invoices, each shown inline in your browser.]"
+            "invoices, payslips, barcoded labels, interactive forms and "
+            "Factur-X PDF/A-3 files, each shown inline in your browser.]"
         ),
     }
     return render(request, "examples/rendered_samples.html", context)

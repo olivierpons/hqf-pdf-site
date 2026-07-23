@@ -9,10 +9,31 @@ from examples.catalog import EXAMPLES, SAMPLES_DIR
 
 
 def test_every_sample_file_is_present():
-    """Each catalogue entry points at a file the static store can serve."""
+    """Each catalogue entry that names a file points at one the static store serves."""
     for example in EXAMPLES:
+        if not example["file"]:
+            continue
         found = finders.find(f"{SAMPLES_DIR}/{example['file']}")
         assert found, f"missing sample for {example['slug']}: {example['file']}"
+
+
+def test_slugs_are_unique():
+    """Slugs anchor the rendered-samples sections, so no two entries may share one."""
+    slugs = [example["slug"] for example in EXAMPLES]
+    assert len(slugs) == len(set(slugs))
+
+
+def test_finished_documents_are_listed_first():
+    """The whole-document examples open the catalogue, before the building blocks."""
+    assert [example["slug"] for example in EXAMPLES[:7]] == [
+        "write_invoice",
+        "write_delivery_note",
+        "write_payslip",
+        "write_contract",
+        "write_certificate",
+        "write_boarding_pass",
+        "write_labels",
+    ]
 
 
 def test_catalog_page_renders(db, client):
@@ -49,3 +70,21 @@ def test_icc_sample_is_offered_as_a_download_not_embedded(db, client):
     """The ICC profile is a download, never embedded as a PDF object."""
     body = client.get(reverse("examples:rendered_samples")).content.decode()
     assert "write_icc.icc" in body
+
+
+def test_catalog_lists_the_business_documents(db, client):
+    """The whole-document examples reach the page, headings and all."""
+    body = client.get(reverse("examples:catalog")).content.decode()
+    for slug in ("write_invoice", "write_payslip", "write_boarding_pass"):
+        assert f"{slug}.pdf" in body
+
+
+def test_examples_without_a_sample_are_catalogued_but_not_embedded(db, client):
+    """An entry with no published file is described, and skipped by the samples page."""
+    unpublished = [example for example in EXAMPLES if not example["file"]]
+    assert unpublished
+    catalog_body = client.get(reverse("examples:catalog")).content.decode()
+    samples_body = client.get(reverse("examples:rendered_samples")).content.decode()
+    for example in unpublished:
+        assert str(example["title"]) in catalog_body
+        assert f'id="{example["slug"]}"' not in samples_body
