@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 23:53+0200\n"
+"POT-Creation-Date: 2026-07-24 00:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -390,36 +390,35 @@ msgstr "No Python files matched the given paths."
 msgid "[--check: comment blocks need rewrapping.]"
 msgstr "--check: comment blocks need rewrapping."
 
-#: examples/catalog.py:31
-#| msgid "[A Factur-X electronic invoice]"
+#: examples/catalog.py:27
 msgid "[A commercial invoice]"
 msgstr "A commercial invoice"
 
-#: examples/catalog.py:33
+#: examples/catalog.py:29
 msgid ""
 "[A commercial invoice: letterhead, logo, a billed-lines table, totals, and a "
 "QR code that pays it by SEPA transfer.]"
 msgstr ""
-"A commercial invoice: letterhead, logo, a billed-lines table, totals, and "
-"a QR code that pays it by SEPA transfer."
+"A commercial invoice: letterhead, logo, a billed-lines table, totals, and a "
+"QR code that pays it by SEPA transfer."
 
-#: examples/catalog.py:43
+#: examples/catalog.py:39
 msgid "[A delivery note]"
 msgstr "A delivery note"
 
-#: examples/catalog.py:45
+#: examples/catalog.py:41
 msgid ""
 "[The note that travels with the goods: a barcode against each article, a box "
 "the receiver ticks, and the consignment's own code.]"
 msgstr ""
-"The note that travels with the goods: a barcode against each article, a "
-"box the receiver ticks, and the consignment's own code."
+"The note that travels with the goods: a barcode against each article, a box "
+"the receiver ticks, and the consignment's own code."
 
-#: examples/catalog.py:55
+#: examples/catalog.py:51
 msgid "[A payslip]"
 msgstr "A payslip"
 
-#: examples/catalog.py:57
+#: examples/catalog.py:53
 msgid ""
 "[A payslip: eighteen contribution lines with employee and employer shares, "
 "the month against the year to date.]"
@@ -427,12 +426,11 @@ msgstr ""
 "A payslip: eighteen contribution lines with employee and employer shares, "
 "the month against the year to date."
 
-#: examples/catalog.py:67
-#| msgid "[A multi-page invoice table]"
+#: examples/catalog.py:63
 msgid "[A two-page services contract]"
 msgstr "A two-page services contract"
 
-#: examples/catalog.py:69
+#: examples/catalog.py:65
 msgid ""
 "[A services agreement over two pages, ending in signature, name and date "
 "fields a reader fills in.]"
@@ -440,61 +438,59 @@ msgstr ""
 "A services agreement over two pages, ending in signature, name and date "
 "fields a reader fills in."
 
-#: examples/catalog.py:79
+#: examples/catalog.py:75
 msgid "[A landscape certificate]"
 msgstr "A landscape certificate"
 
-#: examples/catalog.py:81
+#: examples/catalog.py:77
 msgid ""
 "[A landscape certificate whose border and seal are drawn as paths, not "
 "placed as pictures.]"
 msgstr ""
-"A landscape certificate whose border and seal are drawn as paths, not "
-"placed as pictures."
+"A landscape certificate whose border and seal are drawn as paths, not placed "
+"as pictures."
 
-#: examples/catalog.py:91
+#: examples/catalog.py:87
 msgid "[A boarding pass]"
 msgstr "A boarding pass"
 
-#: examples/catalog.py:93
+#: examples/catalog.py:89
 msgid "[A boarding pass carrying the IATA BCBP string a gate scanner reads.]"
 msgstr "A boarding pass carrying the IATA BCBP string a gate scanner reads."
 
-#: examples/catalog.py:102
-#| msgid "[Custom page labels]"
+#: examples/catalog.py:98
 msgid "[A sheet of shelf labels]"
 msgstr "A sheet of shelf labels"
 
-#: examples/catalog.py:104
+#: examples/catalog.py:100
 msgid ""
 "[A sheet of die-cut shelf labels, priced and barcoded, with cut marks in the "
 "margins.]"
 msgstr ""
-"A sheet of die-cut shelf labels, priced and barcoded, with cut marks in "
-"the margins."
+"A sheet of die-cut shelf labels, priced and barcoded, with cut marks in the "
+"margins."
 
-#: examples/catalog.py:114
+#: examples/catalog.py:110
 msgid "[A minimal PDF]"
 msgstr "A minimal PDF"
 
-#: examples/catalog.py:115
-#| msgid "[The smallest complete file: a page, and text on it.]"
+#: examples/catalog.py:111
 msgid "[The smallest complete file: a page, and shapes drawn on it.]"
 msgstr "The smallest complete file: a page, and shapes drawn on it."
 
-#: examples/catalog.py:123
+#: examples/catalog.py:119
 msgid "[Embedded, subset fonts]"
 msgstr "Embedded, subset fonts"
 
-#: examples/catalog.py:124
+#: examples/catalog.py:120
 msgid "[Text in an embedded font, subset to the glyphs it draws.]"
 msgstr "Text in an embedded font, subset to the glyphs it draws."
 
-#: examples/catalog.py:132
+#: examples/catalog.py:128
 msgid "[Paragraph flow and alignment]"
 msgstr "Paragraph flow and alignment"
 
-#: examples/catalog.py:134
+#: examples/catalog.py:130
 msgid ""
 "[A paragraph broken into lines, set four ways: left, right, centred, "
 "justified.]"
@@ -502,47 +498,47 @@ msgstr ""
 "A paragraph broken into lines, set four ways: left, right, centred, "
 "justified."
 
-#: examples/catalog.py:144
+#: examples/catalog.py:140
 msgid "[Breaking an overlong word]"
 msgstr "Breaking an overlong word"
 
-#: examples/catalog.py:146
+#: examples/catalog.py:142
 msgid "[A word too wide for its column: left whole, or cut to the edge.]"
 msgstr "A word too wide for its column: left whole, or cut to the edge."
 
-#: examples/catalog.py:155
+#: examples/catalog.py:151
 msgid "[Soft hyphens and no-break spaces]"
 msgstr "Soft hyphens and no-break spaces"
 
-#: examples/catalog.py:157
+#: examples/catalog.py:153
 msgid ""
 "[A justified column set twice: the long words breaking at their soft hyphens "
 "with a hyphen shown, or left whole, and a figure a no-break space keeps "
 "together.]"
 msgstr ""
-"A justified column set twice: the long words breaking at their soft "
-"hyphens with a hyphen shown, or left whole, and a figure a no-break space "
-"keeps together."
+"A justified column set twice: the long words breaking at their soft hyphens "
+"with a hyphen shown, or left whole, and a figure a no-break space keeps "
+"together."
 
-#: examples/catalog.py:168
+#: examples/catalog.py:164
 msgid "[Break points after a slash or a hyphen]"
 msgstr "Break points after a slash or a hyphen"
 
-#: examples/catalog.py:170
+#: examples/catalog.py:166
 msgid ""
 "[A justified column set twice: file paths and compounds running past the "
 "edge with no break points, then wrapping where a break after a slash or a "
 "hyphen is allowed.]"
 msgstr ""
-"A justified column set twice: file paths and compounds running past the "
-"edge with no break points, then wrapping where a break after a slash or a "
-"hyphen is allowed."
+"A justified column set twice: file paths and compounds running past the edge "
+"with no break points, then wrapping where a break after a slash or a hyphen "
+"is allowed."
 
-#: examples/catalog.py:181
+#: examples/catalog.py:177
 msgid "[Clipping paths]"
 msgstr "Clipping paths"
 
-#: examples/catalog.py:183
+#: examples/catalog.py:179
 msgid ""
 "[A field of stripes shown through two clipping paths: a disc set by the "
 "nonzero rule, and a frame set by the even-odd rule over two nested "
@@ -552,11 +548,11 @@ msgstr ""
 "nonzero rule, and a frame set by the even-odd rule over two nested "
 "rectangles."
 
-#: examples/catalog.py:194
+#: examples/catalog.py:190
 msgid "[Transparency and blend modes]"
 msgstr "Transparency and blend modes"
 
-#: examples/catalog.py:196
+#: examples/catalog.py:192
 msgid ""
 "[Half-opacity fills that overlap and mix, and one orange square laid over a "
 "blue bar in four blend modes, through an extended graphics state.]"
@@ -564,11 +560,11 @@ msgstr ""
 "Half-opacity fills that overlap and mix, and one orange square laid over a "
 "blue bar in four blend modes, through an extended graphics state."
 
-#: examples/catalog.py:207
+#: examples/catalog.py:203
 msgid "[Text poured into columns]"
 msgstr "Text poured into columns"
 
-#: examples/catalog.py:209
+#: examples/catalog.py:205
 msgid ""
 "[One long passage poured into three columns, each fitting the lines its "
 "height allows and handing the rest to the next.]"
@@ -576,24 +572,23 @@ msgstr ""
 "One long passage poured into three columns, each fitting the lines its "
 "height allows and handing the rest to the next."
 
-#: examples/catalog.py:219
-#| msgid "[Paragraph flow and alignment]"
+#: examples/catalog.py:215
 msgid "[Paragraph indents and spacing]"
 msgstr "Paragraph indents and spacing"
 
-#: examples/catalog.py:221
+#: examples/catalog.py:217
 msgid ""
 "[The same two paragraphs six ways: indents, the room around a paragraph, its "
 "last line, its first baseline.]"
 msgstr ""
-"The same two paragraphs six ways: indents, the room around a paragraph, "
-"its last line, its first baseline."
+"The same two paragraphs six ways: indents, the room around a paragraph, its "
+"last line, its first baseline."
 
-#: examples/catalog.py:231
+#: examples/catalog.py:227
 msgid "[A contents page with dot leaders]"
 msgstr "A contents page with dot leaders"
 
-#: examples/catalog.py:233
+#: examples/catalog.py:229
 msgid ""
 "[A contents page whose entries are led to their page numbers by dots the "
 "layout draws.]"
@@ -601,125 +596,133 @@ msgstr ""
 "A contents page whose entries are led to their page numbers by dots the "
 "layout draws."
 
-#: examples/catalog.py:243
+#: examples/catalog.py:239
 msgid "[Styled runs inside a paragraph]"
 msgstr "Styled runs inside a paragraph"
 
-#: examples/catalog.py:245
+#: examples/catalog.py:241
 msgid "[A paragraph whose style changes inside it: size, underline, colour.]"
 msgstr "A paragraph whose style changes inside it: size, underline, colour."
 
-#: examples/catalog.py:254
+#: examples/catalog.py:250
 msgid "[Stamps fitted to a box]"
 msgstr "Stamps fitted to a box"
 
-#: examples/catalog.py:256
+#: examples/catalog.py:252
 msgid ""
 "[What a document says about itself — DRAFT, COPY, PAID — laid across boxes "
 "of four different shapes and scaled to each.]"
 msgstr ""
-"What a document says about itself — DRAFT, COPY, PAID — laid across boxes "
-"of four different shapes and scaled to each."
+"What a document says about itself — DRAFT, COPY, PAID — laid across boxes of "
+"four different shapes and scaled to each."
 
-#: examples/catalog.py:266
+#: examples/catalog.py:262
 msgid "[Shrunk headings and a turned label]"
 msgstr "Shrunk headings and a turned label"
 
-#: examples/catalog.py:268
+#: examples/catalog.py:264
 msgid ""
 "[Headings of different lengths shrunk to share one column, and a label "
 "turned a quarter turn up the page's spine.]"
 msgstr ""
-"Headings of different lengths shrunk to share one column, and a label "
-"turned a quarter turn up the page's spine."
+"Headings of different lengths shrunk to share one column, and a label turned "
+"a quarter turn up the page's spine."
 
-#: examples/catalog.py:278
+#: examples/catalog.py:274
 msgid "[A multi-page invoice table]"
 msgstr "A multi-page invoice table"
 
-#: examples/catalog.py:280
+#: examples/catalog.py:276
 msgid "[An invoice table, laid out across as many pages as its lines need.]"
 msgstr "An invoice table, laid out across as many pages as its lines need."
 
-#: examples/catalog.py:289
+#: examples/catalog.py:285
 msgid "[Cell margin, border, padding and fill]"
 msgstr "Cell margin, border, padding and fill"
 
-#: examples/catalog.py:291
+#: examples/catalog.py:287
 msgid "[What a cell can do with its own box: margin, border, padding, fill.]"
 msgstr "What a cell can do with its own box: margin, border, padding, fill."
 
-#: examples/catalog.py:300
-#| msgid "[Cell margin, border, padding and fill]"
+#: examples/catalog.py:296
 msgid "[Coloured cell borders and fills]"
 msgstr "Coloured cell borders and fills"
 
-#: examples/catalog.py:302
+#: examples/catalog.py:298
 msgid ""
 "[A cell's four sides in four different colours, and coloured fills told "
 "apart from coloured borders.]"
 msgstr ""
-"A cell's four sides in four different colours, and coloured fills told "
-"apart from coloured borders."
+"A cell's four sides in four different colours, and coloured fills told apart "
+"from coloured borders."
 
-#: examples/catalog.py:312
+#: examples/catalog.py:308
 msgid "[A self-paginating table]"
 msgstr "A self-paginating table"
 
-#: examples/catalog.py:314
+#: examples/catalog.py:310
 msgid ""
 "[A long table handed over whole, deciding its own pagination, its heading on "
 "top of every page, its footnote under every page, its shading said once for "
 "the whole table, and a note the caller draws under each page from the "
 "geometry the placement gives it.]"
 msgstr ""
-"A long table handed over whole, deciding its own pagination, its heading "
-"on top of every page, its footnote under every page, its shading said once "
-"for the whole table, and a note the caller draws under each page from the "
+"A long table handed over whole, deciding its own pagination, its heading on "
+"top of every page, its footnote under every page, its shading said once for "
+"the whole table, and a note the caller draws under each page from the "
 "geometry the placement gives it."
 
-#: examples/catalog.py:326
+#: examples/catalog.py:322
 msgid "[Overlong text in a narrow cell]"
 msgstr "Overlong text in a narrow cell"
 
-#: examples/catalog.py:328
-#| msgid ""
-#| "[A day's meals in a narrow table: a dish too wide for its column, left "
-#| "whole or cut to it.]"
+#: examples/catalog.py:324
 msgid ""
 "[Overlong text in a narrow table cell: left to overflow the column, or cut "
 "to it.]"
 msgstr ""
-"Overlong text in a narrow table cell: left to overflow the column, or cut "
-"to it."
+"Overlong text in a narrow table cell: left to overflow the column, or cut to "
+"it."
 
-#: examples/catalog.py:338
+#: examples/catalog.py:334
 msgid "[Images on a page]"
 msgstr "Images on a page"
 
-#: examples/catalog.py:339
+#: examples/catalog.py:335
 msgid "[Images placed on a page.]"
 msgstr "Images placed on a page."
 
-#: examples/catalog.py:347
+#: examples/catalog.py:343
 msgid "[A gallery of picture formats]"
 msgstr "A gallery of picture formats"
 
-#: examples/catalog.py:349
+#: examples/catalog.py:345
 msgid ""
 "[Every picture the tests ship with, on one page, each captioned with what "
 "its own file declares.]"
 msgstr ""
-"Every picture the tests ship with, on one page, each captioned with what "
-"its own file declares."
+"Every picture the tests ship with, on one page, each captioned with what its "
+"own file declares."
 
-#: examples/catalog.py:359
-#| msgid "[Code 128 and EAN-13 barcodes]"
+#: examples/catalog.py:355
+msgid "[A picture fitted into a box]"
+msgstr "A picture fitted into a box"
+
+#: examples/catalog.py:357
+msgid ""
+"[One picture fitted into a box of one size eight ways: sized four ways, "
+"anchored, turned by a quarter and by an angle of its own, and mirrored — "
+"every panel drawn from the matrix its policy gives.]"
+msgstr ""
+"One picture fitted into a box of one size eight ways: sized four ways, "
+"anchored, turned by a quarter and by an angle of its own, and mirrored — "
+"every panel drawn from the matrix its policy gives."
+
+#: examples/catalog.py:368
 msgid "[Code 128 and retail barcodes]"
 msgstr "Code 128 and retail barcodes"
 
-#: examples/catalog.py:361
-#| msgid "[A page of barcodes, drawn as bars: Code 128 and EAN-13.]"
+#: examples/catalog.py:370
 msgid ""
 "[A page of barcodes, drawn as bars: Code 128 and the retail family, EAN-13, "
 "UPC-A, EAN-8.]"
@@ -727,64 +730,59 @@ msgstr ""
 "A page of barcodes, drawn as bars: Code 128 and the retail family, EAN-13, "
 "UPC-A, EAN-8."
 
-#: examples/catalog.py:371
+#: examples/catalog.py:380
 msgid "[QR codes]"
 msgstr "QR codes"
 
-#: examples/catalog.py:372
+#: examples/catalog.py:381
 msgid "[A page of QR codes, drawn as squares.]"
 msgstr "A page of QR codes, drawn as squares."
 
-#: examples/catalog.py:380
+#: examples/catalog.py:389
 msgid "[Data Matrix codes]"
 msgstr "Data Matrix codes"
 
-#: examples/catalog.py:381
-#| msgid "[A page of QR codes, drawn as squares.]"
+#: examples/catalog.py:390
 msgid "[A page of Data Matrix codes, drawn as squares.]"
 msgstr "A page of Data Matrix codes, drawn as squares."
 
-#: examples/catalog.py:389
-#| msgid "[QR codes]"
+#: examples/catalog.py:398
 msgid "[PDF417 codes]"
 msgstr "PDF417 codes"
 
-#: examples/catalog.py:390
-#| msgid "[A page of QR codes, drawn as squares.]"
+#: examples/catalog.py:399
 msgid "[A page of PDF417 codes, drawn as stacked bars.]"
 msgstr "A page of PDF417 codes, drawn as stacked bars."
 
-#: examples/catalog.py:398
-#| msgid "[QR codes]"
+#: examples/catalog.py:407
 msgid "[Aztec codes]"
 msgstr "Aztec codes"
 
-#: examples/catalog.py:399
-#| msgid "[A page of QR codes, drawn as squares.]"
+#: examples/catalog.py:408
 msgid "[A page of Aztec codes, drawn as squares.]"
 msgstr "A page of Aztec codes, drawn as squares."
 
-#: examples/catalog.py:407
+#: examples/catalog.py:416
 msgid "[Internal and external links]"
 msgstr "Internal and external links"
 
-#: examples/catalog.py:408
+#: examples/catalog.py:417
 msgid "[Pages that link out of themselves and to each other.]"
 msgstr "Pages that link out of themselves and to each other."
 
-#: examples/catalog.py:416
+#: examples/catalog.py:425
 msgid "[Custom page labels]"
 msgstr "Custom page labels"
 
-#: examples/catalog.py:417
+#: examples/catalog.py:426
 msgid "[Pages numbered by their labels rather than their position.]"
 msgstr "Pages numbered by their labels rather than their position."
 
-#: examples/catalog.py:425
+#: examples/catalog.py:434
 msgid "[A tagged, accessible document]"
 msgstr "A tagged, accessible document"
 
-#: examples/catalog.py:427
+#: examples/catalog.py:436
 msgid ""
 "[A document that says what each run of ink stands for, and which runs are "
 "furniture. Its prose and its table describe themselves, a paragraph and a "
@@ -794,19 +792,19 @@ msgstr ""
 "furniture. Its prose and its table describe themselves, a paragraph and a "
 "cell at a time. Validates as PDF/A-3a and PDF/UA-1."
 
-#: examples/catalog.py:438
+#: examples/catalog.py:447
 msgid "[An overlay on a letterhead]"
 msgstr "An overlay on a letterhead"
 
-#: examples/catalog.py:439
+#: examples/catalog.py:448
 msgid "[An invoice laid on a letterhead somebody else made.]"
 msgstr "An invoice laid on a letterhead somebody else made."
 
-#: examples/catalog.py:447
+#: examples/catalog.py:456
 msgid "[The evaluation watermark]"
 msgstr "The evaluation watermark"
 
-#: examples/catalog.py:449
+#: examples/catalog.py:458
 msgid ""
 "[What an unlicensed copy looks like: the evaluation watermark the library "
 "stamps on every page.]"
@@ -814,11 +812,11 @@ msgstr ""
 "What an unlicensed copy looks like: the evaluation watermark the library "
 "stamps on every page."
 
-#: examples/catalog.py:459
+#: examples/catalog.py:468
 msgid "[An interactive form]"
 msgstr "An interactive form"
 
-#: examples/catalog.py:461
+#: examples/catalog.py:470
 msgid ""
 "[A form a reader fills in: text boxes, a check box, a drop-down, radio "
 "buttons.]"
@@ -826,22 +824,19 @@ msgstr ""
 "A form a reader fills in: text boxes, a check box, a drop-down, radio "
 "buttons."
 
-#: examples/catalog.py:471
+#: examples/catalog.py:480
 msgid "[A Factur-X electronic invoice]"
 msgstr "A Factur-X electronic invoice"
 
-#: examples/catalog.py:472
+#: examples/catalog.py:481
 msgid "[An electronic invoice: a PDF/A-3 file carrying its own XML.]"
 msgstr "An electronic invoice: a PDF/A-3 file carrying its own XML."
 
-#: examples/catalog.py:480
+#: examples/catalog.py:489
 msgid "[An archivable PDF/A-3 form]"
 msgstr "An archivable PDF/A-3 form"
 
-#: examples/catalog.py:482
-#| msgid ""
-#| "[A form that is also a PDF/A-3 file: every field baked in, needing no "
-#| "reader.]"
+#: examples/catalog.py:491
 msgid ""
 "[A form that is also a PDF/A-3 file: every field baked in with a visible "
 "border, needing no reader.]"
@@ -849,27 +844,23 @@ msgstr ""
 "A form that is also a PDF/A-3 file: every field baked in with a visible "
 "border, needing no reader."
 
-#: examples/catalog.py:492
+#: examples/catalog.py:501
 msgid "[The embedded ICC profile]"
 msgstr "The embedded ICC profile"
 
-#: examples/catalog.py:493
+#: examples/catalog.py:502
 msgid "[The ICC profile the library embeds in a PDF/A file.]"
 msgstr "The ICC profile the library embeds in a PDF/A file."
 
-#: examples/views.py:61
+#: examples/views.py:60
 msgid "[PDF examples rendered by hqf-pdf]"
 msgstr "PDF examples rendered by hqf-pdf"
 
-#: examples/views.py:86
+#: examples/views.py:85
 msgid "[PDF examples gallery — see what hqf-pdf renders]"
 msgstr "PDF examples gallery — see what hqf-pdf renders"
 
-#: examples/views.py:88
-#| msgid ""
-#| "[Browse the PDFs hqf-pdf produces: text flow, tables, styled runs, "
-#| "images, barcodes, QR codes, interactive forms, PDF/A-3 and Factur-X "
-#| "invoices. Every sample is viewable and downloadable.]"
+#: examples/views.py:87
 msgid ""
 "[Browse the PDFs hqf-pdf produces: invoices, delivery notes, payslips, "
 "contracts, certificates and labels, plus text flow, tables, images, "
@@ -878,25 +869,22 @@ msgid ""
 msgstr ""
 "Browse the PDFs hqf-pdf produces: invoices, delivery notes, payslips, "
 "contracts, certificates and labels, plus text flow, tables, images, "
-"barcodes, QR codes, forms and Factur-X PDF/A-3. Every sample is viewable "
-"and downloadable."
+"barcodes, QR codes, forms and Factur-X PDF/A-3. Every sample is viewable and "
+"downloadable."
 
-#: examples/views.py:119
+#: examples/views.py:113
 msgid "[Rendered PDF samples from hqf-pdf]"
 msgstr "Rendered PDF samples from hqf-pdf"
 
-#: examples/views.py:121
-#| msgid ""
-#| "[View and download the PDFs hqf-pdf renders, from a minimal page to PDF/"
-#| "A-3 and Factur-X invoices, each shown inline in your browser.]"
+#: examples/views.py:115
 msgid ""
 "[View and download the PDFs hqf-pdf renders, from a minimal page to "
 "invoices, payslips, barcoded labels, interactive forms and Factur-X PDF/A-3 "
 "files, each shown inline in your browser.]"
 msgstr ""
-"View and download the PDFs hqf-pdf renders, from a minimal page to "
-"invoices, payslips, barcoded labels, interactive forms and Factur-X "
-"PDF/A-3 files, each shown inline in your browser."
+"View and download the PDFs hqf-pdf renders, from a minimal page to invoices, "
+"payslips, barcoded labels, interactive forms and Factur-X PDF/A-3 files, "
+"each shown inline in your browser."
 
 #: templates/_language_picker.html:9
 msgid "[Language]"
@@ -1085,10 +1073,6 @@ msgid "[What hqf-pdf renders]"
 msgstr "What hqf-pdf renders"
 
 #: templates/examples/catalog.html:13
-#| msgid ""
-#| "[Every feature of the engine has a small example that produces a real "
-#| "PDF. Below is what each one shows; open the rendered samples to see the "
-#| "files themselves.]"
 msgid ""
 "[Whole documents — invoices, delivery notes, payslips, contracts — and a "
 "small example for every feature they are built from, each producing a real "
@@ -1110,28 +1094,24 @@ msgid "[Available for:]"
 msgstr "Available for:"
 
 #: templates/examples/catalog.html:34
-msgid "[Ships with the library; no rendered sample published yet.]"
-msgstr "Ships with the library; no rendered sample published yet."
-
-#: templates/examples/catalog.html:36
 msgid "[View sample]"
 msgstr "View sample"
 
-#: templates/examples/catalog.html:37
+#: templates/examples/catalog.html:35
 #: templates/examples/rendered_samples.html:30
 msgid "[Download PDF]"
 msgstr "Download PDF"
 
-#: templates/examples/catalog.html:39
+#: templates/examples/catalog.html:37
 #: templates/examples/rendered_samples.html:33
 msgid "[Download ICC profile]"
 msgstr "Download ICC profile"
 
-#: templates/examples/catalog.html:49
+#: templates/examples/catalog.html:47
 msgid "[PDF server examples]"
 msgstr "PDF server examples"
 
-#: templates/examples/catalog.html:51
+#: templates/examples/catalog.html:49
 msgid ""
 "[The hosted render server has its own set of examples. They will appear here "
 "once their samples are rendered.]"
