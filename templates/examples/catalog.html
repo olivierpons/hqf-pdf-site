@@ -30,9 +30,7 @@
             {% if example.python %}<span class="badge text-bg-secondary">Python</span>{% endif %}
           </p>
           <div class="mt-auto d-flex flex-wrap gap-2">
-            {% if not example.file %}
-              <span class="text-body-secondary small">{% trans "[Ships with the library; no rendered sample published yet.]" %}</span>
-            {% elif example.kind == "pdf" %}
+            {% if example.kind == "pdf" %}
               <a class="btn btn-sm btn-outline-primary" href="{{ samples_url }}#{{ example.slug }}">{% trans "[View sample]" %}</a>
               <a class="btn btn-sm btn-outline-secondary" href="{% static "examples/samples/"|add:example.file %}" download>{% trans "[Download PDF]" %}</a>
             {% else %}

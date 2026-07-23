@@ -9,10 +9,6 @@ first, then the pieces they are built from, from the smallest file to the archiv
 browser, while ``"icc"`` is a colour profile the engine emits, offered as a download
 rather than shown.
 
-``file`` is ``None`` for an example the engine ships but whose rendered sample is not
-published yet: it is listed and described in the catalogue, and left out of the
-rendered-samples page.
-
 Adding an example is one entry here plus its file under ``static/examples/samples/``;
 nothing else references the list by position.
 """
@@ -351,6 +347,19 @@ EXAMPLES = [
         ),
     },
     {
+        "slug": "write_fitted",
+        "file": "write_fitted.pdf",
+        "kind": "pdf",
+        "rust": True,
+        "python": True,
+        "title": _("[A picture fitted into a box]"),
+        "summary": _(
+            "[One picture fitted into a box of one size eight ways: sized four "
+            "ways, anchored, turned by a quarter and by an angle of its own, and "
+            "mirrored — every panel drawn from the matrix its policy gives.]"
+        ),
+    },
+    {
         "slug": "write_barcode",
         "file": "write_barcode.pdf",
         "kind": "pdf",
@@ -373,7 +382,7 @@ EXAMPLES = [
     },
     {
         "slug": "write_datamatrix",
-        "file": None,
+        "file": "write_datamatrix.pdf",
         "kind": "pdf",
         "rust": True,
         "python": True,
@@ -418,7 +427,7 @@ EXAMPLES = [
     },
     {
         "slug": "write_tagged",
-        "file": None,
+        "file": "write_tagged.pdf",
         "kind": "pdf",
         "rust": True,
         "python": True,

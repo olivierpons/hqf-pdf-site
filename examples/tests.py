@@ -9,10 +9,8 @@ from examples.catalog import EXAMPLES, SAMPLES_DIR
 
 
 def test_every_sample_file_is_present():
-    """Each catalogue entry that names a file points at one the static store serves."""
+    """Each catalogue entry points at a file the static store can serve."""
     for example in EXAMPLES:
-        if not example["file"]:
-            continue
         found = finders.find(f"{SAMPLES_DIR}/{example['file']}")
         assert found, f"missing sample for {example['slug']}: {example['file']}"
 
@@ -79,12 +77,8 @@ def test_catalog_lists_the_business_documents(db, client):
         assert f"{slug}.pdf" in body
 
 
-def test_examples_without_a_sample_are_catalogued_but_not_embedded(db, client):
-    """An entry with no published file is described, and skipped by the samples page."""
-    unpublished = [example for example in EXAMPLES if not example["file"]]
-    assert unpublished
-    catalog_body = client.get(reverse("examples:catalog")).content.decode()
-    samples_body = client.get(reverse("examples:rendered_samples")).content.decode()
-    for example in unpublished:
-        assert str(example["title"]) in catalog_body
-        assert f'id="{example["slug"]}"' not in samples_body
+def test_every_example_is_embedded_on_the_samples_page(db, client):
+    """Every catalogue entry has its own section on the rendered-samples page."""
+    body = client.get(reverse("examples:rendered_samples")).content.decode()
+    for example in EXAMPLES:
+        assert f'id="{example["slug"]}"' in body

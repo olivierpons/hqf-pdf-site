@@ -35,8 +35,8 @@ def _catalog_jsonld(request):
 
     Describes the page as a ``CollectionPage`` whose main entity is an ordered
     ``ItemList`` of the examples, each a ``ListItem`` naming the example and pointing at
-    its rendered sample when one is published. Lazy titles are resolved against the
-    active language before serialisation.
+    its rendered sample. Lazy titles are resolved against the active language before
+    serialisation.
 
     Args:
         request: The current request, for absolute URLs.
@@ -44,17 +44,16 @@ def _catalog_jsonld(request):
     Returns:
         A JSON string.
     """
-    items = []
-    for position, example in enumerate(EXAMPLES, start=1):
-        item = {
+    items = [
+        {
             "@type": "ListItem",
             "position": position,
             "name": str(example["title"]),
             "description": str(example["summary"]),
+            "url": _sample_url(request, example),
         }
-        if example["file"]:
-            item["url"] = _sample_url(request, example)
-        items.append(item)
+        for position, example in enumerate(EXAMPLES, start=1)
+    ]
     document = {
         "@context": "https://schema.org",
         "@type": "CollectionPage",
@@ -96,10 +95,7 @@ def catalog(request):
 
 
 def rendered_samples(request):
-    """Show every published sample inline, each with a download link.
-
-    Examples whose sample file is not published are left out of this page; the
-    catalogue still lists them.
+    """Show every rendered sample inline, each with a download link.
 
     Queries: none.
 
@@ -110,9 +106,7 @@ def rendered_samples(request):
         The rendered-samples page.
     """
     samples = [
-        {**example, "url": _sample_url(request, example)}
-        for example in EXAMPLES
-        if example["file"]
+        {**example, "url": _sample_url(request, example)} for example in EXAMPLES
     ]
     context = {
         "samples": samples,
