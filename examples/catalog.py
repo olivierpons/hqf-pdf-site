@@ -224,6 +224,19 @@ EXAMPLES = [
         ),
     },
     {
+        "slug": "write_layers",
+        "file": "write_layers.pdf",
+        "kind": "pdf",
+        "rust": True,
+        "python": True,
+        "title": _("[Content shown and hidden by layer]"),
+        "summary": _(
+            "[One floor plan on four layers a reader shows and hides: the "
+            "furniture and the dimensions shown, the notes hidden until asked "
+            "for, and a draft mark that is looked at but never printed.]"
+        ),
+    },
+    {
         "slug": "write_columns",
         "file": "write_columns.pdf",
         "kind": "pdf",
