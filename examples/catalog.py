@@ -184,6 +184,20 @@ EXAMPLES = [
         ),
     },
     {
+        "slug": "write_color_spaces",
+        "file": "write_color_spaces.pdf",
+        "kind": "pdf",
+        "rust": True,
+        "python": True,
+        "title": _("[Grey, screen and printing colours]"),
+        "summary": _(
+            "[Swatches in each of the three colour spaces — a grey as one "
+            "number, a screen colour as three, a printing colour as four inks — "
+            "each captioned with the operators it wrote, and one mid-grey said "
+            "three ways.]"
+        ),
+    },
+    {
         "slug": "write_transparency",
         "file": "write_transparency.pdf",
         "kind": "pdf",
