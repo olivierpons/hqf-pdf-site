@@ -278,6 +278,20 @@ EXAMPLES = [
         ),
     },
     {
+        "slug": "write_soft_mask",
+        "file": "write_soft_mask.pdf",
+        "kind": "pdf",
+        "rust": True,
+        "python": True,
+        "title": _("[One rectangle, four masks]"),
+        "summary": _(
+            "[The same flat rectangle four times over, each under a different "
+            "soft mask — a gradient fade, a radial vignette, letters cut "
+            "through it, a coverage read from opacity — and a band that runs "
+            "out with a tag painted whole inside it.]"
+        ),
+    },
+    {
         "slug": "write_columns",
         "file": "write_columns.pdf",
         "kind": "pdf",
