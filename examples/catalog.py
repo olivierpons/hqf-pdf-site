@@ -197,6 +197,20 @@ EXAMPLES = [
         ),
     },
     {
+        "slug": "write_gradient",
+        "file": "write_gradient.pdf",
+        "kind": "pdf",
+        "rust": True,
+        "python": True,
+        "title": _("[Axial and radial gradients]"),
+        "summary": _(
+            "[Axial and radial gradients painted into clipped boxes: a horizontal "
+            "and a diagonal two-colour blend, a radial one whose outer colour is "
+            "extended to the corners, and a three-stop blend from a stitched "
+            "function.]"
+        ),
+    },
+    {
         "slug": "write_columns",
         "file": "write_columns.pdf",
         "kind": "pdf",
@@ -417,6 +431,20 @@ EXAMPLES = [
         "python": True,
         "title": _("[Internal and external links]"),
         "summary": _("[Pages that link out of themselves and to each other.]"),
+    },
+    {
+        "slug": "write_linked_text",
+        "file": "write_linked_text.pdf",
+        "kind": "pdf",
+        "rust": True,
+        "python": True,
+        "title": _("[Links and marks on placed text]"),
+        "summary": _(
+            "[Links and marks hung on text the engine has already placed: a band "
+            "behind a line, an underline, a boxed cell — every rectangle taken "
+            "from the boxes the flow and the table report, none of it measured by "
+            "hand.]"
+        ),
     },
     {
         "slug": "write_page_labels",
