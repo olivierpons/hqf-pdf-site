@@ -198,6 +198,20 @@ EXAMPLES = [
         ),
     },
     {
+        "slug": "write_measured_color",
+        "file": "write_measured_color.pdf",
+        "kind": "pdf",
+        "rust": True,
+        "python": True,
+        "title": _("[Colour the document defines]"),
+        "summary": _(
+            "[The same six colours said as bare numbers and then through the "
+            "sRGB profile the file carries, plus a lightness ramp and a hue "
+            "sweep in CIE L*a*b*: colour that still means the same thing on "
+            "another screen and on a press.]"
+        ),
+    },
+    {
         "slug": "write_transparency",
         "file": "write_transparency.pdf",
         "kind": "pdf",
