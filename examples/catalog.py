@@ -264,6 +264,20 @@ EXAMPLES = [
         ),
     },
     {
+        "slug": "write_tiling",
+        "file": "write_tiling.pdf",
+        "kind": "pdf",
+        "rust": True,
+        "python": True,
+        "title": _("[One cell, tiled across whatever it fills]"),
+        "summary": _(
+            "[Six panels filled with tiling patterns — bars, dots, a slant from "
+            "the pattern's matrix, brickwork, two patterns crossing, a wider "
+            "step — and a wordmark whose letters are windows onto the "
+            "brickwork.]"
+        ),
+    },
+    {
         "slug": "write_columns",
         "file": "write_columns.pdf",
         "kind": "pdf",

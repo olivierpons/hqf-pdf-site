@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-24 12:02+0200\n"
+"POT-Creation-Date: 2026-07-24 12:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -651,10 +651,25 @@ msgstr ""
 "que soit le nombre de placements."
 
 #: examples/catalog.py:272
+msgid "[One cell, tiled across whatever it fills]"
+msgstr "Une seule tuile, répétée sur tout ce qu'elle remplit"
+
+#: examples/catalog.py:274
+msgid ""
+"[Six panels filled with tiling patterns — bars, dots, a slant from the "
+"pattern's matrix, brickwork, two patterns crossing, a wider step — and a "
+"wordmark whose letters are windows onto the brickwork.]"
+msgstr ""
+"Six panneaux remplis de motifs de pavage — barres, points, une inclinaison "
+"venue de la matrice du motif, un appareillage de briques, deux motifs qui se "
+"croisent, un pas plus large — et un logotype dont les lettres sont des "
+"fenêtres sur les briques."
+
+#: examples/catalog.py:286
 msgid "[Text poured into columns]"
 msgstr "Du texte coulé en colonnes"
 
-#: examples/catalog.py:274
+#: examples/catalog.py:288
 msgid ""
 "[One long passage poured into three columns, each fitting the lines its "
 "height allows and handing the rest to the next.]"
@@ -662,11 +677,11 @@ msgstr ""
 "Un long passage coulé dans trois colonnes, chacune accueillant les lignes "
 "que sa hauteur permet et passant le reste à la suivante."
 
-#: examples/catalog.py:284
+#: examples/catalog.py:298
 msgid "[Paragraph indents and spacing]"
 msgstr "Retraits et espacement des paragraphes"
 
-#: examples/catalog.py:286
+#: examples/catalog.py:300
 msgid ""
 "[The same two paragraphs six ways: indents, the room around a paragraph, its "
 "last line, its first baseline.]"
@@ -674,11 +689,11 @@ msgstr ""
 "Les deux mêmes paragraphes de six façons : les retraits, la place autour "
 "d'un paragraphe, sa dernière ligne, sa première ligne de base."
 
-#: examples/catalog.py:296
+#: examples/catalog.py:310
 msgid "[A contents page with dot leaders]"
 msgstr "Une table des matières à points de conduite"
 
-#: examples/catalog.py:298
+#: examples/catalog.py:312
 msgid ""
 "[A contents page whose entries are led to their page numbers by dots the "
 "layout draws.]"
@@ -686,21 +701,21 @@ msgstr ""
 "Une table des matières dont les entrées sont menées à leurs numéros de page "
 "par des points que la mise en page trace."
 
-#: examples/catalog.py:308
+#: examples/catalog.py:322
 msgid "[Styled runs inside a paragraph]"
 msgstr "Fragments stylés dans un paragraphe"
 
-#: examples/catalog.py:310
+#: examples/catalog.py:324
 msgid "[A paragraph whose style changes inside it: size, underline, colour.]"
 msgstr ""
 "Un paragraphe dont le style change en son sein : taille, soulignement, "
 "couleur."
 
-#: examples/catalog.py:319
+#: examples/catalog.py:333
 msgid "[Stamps fitted to a box]"
 msgstr "Des tampons ajustés à une boîte"
 
-#: examples/catalog.py:321
+#: examples/catalog.py:335
 msgid ""
 "[What a document says about itself — DRAFT, COPY, PAID — laid across boxes "
 "of four different shapes and scaled to each.]"
@@ -708,11 +723,11 @@ msgstr ""
 "Ce qu'un document dit de lui-même — DRAFT, COPY, PAID — posé en travers de "
 "boîtes de quatre formes différentes et mis à l'échelle de chacune."
 
-#: examples/catalog.py:331
+#: examples/catalog.py:345
 msgid "[Shrunk headings and a turned label]"
 msgstr "Des titres réduits et une étiquette pivotée"
 
-#: examples/catalog.py:333
+#: examples/catalog.py:347
 msgid ""
 "[Headings of different lengths shrunk to share one column, and a label "
 "turned a quarter turn up the page's spine.]"
@@ -720,30 +735,30 @@ msgstr ""
 "Des titres de longueurs différentes réduits pour partager une même colonne, "
 "et une étiquette pivotée d'un quart de tour le long du dos de la page."
 
-#: examples/catalog.py:343
+#: examples/catalog.py:357
 msgid "[A multi-page invoice table]"
 msgstr "Un tableau de facture multi-pages"
 
-#: examples/catalog.py:345
+#: examples/catalog.py:359
 msgid "[An invoice table, laid out across as many pages as its lines need.]"
 msgstr ""
 "Un tableau de facture, réparti sur autant de pages que ses lignes l'exigent."
 
-#: examples/catalog.py:354
+#: examples/catalog.py:368
 msgid "[Cell margin, border, padding and fill]"
 msgstr "Marge, bordure, remplissage et fond de cellule"
 
-#: examples/catalog.py:356
+#: examples/catalog.py:370
 msgid "[What a cell can do with its own box: margin, border, padding, fill.]"
 msgstr ""
 "Ce qu'une cellule fait de sa propre boîte : marge, bordure, remplissage, "
 "fond."
 
-#: examples/catalog.py:365
+#: examples/catalog.py:379
 msgid "[Coloured cell borders and fills]"
 msgstr "Bordures et fonds de cellule en couleur"
 
-#: examples/catalog.py:367
+#: examples/catalog.py:381
 msgid ""
 "[A cell's four sides in four different colours, and coloured fills told "
 "apart from coloured borders.]"
@@ -751,11 +766,11 @@ msgstr ""
 "Les quatre côtés d'une cellule en quatre couleurs différentes, et des fonds "
 "colorés distingués des bordures colorées."
 
-#: examples/catalog.py:377
+#: examples/catalog.py:391
 msgid "[A self-paginating table]"
 msgstr "Un tableau qui se pagine tout seul"
 
-#: examples/catalog.py:379
+#: examples/catalog.py:393
 msgid ""
 "[A long table handed over whole, deciding its own pagination, its heading on "
 "top of every page, its footnote under every page, its shading said once for "
@@ -767,11 +782,11 @@ msgstr ""
 "une seule fois pour tout le tableau, et une mention que l'appelant trace "
 "sous chaque page à partir de la géométrie que le placement lui donne."
 
-#: examples/catalog.py:391
+#: examples/catalog.py:405
 msgid "[Overlong text in a narrow cell]"
 msgstr "Du texte trop long dans une cellule étroite"
 
-#: examples/catalog.py:393
+#: examples/catalog.py:407
 msgid ""
 "[Overlong text in a narrow table cell: left to overflow the column, or cut "
 "to it.]"
@@ -779,19 +794,19 @@ msgstr ""
 "Du texte trop long dans une cellule de tableau étroite : laissé déborder de "
 "la colonne, ou coupé à sa largeur."
 
-#: examples/catalog.py:403
+#: examples/catalog.py:417
 msgid "[Images on a page]"
 msgstr "Des images sur une page"
 
-#: examples/catalog.py:404
+#: examples/catalog.py:418
 msgid "[Images placed on a page.]"
 msgstr "Des images placées sur une page."
 
-#: examples/catalog.py:412
+#: examples/catalog.py:426
 msgid "[A gallery of picture formats]"
 msgstr "Une galerie de formats d'image"
 
-#: examples/catalog.py:414
+#: examples/catalog.py:428
 msgid ""
 "[Every picture the tests ship with, on one page, each captioned with what "
 "its own file declares.]"
@@ -799,11 +814,11 @@ msgstr ""
 "Toutes les images livrées avec les tests, sur une seule page, chacune "
 "légendée par ce que son propre fichier déclare."
 
-#: examples/catalog.py:424
+#: examples/catalog.py:438
 msgid "[A picture fitted into a box]"
 msgstr "Une image ajustée dans une boîte"
 
-#: examples/catalog.py:426
+#: examples/catalog.py:440
 msgid ""
 "[One picture fitted into a box of one size eight ways: sized four ways, "
 "anchored, turned by a quarter and by an angle of its own, and mirrored — "
@@ -814,11 +829,11 @@ msgstr ""
 "d'un angle qui lui est propre, et retournée en miroir — chaque panneau tracé "
 "à partir de la matrice que sa politique donne."
 
-#: examples/catalog.py:437
+#: examples/catalog.py:451
 msgid "[Code 128 and retail barcodes]"
 msgstr "Code 128 et codes-barres du commerce"
 
-#: examples/catalog.py:439
+#: examples/catalog.py:453
 msgid ""
 "[A page of barcodes, drawn as bars: Code 128 and the retail family, EAN-13, "
 "UPC-A, EAN-8.]"
@@ -826,51 +841,51 @@ msgstr ""
 "Une page de codes-barres, tracés en barres : Code 128 et la famille du "
 "commerce, EAN-13, UPC-A, EAN-8."
 
-#: examples/catalog.py:449
+#: examples/catalog.py:463
 msgid "[QR codes]"
 msgstr "QR codes"
 
-#: examples/catalog.py:450
+#: examples/catalog.py:464
 msgid "[A page of QR codes, drawn as squares.]"
 msgstr "Une page de QR codes, tracés en carrés."
 
-#: examples/catalog.py:458
+#: examples/catalog.py:472
 msgid "[Data Matrix codes]"
 msgstr "Codes Data Matrix"
 
-#: examples/catalog.py:459
+#: examples/catalog.py:473
 msgid "[A page of Data Matrix codes, drawn as squares.]"
 msgstr "Une page de codes Data Matrix, tracés en carrés."
 
-#: examples/catalog.py:467
+#: examples/catalog.py:481
 msgid "[PDF417 codes]"
 msgstr "Codes PDF417"
 
-#: examples/catalog.py:468
+#: examples/catalog.py:482
 msgid "[A page of PDF417 codes, drawn as stacked bars.]"
 msgstr "Une page de codes PDF417, tracés en barres empilées."
 
-#: examples/catalog.py:476
+#: examples/catalog.py:490
 msgid "[Aztec codes]"
 msgstr "Codes Aztec"
 
-#: examples/catalog.py:477
+#: examples/catalog.py:491
 msgid "[A page of Aztec codes, drawn as squares.]"
 msgstr "Une page de codes Aztec, tracés en carrés."
 
-#: examples/catalog.py:485
+#: examples/catalog.py:499
 msgid "[Internal and external links]"
 msgstr "Liens internes et externes"
 
-#: examples/catalog.py:486
+#: examples/catalog.py:500
 msgid "[Pages that link out of themselves and to each other.]"
 msgstr "Des pages qui pointent hors d'elles-mêmes et les unes vers les autres."
 
-#: examples/catalog.py:494
+#: examples/catalog.py:508
 msgid "[Links and marks on placed text]"
 msgstr "Liens et marques sur un texte déjà composé"
 
-#: examples/catalog.py:496
+#: examples/catalog.py:510
 msgid ""
 "[Links and marks hung on text the engine has already placed: a band behind a "
 "line, an underline, a boxed cell — every rectangle taken from the boxes the "
@@ -881,20 +896,20 @@ msgstr ""
 "rectangle tiré des boîtes que le flux et le tableau rapportent, aucun mesuré "
 "à la main."
 
-#: examples/catalog.py:508
+#: examples/catalog.py:522
 msgid "[Custom page labels]"
 msgstr "Étiquettes de page personnalisées"
 
-#: examples/catalog.py:509
+#: examples/catalog.py:523
 msgid "[Pages numbered by their labels rather than their position.]"
 msgstr ""
 "Des pages numérotées par leurs étiquettes plutôt que par leur position."
 
-#: examples/catalog.py:517
+#: examples/catalog.py:531
 msgid "[A tagged, accessible document]"
 msgstr "Un document balisé et accessible"
 
-#: examples/catalog.py:519
+#: examples/catalog.py:533
 msgid ""
 "[A document that says what each run of ink stands for, and which runs are "
 "furniture. Its prose and its table describe themselves, a paragraph and a "
@@ -904,19 +919,19 @@ msgstr ""
 "ne sont que de l'habillage. Sa prose et son tableau se décrivent eux-mêmes, "
 "un paragraphe et une cellule à la fois. Valide en PDF/A-3a et PDF/UA-1."
 
-#: examples/catalog.py:530
+#: examples/catalog.py:544
 msgid "[An overlay on a letterhead]"
 msgstr "Une surimpression sur un en-tête"
 
-#: examples/catalog.py:531
+#: examples/catalog.py:545
 msgid "[An invoice laid on a letterhead somebody else made.]"
 msgstr "Une facture posée sur un en-tête fait par quelqu'un d'autre."
 
-#: examples/catalog.py:539
+#: examples/catalog.py:553
 msgid "[The evaluation watermark]"
 msgstr "Le filigrane d'évaluation"
 
-#: examples/catalog.py:541
+#: examples/catalog.py:555
 msgid ""
 "[What an unlicensed copy looks like: the evaluation watermark the library "
 "stamps on every page.]"
@@ -924,11 +939,11 @@ msgstr ""
 "À quoi ressemble une copie sans licence : le filigrane d'évaluation que la "
 "bibliothèque appose sur chaque page."
 
-#: examples/catalog.py:551
+#: examples/catalog.py:565
 msgid "[An interactive form]"
 msgstr "Un formulaire interactif"
 
-#: examples/catalog.py:553
+#: examples/catalog.py:567
 msgid ""
 "[A form a reader fills in: text boxes, a check box, a drop-down, radio "
 "buttons.]"
@@ -936,20 +951,20 @@ msgstr ""
 "Un formulaire que le lecteur remplit : champs texte, case à cocher, liste "
 "déroulante, boutons radio."
 
-#: examples/catalog.py:563
+#: examples/catalog.py:577
 msgid "[A Factur-X electronic invoice]"
 msgstr "Une facture électronique Factur-X"
 
-#: examples/catalog.py:564
+#: examples/catalog.py:578
 msgid "[An electronic invoice: a PDF/A-3 file carrying its own XML.]"
 msgstr ""
 "Une facture électronique : un fichier PDF/A-3 qui porte son propre XML."
 
-#: examples/catalog.py:572
+#: examples/catalog.py:586
 msgid "[An archivable PDF/A-3 form]"
 msgstr "Un formulaire PDF/A-3 archivable"
 
-#: examples/catalog.py:574
+#: examples/catalog.py:588
 msgid ""
 "[A form that is also a PDF/A-3 file: every field baked in with a visible "
 "border, needing no reader.]"
@@ -957,11 +972,11 @@ msgstr ""
 "Un formulaire qui est aussi un fichier PDF/A-3 : chaque champ figé avec une "
 "bordure visible, sans lecteur requis."
 
-#: examples/catalog.py:584
+#: examples/catalog.py:598
 msgid "[The embedded ICC profile]"
 msgstr "Le profil ICC embarqué"
 
-#: examples/catalog.py:585
+#: examples/catalog.py:599
 msgid "[The ICC profile the library embeds in a PDF/A file.]"
 msgstr "Le profil ICC que la bibliothèque embarque dans un fichier PDF/A."
 
