@@ -5,7 +5,7 @@
 <div class="py-3">
   <h1 class="display-6 fw-semibold">{% trans "[Rendered PDF samples]" %}</h1>
   <p class="lead mt-3 mb-2">
-    {% trans "[Each file below was produced by one example. View it inline or download it; nothing is generated on request — these are the exact bytes the engine wrote.]" %}
+    {% trans "[Each file below was produced by one example. Click its preview to open the PDF, or download it; nothing is generated on request — these are the exact bytes the engine wrote.]" %}
   </p>
   <p>
     <a class="btn btn-outline-secondary" href="{% url 'examples:catalog' %}">{% trans "[Back to the catalogue]" %}</a>
@@ -22,12 +22,16 @@
       {% if sample.python %}<span class="badge text-bg-secondary">Python</span>{% endif %}
     </p>
     {% if sample.kind == "pdf" %}
-      <div class="ratio ratio-1x1 border rounded mb-3" style="max-width: 640px;">
-        <object data="{{ sample.url }}#view=FitH" type="application/pdf" title="{{ sample.title }}">
-          <p class="p-3">{% trans "[Your browser cannot display this PDF inline. Use the download link below.]" %}</p>
-        </object>
+      <a href="{{ sample.url }}" target="_blank" rel="noopener"
+         class="d-inline-block mb-3" style="max-width: 400px;" title="{{ sample.title }}">
+        <img src="{{ sample.thumbnail.url }}"
+             width="{{ sample.thumbnail.width }}" height="{{ sample.thumbnail.height }}"
+             class="img-fluid border rounded shadow-sm" loading="lazy" decoding="async"
+             alt="{% blocktrans with title=sample.title %}[First page of {{ title }}]{% endblocktrans %}">
+      </a>
+      <div>
+        <a class="btn btn-sm btn-outline-secondary" href="{{ sample.url }}" download>{% trans "[Download PDF]" %}</a>
       </div>
-      <a class="btn btn-sm btn-outline-secondary" href="{{ sample.url }}" download>{% trans "[Download PDF]" %}</a>
     {% else %}
       <p class="mb-2">{% trans "[This sample is a colour profile, not a page. Download it to inspect it.]" %}</p>
       <a class="btn btn-sm btn-outline-secondary" href="{{ sample.url }}" download>{% trans "[Download ICC profile]" %}</a>

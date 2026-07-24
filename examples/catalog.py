@@ -9,13 +9,15 @@ first, then the pieces they are built from, from the smallest file to the archiv
 browser, while ``"icc"`` is a colour profile the engine emits, offered as a download
 rather than shown.
 
-Adding an example is one entry here plus its file under ``static/examples/samples/``;
-nothing else references the list by position.
+Adding an example is one entry here plus its file under ``static/examples/samples/``
+and a first-page thumbnail under ``static/examples/thumbnails/`` (same basename with
+a ``.png`` extension); nothing else references the list by position.
 """
 
 from django.utils.translation import gettext_lazy as _
 
 SAMPLES_DIR = "examples/samples"
+THUMBNAILS_DIR = "examples/thumbnails"
 
 EXAMPLES = [
     {
