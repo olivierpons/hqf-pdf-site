@@ -465,6 +465,21 @@ EXAMPLES = [
         ),
     },
     {
+        "slug": "write_picture_cells",
+        "file": "write_picture_cells.pdf",
+        "kind": "pdf",
+        "rust": True,
+        "python": True,
+        "title": _("[Pictures inside table cells]"),
+        "summary": _(
+            "[A catalogue whose first column is a picture rather than text: four "
+            "pictures of wildly different pixel sizes and proportions, each fitted "
+            "whole and undistorted into the cell the table gives it and standing "
+            "against a different corner of it, asking its column for no width and "
+            "its row for no height.]"
+        ),
+    },
+    {
         "slug": "write_cell_overflow",
         "file": "write_cell_overflow.pdf",
         "kind": "pdf",
