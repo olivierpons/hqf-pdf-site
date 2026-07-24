@@ -211,6 +211,19 @@ EXAMPLES = [
         ),
     },
     {
+        "slug": "write_gradient_fill",
+        "file": "write_gradient_fill.pdf",
+        "kind": "pdf",
+        "rust": True,
+        "python": True,
+        "title": _("[Text and shapes filled with a gradient]"),
+        "summary": _(
+            "[A gradient as the colour something is filled with, through a shading "
+            "pattern: a headline whose letters are windows onto a three-stop "
+            "blend, and a panel filled with a radial one.]"
+        ),
+    },
+    {
         "slug": "write_columns",
         "file": "write_columns.pdf",
         "kind": "pdf",
