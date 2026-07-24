@@ -212,6 +212,19 @@ EXAMPLES = [
         ),
     },
     {
+        "slug": "write_spot_color",
+        "file": "write_spot_color.pdf",
+        "kind": "pdf",
+        "rust": True,
+        "python": True,
+        "title": _("[Inks on plates of their own]"),
+        "summary": _(
+            "[Two inks the press carries on plates of their own, each at ten "
+            "tints, a piece of work set in both, and the crosshairs that line "
+            "the plates up — set in the colorant every plate answers to.]"
+        ),
+    },
+    {
         "slug": "write_transparency",
         "file": "write_transparency.pdf",
         "kind": "pdf",
