@@ -237,6 +237,19 @@ EXAMPLES = [
         ),
     },
     {
+        "slug": "write_drawing",
+        "file": "write_drawing.pdf",
+        "kind": "pdf",
+        "rust": True,
+        "python": True,
+        "title": _("[One drawing, placed many times]"),
+        "summary": _(
+            "[One badge built as a drawing and placed eight times, plus once at "
+            "half size: the file holds its operators once, whatever it costs to "
+            "place.]"
+        ),
+    },
+    {
         "slug": "write_columns",
         "file": "write_columns.pdf",
         "kind": "pdf",
