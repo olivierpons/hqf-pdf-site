@@ -366,6 +366,21 @@ EXAMPLES = [
         ),
     },
     {
+        "slug": "write_tab_stops",
+        "file": "write_tab_stops.pdf",
+        "kind": "pdf",
+        "rust": True,
+        "python": True,
+        "title": _("[Tabulations and their stops]"),
+        "summary": _(
+            "[The same tabulated rows under each of the three tab methods, then a "
+            "contents page whose dots run out to a right-hand stop: the pen "
+            "stepped on relatively, landed on a typewriter's grid, or sent to a "
+            "ruler stop that sets its run on itself, centred over it, or on its "
+            "decimal point.]"
+        ),
+    },
+    {
         "slug": "write_stamp",
         "file": "write_stamp.pdf",
         "kind": "pdf",
