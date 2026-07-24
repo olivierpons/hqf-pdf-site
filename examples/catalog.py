@@ -452,6 +452,19 @@ EXAMPLES = [
         ),
     },
     {
+        "slug": "write_measured_columns",
+        "file": "write_measured_columns.pdf",
+        "kind": "pdf",
+        "rust": True,
+        "python": True,
+        "title": _("[Columns measured from their cells]"),
+        "summary": _(
+            "[One parts list twice: four columns sharing the width equally, then "
+            "the reference, the quantity and the price each as wide as their own "
+            "widest cell and the description given everything they leave.]"
+        ),
+    },
+    {
         "slug": "write_cell_overflow",
         "file": "write_cell_overflow.pdf",
         "kind": "pdf",
