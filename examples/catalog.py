@@ -381,6 +381,20 @@ EXAMPLES = [
         ),
     },
     {
+        "slug": "write_lists",
+        "file": "write_lists.pdf",
+        "kind": "pdf",
+        "rust": True,
+        "python": True,
+        "title": _("[Lists made from a hanging indent]"),
+        "summary": _(
+            "[Bulleted, numbered and nested lists, each built out of a hanging "
+            "indent and one tab stop rather than out of a list engine: the marker "
+            "hangs in the room the indent opens, and every line below the first "
+            "begins where the tabulation put the body.]"
+        ),
+    },
+    {
         "slug": "write_stamp",
         "file": "write_stamp.pdf",
         "kind": "pdf",
