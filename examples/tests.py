@@ -5,7 +5,7 @@
 from django.contrib.staticfiles import finders
 from django.urls import reverse
 
-from examples.catalog import EXAMPLES, SAMPLES_DIR
+from examples.catalog import EXAMPLES, SAMPLES_DIR, THUMBNAILS_DIR
 
 
 def test_every_sample_file_is_present():
@@ -13,6 +13,16 @@ def test_every_sample_file_is_present():
     for example in EXAMPLES:
         found = finders.find(f"{SAMPLES_DIR}/{example['file']}")
         assert found, f"missing sample for {example['slug']}: {example['file']}"
+
+
+def test_every_pdf_thumbnail_is_present():
+    """Each PDF sample has a first-page thumbnail the samples page can show."""
+    for example in EXAMPLES:
+        if example["kind"] != "pdf":
+            continue
+        name = example["file"].rsplit(".", 1)[0]
+        found = finders.find(f"{THUMBNAILS_DIR}/{name}.png")
+        assert found, f"missing thumbnail for {example['slug']}: {name}.png"
 
 
 def test_slugs_are_unique():
@@ -54,14 +64,25 @@ def test_catalog_page_has_hreflang_and_canonical(db, client):
     assert 'hreflang="x-default"' in body
 
 
-def test_rendered_samples_embeds_pdfs_with_anchors(db, client):
-    """Each PDF is embedded inline under an id the catalogue links to."""
+def test_rendered_samples_shows_clickable_thumbnails_with_anchors(db, client):
+    """Each PDF shows a lazy-loaded thumbnail linking to it, under its anchor."""
     response = client.get(reverse("examples:rendered_samples"))
     assert response.status_code == 200
     body = response.content.decode()
-    assert 'type="application/pdf"' in body
+    assert 'loading="lazy"' in body
+    assert "write_table.png" in body
     assert 'id="write_table"' in body
     assert "write_facturx.pdf" in body
+    assert 'type="application/pdf"' not in body
+
+
+def test_thumbnails_carry_their_intrinsic_size(db, client):
+    """Every thumbnail img states a width and height so no layout shifts on load."""
+    body = client.get(reverse("examples:rendered_samples")).content.decode()
+    thumbnails = body.count("<img")
+    assert thumbnails == sum(1 for e in EXAMPLES if e["kind"] == "pdf")
+    assert body.count('width="') >= thumbnails
+    assert body.count('height="') >= thumbnails
 
 
 def test_icc_sample_is_offered_as_a_download_not_embedded(db, client):
