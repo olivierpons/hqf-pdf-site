@@ -568,7 +568,7 @@ msgstr ""
 
 #: examples/catalog.py:192
 msgid "[Grey, screen and printing colours]"
-msgstr "Gris, couleurs écran et couleurs d’impression"
+msgstr "Gris, couleurs écran et couleurs d'impression"
 
 #: examples/catalog.py:194
 msgid ""
@@ -577,8 +577,8 @@ msgid ""
 "the operators it wrote, and one mid-grey said three ways.]"
 msgstr ""
 "Des pastilles dans chacun des trois espaces de couleur — un gris en un "
-"nombre, une couleur d’écran en trois, une couleur d’impression en quatre "
-"encres — chacune légendée par les opérateurs qu’elle a écrits, et un gris "
+"nombre, une couleur d'écran en trois, une couleur d'impression en quatre "
+"encres — chacune légendée par les opérateurs qu'elle a écrits, et un gris "
 "moyen dit de trois façons."
 
 #: examples/catalog.py:206
