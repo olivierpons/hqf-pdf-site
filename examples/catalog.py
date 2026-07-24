@@ -438,6 +438,20 @@ EXAMPLES = [
         ),
     },
     {
+        "slug": "write_merged_cells",
+        "file": "write_merged_cells.pdf",
+        "kind": "pdf",
+        "rust": True,
+        "python": True,
+        "title": _("[Cells merged down the rows]"),
+        "summary": _(
+            "[A specification sheet whose cells are merged down the rows: each "
+            "group named once beside all of its rows, one note beside them, the "
+            "hairlines stopping at their edges, and a note too long for the rows "
+            "it covers growing the last of them.]"
+        ),
+    },
+    {
         "slug": "write_cell_overflow",
         "file": "write_cell_overflow.pdf",
         "kind": "pdf",
